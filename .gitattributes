@@ -1,0 +1,10 @@
+# Track images in raw download folder with Git LFS
+data/images/0_raw_download/*.jpg filter=lfs diff=lfs merge=lfs -text
+data/images/0_raw_download/*.jpeg filter=lfs diff=lfs merge=lfs -text
+data/images/0_raw_download/*.png filter=lfs diff=lfs merge=lfs -text
+data/images/0_raw_download/*.JPG filter=lfs diff=lfs merge=lfs -text
+data/images/0_raw_download/*.JPEG filter=lfs diff=lfs merge=lfs -text
+data/images/0_raw_download/*.PNG filter=lfs diff=lfs merge=lfs -text
+
+# Optional: Track any large files that might end up elsewhere
+*.pdf filter=lfs diff=lfs merge=lfs -text 
