@@ -1,0 +1,28 @@
+
+# Image Curation Export Report
+Generated: 2025-06-02 14:13:49
+
+## Summary
+- Total Images Exported: 50
+- Images Skipped: 0
+- Total Estimated Value: $56,490.00
+- Average Estimate Value: $1,129.80
+
+## Contractor Distribution
+- Gustavo: 17 images (34.0%)
+- Frank: 17 images (34.0%)
+- Edgar: 5 images (10.0%)
+- Pelico: 4 images (8.0%)
+- Marco: 3 images (6.0%)
+- Gustavo : 2 images (4.0%)
+- Pelico : 2 images (4.0%)
+
+## Value Distribution
+- Under $500: 9 images
+- $500 - $2000: 36 images
+- Over $2000: 5 images
+
+## File Locations
+- Curated Images: d:\UCSD_MJM\Deliverables-Code\data\images\1_curated
+- Metadata: d:\UCSD_MJM\Deliverables-Code\data\images\1_curated\curated_metadata.csv
+- Original Images: d:\UCSD_MJM\Deliverables-Code\data\images\0_raw_download
