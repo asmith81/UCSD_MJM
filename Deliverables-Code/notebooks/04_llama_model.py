@@ -820,44 +820,96 @@ except Exception as e:
 # %% [markdown]
 """
 ## Batch Test
-Run the model on all images and save results.
+Run the model on all images and save raw results only.
 """
 
 # %%
-def generate_test_id() -> str:
-    """Generate a unique test identifier using timestamp."""
-    return datetime.now().strftime("%Y%m%d_%H%M%S")
+def generate_results_filename(model_name: str, quantization_level: str, results_dir: Path) -> tuple[str, str]:
+    """
+    Generate a results filename with auto-incrementing counter.
+    
+    Args:
+        model_name: Name of the model (e.g., "pixtral", "llama", "doctr")
+        quantization_level: Quantization level (e.g., "bfloat16", "int8", "int4", "none")
+        results_dir: Directory where results are stored
+        
+    Returns:
+        tuple: (filename_without_extension, full_filepath)
+    """
+    # Find existing files with the same model and quantization pattern
+    pattern = f"results-{model_name}-{quantization_level}-*.json"
+    existing_files = list(results_dir.glob(pattern))
+    
+    # Extract counter numbers from existing files
+    counter_numbers = []
+    for file in existing_files:
+        try:
+            # Extract number from filename like "results-llama-bfloat16-3.json"
+            parts = file.stem.split('-')
+            if len(parts) >= 4:
+                counter_numbers.append(int(parts[-1]))
+        except ValueError:
+            continue
+    
+    # Get next counter number
+    next_counter = max(counter_numbers, default=0) + 1
+    
+    # Generate filename
+    filename_base = f"results-{model_name}-{quantization_level}-{next_counter}"
+    full_filepath = results_dir / f"{filename_base}.json"
+    
+    return filename_base, str(full_filepath)
 
-def save_incremental_results(results_file: Path, results: list):
-    """Save results incrementally to avoid losing progress."""
-    # Create a complete results structure
-    complete_results = {
-        "metadata": {
-            "test_id": results_file.stem.split("_")[-1],
-            "timestamp": datetime.now().isoformat(),
-            "model_info": {
-                "name": MODEL_CONFIG["name"],
-                "version": "1.0",
-                "model_id": MODEL_CONFIG["repo_id"],
-                "quantization": quantization,
-                "parameters": {
-                    "use_flash_attention": use_flash_attention,
-                    "device_map": device_map
-                }
+def collect_test_metadata(test_id: str) -> dict:
+    """Collect metadata about the current test configuration."""
+    # Get GPU information
+    gpu_props = torch.cuda.get_device_properties(0) if torch.cuda.is_available() else None
+    
+    return {
+        "test_id": test_id,
+        "timestamp": datetime.now().isoformat(),
+        "model_info": {
+            "name": MODEL_CONFIG["name"],
+            "version": "1.0",
+            "model_id": MODEL_CONFIG["repo_id"],
+            "model_type": "vision_language_model",
+            "quantization": {
+                "type": quantization,
+                "config": QUANTIZATION_CONFIG
             },
-            "prompt_type": selected_prompt_type
+            "device_info": {
+                "device_map": device_map,
+                "use_flash_attention": use_flash_attention,
+                "gpu_memory_gb": round(gpu_props.total_memory / (1024**3), 2) if gpu_props else None,
+                "compute_capability": f"{gpu_props.major}.{gpu_props.minor}" if gpu_props else None
+            }
         },
+        "prompt_info": {
+            "prompt_type": selected_prompt_type,
+            "raw_text": SELECTED_PROMPT['prompts'][0]['text'],
+            "formatted_text": format_prompt(SELECTED_PROMPT['prompts'][0]['text']),
+            "special_tokens": ["<|image|>", "<|begin_of_text|>", "<|end_of_text|>", "<|response|>", "<|end_of_response|>"]
+        },
+        "processing_config": {
+            "inference_params": INFERENCE_PARAMS,
+            "image_preprocessing": IMAGE_PARAMS
+        }
+    }
+
+def save_incremental_results(results_file: Path, results: list, metadata: dict):
+    """Save results incrementally to avoid losing progress."""
+    complete_results = {
+        "metadata": metadata,
         "results": results
     }
     
-    # Save to file
     with open(results_file, 'w') as f:
         json.dump(complete_results, f, indent=2)
     
     logger.info(f"Saved incremental results to {results_file}")
 
-def process_batch(test_id: str = None) -> list:
-    """Process all images in the data/images directory and collect responses."""
+def process_batch(test_id: str) -> list:
+    """Process all images in the data/images directory and collect raw responses only."""
     results = []
     image_dir = ROOT_DIR / "data" / "images" / "1_curated"
     image_files = list(image_dir.glob("*.jpg"))
@@ -865,13 +917,13 @@ def process_batch(test_id: str = None) -> list:
     if not image_files:
         raise FileNotFoundError("No .jpg files found in data/images/1_curated directory")
     
-    # Use provided test_id or generate new one
-    if test_id is None:
-        test_id = generate_test_id()
-    results_file = results_dir / f"test_results_{test_id}.json"
+    # Collect metadata
+    metadata = collect_test_metadata(test_id)
+    
+    results_file = results_dir / f"{test_id}.json"
     
     logger.info(f"Starting batch processing of {len(image_files)} images")
-    logger.info(f"Results will be saved to: {results_file}")
+    logger.info(f"Raw results will be saved to: {results_file}")
     
     for image_path in image_files:
         try:
@@ -892,6 +944,9 @@ def process_batch(test_id: str = None) -> list:
                 # For quantized models, convert to float16
                 inputs = {k: v.to(torch.float16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
             
+            # Time the inference
+            start_time = datetime.now()
+            
             # Generate response
             with torch.no_grad():
                 generation_params = {
@@ -902,19 +957,23 @@ def process_batch(test_id: str = None) -> list:
                     "top_p": INFERENCE_PARAMS["top_p"]
                 }
                 
-                # Generate response
                 generated_ids = model.generate(**inputs, **generation_params)
+            
+            processing_time = (datetime.now() - start_time).total_seconds()
             
             # Decode response
             response = processor.decode(generated_ids[0], skip_special_tokens=True)
             
-            # Create result entry
+            # Create result entry with raw output only
             result = {
                 "image_name": image_path.name,
                 "status": "completed",
                 "timestamp": datetime.now().isoformat(),
-                "extracted_data": {
-                    "raw_response": response
+                "processing_time_seconds": round(processing_time, 2),
+                "raw_output": {
+                    "model_response": response,
+                    "model_tokens_used": len(generated_ids[0]),
+                    "generation_parameters_used": generation_params
                 }
             }
             
@@ -922,7 +981,7 @@ def process_batch(test_id: str = None) -> list:
             results.append(result)
             
             # Save incremental results
-            save_incremental_results(results_file, results)
+            save_incremental_results(results_file, results, metadata)
             
             logger.info(f"Processed image: {image_path.name}")
             
@@ -931,30 +990,34 @@ def process_batch(test_id: str = None) -> list:
             result = {
                 "image_name": image_path.name,
                 "status": "error",
+                "timestamp": datetime.now().isoformat(),
                 "error": {
+                    "type": "processing_error",
                     "message": str(e),
-                    "type": "processing_error"
-                },
-                "timestamp": datetime.now().isoformat()
+                    "stage": "inference"
+                }
             }
             results.append(result)
             # Save incremental results even on error
-            save_incremental_results(results_file, results)
+            save_incremental_results(results_file, results, metadata)
     
     logger.info(f"Batch processing completed. Processed {len(results)} images")
     return results
 
 def run_batch_test():
-    """Run the model on all images and save results."""
+    """Run the model on all images and save raw results only."""
     try:
-        # Generate test ID first
-        test_id = generate_test_id()
-        results_file = results_dir / f"test_results_{test_id}.json"
+        # Generate filename with new naming convention
+        test_id, results_file_path = generate_results_filename("llama", quantization, results_dir)
+        results_file = Path(results_file_path)
+        
+        logger.info(f"Starting Llama batch test with {quantization} quantization")
+        logger.info(f"Results will be saved to: {results_file}")
         
         # Process all images with incremental saving
         results = process_batch(test_id)
         
-        logger.info(f"Batch test completed. Results saved to: {results_file}")
+        logger.info(f"Batch test completed. Raw results saved to: {results_file}")
         return str(results_file)
         
     except Exception as e:
@@ -971,98 +1034,11 @@ except Exception as e:
 
 # %% [markdown]
 """
-## Analysis
-Generate and display analysis of model performance.
+## Analysis Functions - Data Processing Phase
+Functions for analyzing raw model outputs and generating structured analysis reports.
 """
 
 # %%
-def normalize_total_cost(cost_str: str) -> float:
-    """Convert a cost string to a float by removing currency symbols and commas."""
-    if not cost_str or cost_str == "extracted value":
-        return None
-        
-    # If already a float, return as is
-    if isinstance(cost_str, (int, float)):
-        return float(cost_str)
-        
-    try:
-        # Remove $ and commas, then convert to float
-        cleaned_str = cost_str.replace('$', '').replace(',', '').strip()
-        if not cleaned_str:  # Handle empty string after cleaning
-            return None
-        return float(cleaned_str)
-    except (ValueError, TypeError):
-        logger.warning(f"Failed to normalize cost value: {cost_str}")
-        return None
-
-def categorize_work_order_error(predicted: str, ground_truth: str) -> str:
-    """Categorize the type of error in work order number prediction."""
-    if not predicted or not ground_truth:
-        return "No Extraction"
-    if predicted == ground_truth:
-        return "Exact Match"
-    # Check if prediction looks like a date (contains - or /)
-    if '-' in predicted or '/' in predicted:
-        return "Date Confusion"
-    # Check for partial match (some digits match)
-    if any(digit in ground_truth for digit in predicted):
-        return "Partial Match"
-    return "Completely Wrong"
-
-def categorize_total_cost_error(predicted: float, ground_truth: float) -> str:
-    """Categorize the type of error in total cost prediction."""
-    if predicted is None or ground_truth is None:
-        return "No Extraction"
-    if predicted == ground_truth:
-        return "Numeric Match"
-    
-    # Convert to strings for digit comparison
-    pred_str = str(int(predicted))
-    truth_str = str(int(ground_truth))
-    
-    # Check for digit reversal
-    if pred_str[::-1] == truth_str:
-        return "Digit Reversal"
-    
-    # Check for missing digit
-    if len(pred_str) == len(truth_str) - 1 and all(d in truth_str for d in pred_str):
-        return "Missing Digit"
-    
-    # Check for extra digit
-    if len(pred_str) == len(truth_str) + 1 and all(d in pred_str for d in truth_str):
-        return "Extra Digit"
-    
-    return "Completely Wrong"
-
-def calculate_cer(str1: str, str2: str) -> float:
-    """Calculate Character Error Rate between two strings."""
-    if not str1 or not str2:
-        return 1.0  # Return maximum error if either string is empty
-    
-    # Convert to strings and remove whitespace
-    str1 = str(str1).strip()
-    str2 = str(str2).strip()
-    
-    # Calculate Levenshtein distance
-    if len(str1) < len(str2):
-        str1, str2 = str2, str1
-    
-    if len(str2) == 0:
-        return 1.0
-    
-    previous_row = range(len(str2) + 1)
-    for i, c1 in enumerate(str1):
-        current_row = [i + 1]
-        for j, c2 in enumerate(str2):
-            insertions = previous_row[j + 1] + 1
-            deletions = current_row[j] + 1
-            substitutions = previous_row[j] + (c1 != c2)
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-    
-    # Return CER as distance divided by length of longer string
-    return previous_row[-1] / len(str1)
-
 def extract_json_from_response(raw_response: str) -> dict:
     """Extract JSON data from the raw response string."""
     try:
@@ -1099,8 +1075,8 @@ def extract_json_from_response(raw_response: str) -> dict:
         logger.error(f"Failed to parse JSON from response: {e}")
         return None
 
-def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
-    """Analyze model performance and generate analysis report."""
+def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dict:
+    """Analyze raw model results and generate analysis report."""
     import pandas as pd
     
     # Set default ground truth file path
@@ -1109,23 +1085,22 @@ def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
     
     # Load results and ground truth
     with open(results_file, 'r') as f:
-        results = json.load(f)
+        raw_results = json.load(f)
     
     # Read ground truth with explicit string type for Invoice column
     ground_truth = pd.read_csv(ground_truth_file, dtype={'Invoice': str})
     
-    # Debug ground truth data
-    logger.info(f"Ground truth columns: {ground_truth.columns.tolist()}")
-    logger.info(f"Ground truth shape: {ground_truth.shape}")
-    logger.info(f"Sample of ground truth Invoice values: {ground_truth['Invoice'].head().tolist()}")
-    
     # Initialize analysis structure
     analysis = {
-        "metadata": results["metadata"],
+        "source_results": results_file,
+        "extraction_method": "json_parsing_v2",
+        "ground_truth_file": ground_truth_file,
+        "metadata": raw_results["metadata"],
         "summary": {
-            "total_images": len(results["results"]),
+            "total_images": len(raw_results["results"]),
             "completed": 0,
             "errors": 0,
+            "json_extraction_successful": 0,
             "work_order_accuracy": 0,
             "total_cost_accuracy": 0,
             "average_cer": 0
@@ -1134,21 +1109,19 @@ def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
             "work_order": {},
             "total_cost": {}
         },
-        "results": []
+        "extracted_data": [],
+        "performance_metrics": {}
     }
     
     # Process each result
     total_cer = 0
     work_order_matches = 0
     total_cost_matches = 0
+    json_successful = 0
     
-    for result in results["results"]:
+    for result in raw_results["results"]:
         # Get ground truth for this image - remove .jpg extension for matching
         image_id = result["image_name"].replace(".jpg", "")
-        
-        # Debug image matching
-        logger.info(f"Looking for image_id: {image_id}")
-        logger.info(f"Available Invoice values: {ground_truth['Invoice'].tolist()}")
         
         gt_row = ground_truth[ground_truth["Invoice"] == image_id]
         
@@ -1159,23 +1132,26 @@ def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
         gt_work_order = str(gt_row["Work Order Number/Numero de Orden"].iloc[0]).strip()
         gt_total_cost = normalize_total_cost(str(gt_row["Total"].iloc[0]))
         
-        # Initialize result analysis
-        result_analysis = {
+        # Initialize extraction entry
+        extraction_entry = {
             "image_name": result["image_name"],
             "status": result["status"],
-            "raw_response": result["extracted_data"]["raw_response"],  # Store raw response
-            "processed_data": {}  # Store processed data
+            "raw_response": result.get("raw_output", {}).get("model_response", ""),
+            "ground_truth": {
+                "work_order_number": gt_work_order,
+                "total_cost": gt_total_cost
+            }
         }
         
         if result["status"] == "completed":
             analysis["summary"]["completed"] += 1
             
             # Extract JSON data from raw response
-            extracted_data = extract_json_from_response(result["extracted_data"]["raw_response"])
+            raw_response = result["raw_output"]["model_response"]
+            extracted_data = extract_json_from_response(raw_response)
             
             if extracted_data:
-                # Store processed data
-                result_analysis["processed_data"] = extracted_data
+                json_successful += 1
                 
                 # Analyze work order
                 pred_work_order = extracted_data.get("work_order_number", "")
@@ -1192,18 +1168,25 @@ def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
                 if total_cost_error == "Numeric Match":
                     total_cost_matches += 1
                 
-                # Update result analysis
-                result_analysis.update({
-                    "work_order": {
-                        "predicted": pred_work_order,
-                        "ground_truth": gt_work_order,
-                        "error_category": work_order_error,
-                        "cer": work_order_cer
+                # Update extraction entry
+                extraction_entry.update({
+                    "extracted_data": {
+                        "work_order_number": pred_work_order,
+                        "total_cost": pred_total_cost
                     },
-                    "total_cost": {
-                        "predicted": pred_total_cost,
-                        "ground_truth": gt_total_cost,
-                        "error_category": total_cost_error
+                    "extraction_confidence": {
+                        "json_extraction_successful": True,
+                        "parsing_method": "json_extraction",
+                        "work_order_found": bool(pred_work_order),
+                        "total_cost_found": bool(pred_total_cost),
+                        "overall_confidence": 1.0 - work_order_cer
+                    },
+                    "performance": {
+                        "work_order_error_category": work_order_error,
+                        "total_cost_error_category": total_cost_error,
+                        "work_order_cer": work_order_cer,
+                        "work_order_correct": work_order_error == "Exact Match",
+                        "total_cost_correct": total_cost_error == "Numeric Match"
                     }
                 })
                 
@@ -1215,62 +1198,52 @@ def analyze_results(results_file: str, ground_truth_file: str = None) -> dict:
                 
                 total_cer += work_order_cer
             else:
-                logger.warning(f"Failed to extract JSON data for image {image_id}")
-                result_analysis["error"] = "JSON extraction failed"
-                analysis["summary"]["errors"] += 1
+                extraction_entry.update({
+                    "extraction_error": "JSON extraction failed",
+                    "extraction_confidence": {
+                        "json_extraction_successful": False,
+                        "parsing_method": "json_extraction",
+                        "work_order_found": False,
+                        "total_cost_found": False,
+                        "overall_confidence": 0.0
+                    }
+                })
         else:
             analysis["summary"]["errors"] += 1
-            result_analysis["error"] = result["error"]
+            extraction_entry["processing_error"] = result.get("error", {})
         
-        analysis["results"].append(result_analysis)
+        analysis["extracted_data"].append(extraction_entry)
     
     # Calculate summary statistics
-    total_images = analysis["summary"]["total_images"]
-    if total_images > 0:
-        analysis["summary"]["work_order_accuracy"] = work_order_matches / total_images
-        analysis["summary"]["total_cost_accuracy"] = total_cost_matches / total_images
-        analysis["summary"]["average_cer"] = total_cer / total_images
+    completed = analysis["summary"]["completed"]
+    if completed > 0:
+        analysis["summary"]["json_extraction_successful"] = json_successful
+        analysis["summary"]["work_order_accuracy"] = work_order_matches / completed
+        analysis["summary"]["total_cost_accuracy"] = total_cost_matches / completed
+        analysis["summary"]["average_cer"] = total_cer / completed
+        
+        # Performance metrics
+        analysis["performance_metrics"] = {
+            "json_extraction_rate": json_successful / completed,
+            "work_order_extraction_rate": work_order_matches / completed,
+            "total_cost_extraction_rate": total_cost_matches / completed,
+            "average_processing_time": sum(
+                r.get("processing_time_seconds", 0) 
+                for r in raw_results["results"] 
+                if r["status"] == "completed"
+            ) / completed
+        }
     
     return analysis
 
-def select_test_results_file() -> Path:
-    """Allow user to select a test results file for analysis."""
-    # Get all test result files
-    results_dir_path = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
-    result_files = list(results_dir_path.glob("test_results_*.json"))
-    
-    if not result_files:
-        raise FileNotFoundError("No test result files found in results directory")
-    
-    # Sort files by modification time (newest first)
-    result_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
-    
-    print("\nAvailable test result files:")
-    for i, file in enumerate(result_files, 1):
-        # Get file modification time
-        mod_time = datetime.fromtimestamp(file.stat().st_mtime)
-        print(f"{i}. {file.name} (Modified: {mod_time.strftime('%Y-%m-%d %H:%M:%S')})")
-    
-    while True:
-        try:
-            choice = int(input("\nSelect a test result file (1-{}): ".format(len(result_files))))
-            if 1 <= choice <= len(result_files):
-                selected_file = result_files[choice - 1]
-                print(f"\nSelected file: {selected_file.name}")
-                return selected_file
-            else:
-                print(f"Invalid choice. Please select a number between 1 and {len(result_files)}.")
-        except ValueError:
-            print("Please enter a valid number.")
-
 def run_analysis():
-    """Run the model and analyze its performance."""
+    """Run analysis on raw results and generate comprehensive performance report."""
     try:
         # Get test results file
         results_file = select_test_results_file()
         
         # Generate analysis
-        analysis = analyze_results(str(results_file))
+        analysis = analyze_raw_results(str(results_file))
         
         # Create analysis directory if it doesn't exist
         analysis_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "analysis"
@@ -1282,14 +1255,22 @@ def run_analysis():
             json.dump(analysis, f, indent=2)
         
         # Display summary
-        print("\nAnalysis Summary:")
+        print("\nLlama Vision Model Analysis Summary:")
         print("-" * 50)
         print(f"Total Images: {analysis['summary']['total_images']}")
         print(f"Completed: {analysis['summary']['completed']}")
         print(f"Errors: {analysis['summary']['errors']}")
+        print(f"JSON Extraction Successful: {analysis['summary']['json_extraction_successful']}")
         print(f"Work Order Accuracy: {analysis['summary']['work_order_accuracy']:.2%}")
         print(f"Total Cost Accuracy: {analysis['summary']['total_cost_accuracy']:.2%}")
         print(f"Average CER: {analysis['summary']['average_cer']:.3f}")
+        
+        print("\nPerformance Metrics:")
+        for metric, value in analysis['performance_metrics'].items():
+            if 'rate' in metric:
+                print(f"- {metric.replace('_', ' ').title()}: {value:.2%}")
+            else:
+                print(f"- {metric.replace('_', ' ').title()}: {value:.2f}")
         
         print("\nWork Order Error Categories:")
         for category, count in analysis['error_categories']['work_order'].items():
@@ -1299,7 +1280,7 @@ def run_analysis():
         for category, count in analysis['error_categories']['total_cost'].items():
             print(f"- {category}: {count}")
         
-        print(f"\nAnalysis saved to: {analysis_file}")
+        print(f"\nDetailed analysis saved to: {analysis_file}")
         
         return analysis
         
