@@ -697,7 +697,7 @@ selection_manager = SelectionManager(METADATA_DIR)
 # ## Cell Block 5: Grid Display & Navigation
 
 # %%
-# Cell 8: Enhanced Image grid viewer with integrated selection
+# Cell 8: Image grid viewer
 class ImageGridViewer:
     """Interactive grid-based image viewer with selection."""
     
@@ -753,11 +753,8 @@ class ImageGridViewer:
         self.clear_button = widgets.Button(description="Clear All Selections", button_style='warning')
         self.export_button = widgets.Button(description="Export Selected Images", button_style='success')
         
-        # Grid container for images
+        # Grid container
         self.grid_container = widgets.VBox()
-        
-        # Selection buttons container
-        self.selection_container = widgets.VBox()
         
         # Wire up events
         self.contractor_filter.observe(self.on_filter_change, names='value')
@@ -778,8 +775,6 @@ class ImageGridViewer:
             filter_controls,
             nav_controls,
             self.grid_container,
-            widgets.HTML("<h4>🔘 Click buttons below to select/deselect images:</h4>"),
-            self.selection_container,
             action_controls
         ])
         
@@ -878,9 +873,10 @@ class ImageGridViewer:
             thumbnail_with_overlay.save(buffer, format='JPEG')
             img_data = base64.b64encode(buffer.getvalue()).decode()
             
-            # Create image display
+            # Create clickable image
             img_html = f"""
-            <div style="margin: 5px; text-align: center;">
+            <div style="margin: 5px; cursor: pointer; text-align: center;" 
+                 onclick="toggleSelection('{filename}')">
                 <img src="data:image/jpeg;base64,{img_data}" 
                      style="max-width: 300px; max-height: 400px; border: 2px solid #ddd; border-radius: 5px;">
             </div>
@@ -889,58 +885,6 @@ class ImageGridViewer:
             return widgets.HTML(img_html)
         
         return widgets.HTML("<div style='width:300px;height:400px;'>Error loading image</div>")
-    
-    def create_selection_buttons(self, page_images):
-        """Create selection buttons for current page images."""
-        selection_buttons = []
-        
-        for _, row in page_images.iterrows():
-            filename = row['filename']
-            work_order = str(row.get('work_order_number', 'N/A'))[:10]
-            is_selected = self.selection_manager.is_selected(filename)
-            
-            # Create toggle button
-            button_text = f"✓ WO:{work_order}" if is_selected else f"○ WO:{work_order}"
-            button_style = 'success' if is_selected else 'info'
-            
-            button = widgets.Button(
-                description=button_text,
-                button_style=button_style,
-                layout=widgets.Layout(width='300px', margin='2px')
-            )
-            
-            # Create click handler that captures the current filename
-            def make_handler(fname, wo):
-                def handler(b):
-                    selected = self.selection_manager.toggle_selection(fname)
-                    self.selection_manager.save_selections()
-                    
-                    # Update button appearance
-                    if selected:
-                        b.description = f"✓ WO:{wo}"
-                        b.button_style = 'success'
-                    else:
-                        b.description = f"○ WO:{wo}"
-                        b.button_style = 'info'
-                    
-                    # Update grid display to show selection indicators
-                    self.update_display()
-                    
-                return handler
-            
-            button.on_click(make_handler(filename, work_order))
-            selection_buttons.append(button)
-        
-        # Arrange buttons in grid layout matching image grid
-        button_rows = []
-        for i in range(0, len(selection_buttons), GRID_COLS):
-            row_buttons = selection_buttons[i:i+GRID_COLS]
-            # Pad row if needed
-            while len(row_buttons) < GRID_COLS:
-                row_buttons.append(widgets.HTML("<div style='width:300px;'></div>"))
-            button_rows.append(widgets.HBox(row_buttons))
-        
-        return widgets.VBox(button_rows)
     
     def update_display(self):
         """Update the grid display."""
@@ -969,8 +913,8 @@ class ImageGridViewer:
         self.prev_button.disabled = (self.current_page == 0)
         self.next_button.disabled = (self.current_page >= total_pages - 1)
         
-        # Create image grid
-        image_rows = []
+        # Create grid
+        rows = []
         for i in range(0, len(page_images), GRID_COLS):
             row_widgets = []
             for j in range(GRID_COLS):
@@ -981,16 +925,20 @@ class ImageGridViewer:
                 else:
                     row_widgets.append(widgets.HTML("<div style='width:300px;'></div>"))
             
-            image_rows.append(widgets.HBox(row_widgets))
+            rows.append(widgets.HBox(row_widgets))
         
-        self.grid_container.children = image_rows
+        self.grid_container.children = rows
         
-        # Create and display selection buttons
-        if len(page_images) > 0:
-            selection_buttons = self.create_selection_buttons(page_images)
-            self.selection_container.children = [selection_buttons]
-        else:
-            self.selection_container.children = [widgets.HTML("<p>No images to display</p>")]
+        # Add JavaScript for click handling
+        js_code = f"""
+        <script>
+        function toggleSelection(filename) {{
+            // This would normally communicate back to Python
+            // For now, we'll use a simpler approach through button clicks
+            console.log('Toggle selection for:', filename);
+        }}
+        </script>
+        """
         
         # Update export button state
         self.export_button.disabled = (selected_count == 0)
@@ -1001,7 +949,70 @@ class ImageGridViewer:
         return self.ui
 
 # %% [markdown]
-# ## Cell Block 6: Export & Curation Management
+# ## Cell Block 6: Click Handler & Selection Interface
+
+# %%
+# Cell 9: Selection interface with click handling
+class InteractiveSelector:
+    """Handle image selection through interactive buttons."""
+    
+    def __init__(self, grid_viewer):
+        self.grid_viewer = grid_viewer
+    
+    def create_selection_interface(self, images_on_page):
+        """Create selection buttons for current page."""
+        selection_buttons = []
+        
+        for _, row in images_on_page.iterrows():
+            filename = row['filename']
+            work_order = row['work_order_number']
+            is_selected = self.grid_viewer.selection_manager.is_selected(filename)
+            
+            # Create toggle button
+            button_text = f"✓ {work_order}" if is_selected else f"○ {work_order}"
+            button_style = 'success' if is_selected else 'info'
+            
+            button = widgets.Button(
+                description=button_text,
+                button_style=button_style,
+                layout=widgets.Layout(width='300px', margin='2px')
+            )
+            
+            # Create click handler
+            def make_handler(fname):
+                def handler(b):
+                    selected = self.grid_viewer.selection_manager.toggle_selection(fname)
+                    self.grid_viewer.selection_manager.save_selections()
+                    
+                    # Update button appearance
+                    if selected:
+                        b.description = f"✓ {work_order}"
+                        b.button_style = 'success'
+                    else:
+                        b.description = f"○ {work_order}"
+                        b.button_style = 'info'
+                    
+                    # Update grid display
+                    self.grid_viewer.update_display()
+                    
+                return handler
+            
+            button.on_click(make_handler(filename))
+            selection_buttons.append(button)
+        
+        # Arrange buttons in grid layout
+        button_rows = []
+        for i in range(0, len(selection_buttons), GRID_COLS):
+            row_buttons = selection_buttons[i:i+GRID_COLS]
+            # Pad row if needed
+            while len(row_buttons) < GRID_COLS:
+                row_buttons.append(widgets.HTML("<div style='width:300px;'></div>"))
+            button_rows.append(widgets.HBox(row_buttons))
+        
+        return widgets.VBox(button_rows)
+
+# %% [markdown]
+# ## Cell Block 7: Export & Curation Management
 
 # %%
 # Cell 10: Curation exporter
@@ -1125,28 +1136,27 @@ Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         print(f"📄 Export report saved: {report_path}")
 
 # %% [markdown]
-# ## Cell Block 7: Main Interface Launch
+# ## Cell Block 8: Main Interface Launch
 
 # %%
 # Cell 11: Initialize and display the curation interface
 print("🚀 Initializing Image Curation Interface...")
 
-# Check if images_df is available
-if 'images_df' not in locals() or images_df is None:
-    print("❌ images_df not found. Please run the metadata loading cells first.")
-else:
-    # Create the main grid viewer
-    grid_viewer = ImageGridViewer(images_df, thumbnail_gen, selection_manager)
-    
-    print("✅ Curation interface ready!")
-    print(f"📊 Dataset: {len(images_df)} images available for curation")
-    print(f"🎯 Target: Select 100-150 high-quality images")
-    
-    # Display interface
-    display(HTML("<h2>🖼️ Image Curation Interface</h2>"))
-    display(HTML("<p><strong>Instructions:</strong> Use the grid below to browse images. Use the buttons below each image to select/deselect. Use filters to narrow down images by contractor or value range.</p>"))
-    
-    display(grid_viewer.display())
+# Create the main grid viewer
+grid_viewer = ImageGridViewer(images_df, thumbnail_gen, selection_manager)
+
+# Create selection interface
+selector = InteractiveSelector(grid_viewer)
+
+print("✅ Curation interface ready!")
+print(f"📊 Dataset: {len(images_df)} images available for curation")
+print(f"🎯 Target: Select 100-150 high-quality images")
+
+# Display interface
+display(HTML("<h2>🖼️ Image Curation Interface</h2>"))
+display(HTML("<p><strong>Instructions:</strong> Use the grid below to browse images. Click the selection buttons below each image to select/deselect. Use filters to narrow down images by contractor or value range.</p>"))
+
+grid_viewer.display()
 
 # %%
 # Cell 12: Quick selection helpers

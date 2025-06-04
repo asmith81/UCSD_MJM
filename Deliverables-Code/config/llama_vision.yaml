@@ -1,0 +1,81 @@
+# Llama-3.2-11B-Vision Model Configuration
+
+# Basic model information
+name: "Llama-3.2-11B-Vision"
+repo_id: "meta-llama/Llama-3.2-11B-Vision"
+description: "Llama 3.2 11B vision-language model for invoice processing"
+model_type: "MllamaForConditionalGeneration"
+processor_type: "AutoProcessor"
+
+# Hardware requirements
+hardware:
+  gpu_required: true
+  minimum_compute_capability: "8.0"
+  minimum_memory_gb: 16
+
+# Loading configuration
+loading:
+  trust_remote_code: true
+  use_auth_token: true
+  device_map: "auto"
+
+# Quantization options
+quantization:
+  default: "bfloat16"
+  options:
+    bfloat16:
+      torch_dtype: "bfloat16"
+      device_map: "auto"
+    int8:
+      load_in_8bit: true
+      bnb_4bit_compute_dtype: "float16"
+      device_map: "auto"
+    int4:
+      load_in_4bit: true
+      bnb_4bit_compute_dtype: "float16"
+      bnb_4bit_use_double_quant: true
+      bnb_4bit_quant_type: "nf4"
+      device_map: "auto"
+
+# Prompt configuration
+prompt:
+  format: "{prompt_text}"
+  image_placeholder: "<|image|>"
+  system_prompt: "You are a helpful assistant that extracts information from invoices."
+  response_format: "JSON"
+  field_mapping:
+    work_order_number: "Work Order Number"
+    total_cost: "Total Cost"
+
+# Image preprocessing
+image_preprocessing:
+  max_size: [1344, 1344]
+  convert_to_rgb: true
+  normalize: true
+  resize_strategy: "maintain_aspect_ratio"
+
+# Inference parameters
+inference:
+  max_new_tokens: 256
+  do_sample: false
+  temperature: 0.1
+  top_k: 1
+  top_p: 0.1
+  batch_size: 1
+  max_batch_memory_gb: 16
+
+# Performance monitoring
+performance:
+  expected_accuracy: 0.75  # Slightly higher expected accuracy
+  inference_timeout_seconds: 25  # Faster expected inference
+  gpu_utilization_threshold: 0.85  # Higher utilization threshold
+
+# Error handling
+error_handling:
+  retry_attempts: 3  # More retries due to auth token requirements
+  fallback_strategy: "minimal_params"
+  critical_error_fields:
+    - device_map
+    - torch_dtype
+    - trust_remote_code
+    - use_auth_token  # Added due to auth requirement 
