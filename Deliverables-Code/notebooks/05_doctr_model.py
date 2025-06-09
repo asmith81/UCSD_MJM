@@ -630,10 +630,11 @@ def extract_work_order_and_total(result) -> dict:
             "work_order_number": None,
             "total_cost": None,
             "extraction_confidence": {
+                "spatial_extraction_successful": False,
+                "parsing_method": "spatial_analysis",
                 "work_order_found": False,
                 "total_cost_found": False,
-                "spatial_match": False,
-                "document_type": None
+                "overall_confidence": 0.0
             },
             "error": str(e)
         }
@@ -1302,11 +1303,35 @@ def run_analysis():
         analysis = analyze_raw_results(str(results_file))
         
         # Create analysis directory if it doesn't exist
-        analysis_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "analysis"
+        analysis_dir = ROOT_DIR / "Deliverables-Code" / "analysis"
         analysis_dir.mkdir(parents=True, exist_ok=True)
         
-        # Save analysis to file
-        analysis_file = analysis_dir / f"analysis_{analysis['metadata']['test_id']}.json"
+        # Generate analysis filename with same convention as results
+        model_name = "doctr"
+        quantization_level = "none"  # docTR doesn't use quantization
+        
+        # Find existing analysis files with the same model and quantization pattern
+        pattern = f"analysis-{model_name}-{quantization_level}-*.json"
+        existing_files = list(analysis_dir.glob(pattern))
+        
+        # Extract counter numbers from existing files
+        counter_numbers = []
+        for file in existing_files:
+            try:
+                # Extract number from filename like "analysis-doctr-none-3.json"
+                parts = file.stem.split('-')
+                if len(parts) >= 4:
+                    counter_numbers.append(int(parts[-1]))
+            except ValueError:
+                continue
+        
+        # Get next counter number
+        next_counter = max(counter_numbers, default=0) + 1
+        
+        # Generate analysis filename
+        analysis_filename = f"analysis-{model_name}-{quantization_level}-{next_counter}.json"
+        analysis_file = analysis_dir / analysis_filename
+        
         with open(analysis_file, 'w') as f:
             json.dump(analysis, f, indent=2)
         
