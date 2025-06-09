@@ -1,7 +1,7 @@
 # Core docTR package with PyTorch backend
 python-doctr[torch]>=0.11.0
 
-# Deep Learning Framework
+# Deep Learning Framework - use flexible versions compatible with RunPod
 torch>=2.1.0
 torchvision>=0.16.0
 torchaudio>=2.1.0
@@ -19,6 +19,11 @@ PyYAML>=6.0   # for configuration files
 pandas>=1.5.0  # for data handling
 matplotlib>=3.5.0  # for visualization
 opencv-python>=4.5.0  # for additional image processing
+
+# Core ML packages - ensure compatibility
+transformers>=4.40.0  # Flexible version for compatibility
+accelerate>=0.25.0    # Compatible with other models in environment
+huggingface_hub>=0.26.0  # Compatible with transformers
 
 # For API integration (if needed)
 fastapi>=0.68.0

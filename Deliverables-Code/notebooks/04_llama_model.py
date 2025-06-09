@@ -163,19 +163,39 @@ def install_dependencies():
     # Update pip first
     subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
     
-    # Install base requirements
-    base_requirements = [
-        ("Base requirements", [sys.executable, "-m", "pip", "install", "-q", "-r", str(ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_llama.txt")]),
-        ("PyTorch", [
+    # Check if PyTorch is already installed with correct version
+    pytorch_step = None
+    try:
+        import torch
+        torch_version = torch.__version__
+        if torch_version.startswith("2.1.0") and "cu118" in torch_version:
+            logger.info(f"PyTorch {torch_version} already installed, skipping PyTorch installation")
+        else:
+            pytorch_step = ("PyTorch", [
+                sys.executable, "-m", "pip", "install", "-q",
+                "torch==2.1.0",
+                "torchvision==0.16.0",
+                "torchaudio==2.1.0",
+                "--index-url", "https://download.pytorch.org/whl/cu118"
+            ])
+    except ImportError:
+        pytorch_step = ("PyTorch", [
             sys.executable, "-m", "pip", "install", "-q",
             "torch==2.1.0",
             "torchvision==0.16.0",
             "torchaudio==2.1.0",
             "--index-url", "https://download.pytorch.org/whl/cu118"
         ])
+    
+    # Install base requirements
+    base_requirements = [
+        ("Base requirements", [sys.executable, "-m", "pip", "install", "-q", "-r", str(ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_llama.txt")])
     ]
     
-    for step_name, command in tqdm.tqdm(base_requirements, desc="Installing base dependencies"):
+    if pytorch_step:
+        base_requirements.append(pytorch_step)
+    
+    for step_name, command in tqdm.tqdm(base_requirements, desc="Installing dependencies"):
         try:
             subprocess.check_call(command)
             logger.info(f"Successfully installed {step_name}")

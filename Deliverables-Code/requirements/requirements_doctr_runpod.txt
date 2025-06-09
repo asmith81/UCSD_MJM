@@ -1,0 +1,35 @@
+# RunPod-compatible requirements for docTR model
+# PyTorch already installed in RunPod: torch==2.1.0+cu118 torchvision==0.16.0+cu118 torchaudio==2.1.0+cu118
+
+# Core docTR package with PyTorch backend
+python-doctr[torch]>=0.11.0
+python-doctr[viz,html]  # For visualization and HTML output
+
+# Core ML packages - ensure compatibility
+transformers>=4.40.0  # Flexible version for compatibility
+accelerate>=0.25.0    # Compatible with other models in environment
+huggingface_hub>=0.26.0  # Compatible with transformers
+
+# Image Processing
+Pillow>=9.0.0
+numpy>=1.21.0
+opencv-python>=4.5.0
+
+# Data processing and utilities
+pandas>=1.5.0
+PyYAML>=6.0
+tqdm>=4.65.0
+matplotlib>=3.5.0
+
+# Development tools
+jupyter>=1.0.0
+
+# For API integration (optional)
+fastapi>=0.68.0
+uvicorn>=0.15.0
+python-multipart>=0.0.5
+
+# For development and testing (optional)
+pytest>=7.0.0
+black>=22.0.0
+flake8>=4.0.0 

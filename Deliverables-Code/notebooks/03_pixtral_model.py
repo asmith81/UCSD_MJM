@@ -142,16 +142,36 @@ from tqdm import tqdm
 
 def install_dependencies():
     """Install required dependencies with progress tracking."""
-    steps = [
-        ("Base requirements", [sys.executable, "-m", "pip", "install", "-q", "-r", str(ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_pixtral.txt")]),
-        ("PyTorch", [
+    # Check if PyTorch is already installed with correct version
+    try:
+        import torch
+        torch_version = torch.__version__
+        if torch_version.startswith("2.1.0") and "cu118" in torch_version:
+            logger.info(f"PyTorch {torch_version} already installed, skipping PyTorch installation")
+            pytorch_step = None
+        else:
+            pytorch_step = ("PyTorch", [
+                sys.executable, "-m", "pip", "install", "-q",
+                "torch==2.1.0",
+                "torchvision==0.16.0",
+                "torchaudio==2.1.0",
+                "--index-url", "https://download.pytorch.org/whl/cu118"
+            ])
+    except ImportError:
+        pytorch_step = ("PyTorch", [
             sys.executable, "-m", "pip", "install", "-q",
             "torch==2.1.0",
             "torchvision==0.16.0",
             "torchaudio==2.1.0",
             "--index-url", "https://download.pytorch.org/whl/cu118"
         ])
+    
+    steps = [
+        ("Base requirements", [sys.executable, "-m", "pip", "install", "-q", "-r", str(ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_pixtral.txt")])
     ]
+    
+    if pytorch_step:
+        steps.append(pytorch_step)
     
     for step_name, command in tqdm(steps, desc="Installing dependencies"):
         try:

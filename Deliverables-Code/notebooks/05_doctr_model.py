@@ -44,14 +44,36 @@ deliverables_dir = ROOT_DIR / "Deliverables-Code"
 if not deliverables_dir.exists():
     raise RuntimeError("Could not find Deliverables-Code directory in project root")
 
-requirements_file = ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_doctr.txt"
+def install_doctr_dependencies():
+    """Install docTR dependencies with PyTorch version checking."""
+    requirements_file = ROOT_DIR / "Deliverables-Code" / "requirements" / "requirements_doctr.txt"
+    
+    if not requirements_file.exists():
+        raise FileNotFoundError(f"Requirements file not found at {requirements_file}")
+    
+    # Check if PyTorch is already installed with correct version
+    pytorch_compatible = False
+    try:
+        import torch
+        torch_version = torch.__version__
+        if torch_version.startswith("2.1.0"):
+            print(f"Compatible PyTorch {torch_version} already installed")
+            pytorch_compatible = True
+        else:
+            print(f"PyTorch {torch_version} found but may need update for docTR compatibility")
+    except ImportError:
+        print("PyTorch not found, will install from requirements")
+    
+    print(f"Installing docTR dependencies from {requirements_file}...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "-r", str(requirements_file)])
+        print("✅ Dependencies installed successfully")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Error installing dependencies: {e}")
+        raise
 
-# Install requirements if file exists
-if requirements_file.exists():
-    print(f"Installing dependencies from {requirements_file}...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "-r", str(requirements_file)])
-else:
-    raise FileNotFoundError(f"Requirements file not found at {requirements_file}")
+# Install dependencies
+install_doctr_dependencies()
 
 # %%
 # Built-in Python modules
