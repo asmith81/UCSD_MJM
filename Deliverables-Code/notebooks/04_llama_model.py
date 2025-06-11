@@ -1188,8 +1188,8 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
     with open(results_file, 'r') as f:
         raw_results = json.load(f)
     
-    # Read ground truth with explicit string type for Invoice column
-    ground_truth = pd.read_csv(ground_truth_file, dtype={'Invoice': str})
+    # Read ground truth with explicit string type for filename column
+    ground_truth = pd.read_csv(ground_truth_file, dtype={'filename': str})
     
     # Initialize analysis structure
     analysis = {
@@ -1221,17 +1221,17 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
     json_successful = 0
     
     for result in raw_results["results"]:
-        # Get ground truth for this image - remove .jpg extension for matching
-        image_id = result["image_name"].replace(".jpg", "")
+        # Get ground truth for this image - use filename directly for matching
+        image_filename = result["image_name"]
         
-        gt_row = ground_truth[ground_truth["Invoice"] == image_id]
+        gt_row = ground_truth[ground_truth["filename"] == image_filename]
         
         if gt_row.empty:
-            logger.warning(f"No ground truth found for image {image_id}")
+            logger.warning(f"No ground truth found for image {image_filename}")
             continue
             
-        gt_work_order = str(gt_row["Work Order Number/Numero de Orden"].iloc[0]).strip()
-        gt_total_cost = normalize_total_cost(str(gt_row["Total"].iloc[0]))
+        gt_work_order = str(gt_row["work_order_number"].iloc[0]).strip()
+        gt_total_cost = normalize_total_cost(str(gt_row["total"].iloc[0]))
         
         # Initialize extraction entry
         extraction_entry = {
