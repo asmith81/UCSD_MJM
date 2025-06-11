@@ -899,7 +899,7 @@ def process_batch(image_dir: str = None, output_dir: str = None) -> str:
         if image_dir is None:
             image_dir = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated"
         if output_dir is None:
-            output_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
+            output_dir = ROOT_DIR / "Deliverables-Code" / "results"
         
         image_dir = Path(image_dir)
         output_dir = Path(output_dir)
@@ -1044,7 +1044,7 @@ def calculate_cer(str1: str, str2: str) -> float:
 def select_test_results_file() -> Path:
     """Allow user to select a test results file for analysis."""
     # Get all test result files
-    results_dir_path = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
+    results_dir_path = ROOT_DIR / "Deliverables-Code" / "results"
     result_files = list(results_dir_path.glob("results-doctr-*.json"))
     
     if not result_files:

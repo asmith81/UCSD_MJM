@@ -141,7 +141,7 @@ if not deliverables_dir.exists():
 sys.path.append(str(ROOT_DIR))
 
 # Create results directory
-results_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
+results_dir = ROOT_DIR / "Deliverables-Code" / "results"
 results_dir.mkdir(parents=True, exist_ok=True)
 logger.info(f"Results will be saved to: {results_dir}")
 
@@ -1095,6 +1095,87 @@ def extract_json_from_response(raw_response: str) -> dict:
         logger.error(f"Failed to parse JSON from response: {e}")
         return None
 
+def normalize_total_cost(cost_str: str) -> float:
+    """Convert a cost string to a float by removing currency symbols and commas."""
+    if not cost_str:
+        return None
+    # If already a float, return as is
+    if isinstance(cost_str, (int, float)):
+        return float(cost_str)
+    # Remove $ and commas, then convert to float
+    try:
+        return float(cost_str.replace('$', '').replace(',', '').strip())
+    except (ValueError, TypeError):
+        return None
+
+def categorize_work_order_error(predicted: str, ground_truth: str) -> str:
+    """Categorize the type of error in work order number prediction."""
+    if not predicted or not ground_truth:
+        return "No Extraction"
+    if predicted == ground_truth:
+        return "Exact Match"
+    # Check if prediction looks like a date (contains - or /)
+    if '-' in predicted or '/' in predicted:
+        return "Date Confusion"
+    # Check for partial match (some digits match)
+    if any(digit in ground_truth for digit in predicted):
+        return "Partial Match"
+    return "Completely Wrong"
+
+def categorize_total_cost_error(predicted: float, ground_truth: float) -> str:
+    """Categorize the type of error in total cost prediction."""
+    if predicted is None or ground_truth is None:
+        return "No Extraction"
+    if predicted == ground_truth:
+        return "Numeric Match"
+    
+    # Convert to strings for digit comparison
+    pred_str = str(int(predicted))
+    truth_str = str(int(ground_truth))
+    
+    # Check for digit reversal
+    if pred_str[::-1] == truth_str:
+        return "Digit Reversal"
+    
+    # Check for missing digit
+    if len(pred_str) == len(truth_str) - 1 and all(d in truth_str for d in pred_str):
+        return "Missing Digit"
+    
+    # Check for extra digit
+    if len(pred_str) == len(truth_str) + 1 and all(d in pred_str for d in truth_str):
+        return "Extra Digit"
+    
+    return "Completely Wrong"
+
+def calculate_cer(str1: str, str2: str) -> float:
+    """Calculate Character Error Rate between two strings."""
+    if not str1 or not str2:
+        return 1.0  # Return maximum error if either string is empty
+    
+    # Convert to strings and remove whitespace
+    str1 = str(str1).strip()
+    str2 = str(str2).strip()
+    
+    # Calculate Levenshtein distance
+    if len(str1) < len(str2):
+        str1, str2 = str2, str1
+    
+    if len(str2) == 0:
+        return 1.0
+    
+    previous_row = range(len(str2) + 1)
+    for i, c1 in enumerate(str1):
+        current_row = [i + 1]
+        for j, c2 in enumerate(str2):
+            insertions = previous_row[j + 1] + 1
+            deletions = current_row[j] + 1
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+    
+    # Return CER as distance divided by length of longer string
+    return previous_row[-1] / len(str1)
+
 def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dict:
     """Analyze raw model results and generate analysis report."""
     import pandas as pd
@@ -1255,6 +1336,36 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
         }
     
     return analysis
+
+def select_test_results_file() -> Path:
+    """Allow user to select a test results file for analysis."""
+    # Get all test result files
+    results_dir_path = ROOT_DIR / "Deliverables-Code" / "results"
+    result_files = list(results_dir_path.glob("results-*.json"))
+    
+    if not result_files:
+        raise FileNotFoundError("No test result files found in results directory")
+    
+    # Sort files by modification time (newest first)
+    result_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
+    
+    print("\nAvailable test result files:")
+    for i, file in enumerate(result_files, 1):
+        # Get file modification time
+        mod_time = datetime.fromtimestamp(file.stat().st_mtime)
+        print(f"{i}. {file.name} (Modified: {mod_time.strftime('%Y-%m-%d %H:%M:%S')})")
+    
+    while True:
+        try:
+            choice = int(input("\nSelect a test result file (1-{}): ".format(len(result_files))))
+            if 1 <= choice <= len(result_files):
+                selected_file = result_files[choice - 1]
+                print(f"\nSelected file: {selected_file.name}")
+                return selected_file
+            else:
+                print(f"Invalid choice. Please select a number between 1 and {len(result_files)}.")
+        except ValueError:
+            print("Please enter a valid number.")
 
 def run_analysis():
     """Run analysis on raw results and generate comprehensive performance report."""

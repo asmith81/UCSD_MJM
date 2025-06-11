@@ -125,7 +125,7 @@ if not deliverables_dir.exists():
 sys.path.append(str(ROOT_DIR))
 
 # Create results directory
-results_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
+results_dir = ROOT_DIR / "Deliverables-Code" / "results"
 results_dir.mkdir(parents=True, exist_ok=True)
 logger.info(f"Results will be saved to: {results_dir}")
 
@@ -1095,8 +1095,8 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
 def select_test_results_file() -> Path:
     """Allow user to select a test results file for analysis."""
     # Get all test result files
-    results_dir_path = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
-    result_files = list(results_dir_path.glob("test_results_*.json"))
+    results_dir_path = ROOT_DIR / "Deliverables-Code" / "results"
+    result_files = list(results_dir_path.glob("results-*.json"))
     
     if not result_files:
         raise FileNotFoundError("No test result files found in results directory")
