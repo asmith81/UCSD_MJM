@@ -771,7 +771,7 @@ Run the model on a single image using the selected prompt.
 def run_single_image_test():
     """Run the model on a single image with the selected prompt."""
     # Get the first .jpg file from data/images
-    image_dir = ROOT_DIR / "data" / "images" / "1_curated"
+    image_dir = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated"
     image_files = list(image_dir.glob("*.jpg"))
     if not image_files:
         raise FileNotFoundError("No .jpg files found in data/images/1_curated directory")
@@ -931,7 +931,7 @@ def save_incremental_results(results_file: Path, results: list, metadata: dict):
 def process_batch(test_id: str) -> list:
     """Process all images in the data/images directory and collect raw responses only."""
     results = []
-    image_dir = ROOT_DIR / "data" / "images" / "1_curated"
+    image_dir = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated"
     image_files = list(image_dir.glob("*.jpg"))
     
     if not image_files:
@@ -1101,7 +1101,7 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
     
     # Set default ground truth file path
     if ground_truth_file is None:
-        ground_truth_file = str(ROOT_DIR / "data" / "images" / "metadata" / "ground_truth.csv")
+        ground_truth_file = str(ROOT_DIR / "Deliverables-Code" / "data" / "images" / "metadata" / "ground_truth.csv")
     
     # Load results and ground truth
     with open(results_file, 'r') as f:

@@ -305,7 +305,7 @@ def process_single_image(image_path: str) -> None:
 
 # %%
 # Test with a sample image
-test_image_path = ROOT_DIR / "data" / "images" / "1_curated" / "1017.jpg"
+test_image_path = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated" / "1017.jpg"
 if test_image_path.exists():
     process_single_image(str(test_image_path))
 else:
@@ -897,7 +897,7 @@ def process_batch(image_dir: str = None, output_dir: str = None) -> str:
     try:
         # Set up directories
         if image_dir is None:
-            image_dir = ROOT_DIR / "data" / "images" / "1_curated"
+            image_dir = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated"
         if output_dir is None:
             output_dir = ROOT_DIR / "Deliverables-Code" / "notebooks" / "results"
         
@@ -1084,7 +1084,7 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
     
     # Set default ground truth file path
     if ground_truth_file is None:
-        ground_truth_file = str(ROOT_DIR / "data" / "images" / "metadata" / "ground_truth.csv")
+        ground_truth_file = str(ROOT_DIR / "Deliverables-Code" / "data" / "images" / "metadata" / "ground_truth.csv")
     
     # Load results and ground truth
     with open(results_file, 'r') as f:
