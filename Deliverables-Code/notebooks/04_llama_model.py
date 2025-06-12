@@ -814,8 +814,20 @@ def run_single_image_test():
     print(formatted_prompt)
     print("-" * 50)
     
-    # Prepare model inputs - simplified dtype handling
+    # Prepare model inputs with dtype handling
     inputs = processor(image, formatted_prompt, return_tensors="pt").to(model.device)
+    
+    # Convert pixel_values to match model dtype for quantized models
+    if 'pixel_values' in inputs:
+        # Get the actual dtype of the vision model's first layer
+        try:
+            vision_dtype = next(model.vision_model.parameters()).dtype
+            if vision_dtype != torch.float32:
+                inputs['pixel_values'] = inputs['pixel_values'].to(vision_dtype)
+        except:
+            # Fallback for quantized models
+            if quantization in ["int8", "int4"]:
+                inputs['pixel_values'] = inputs['pixel_values'].to(torch.float16)
     
     # Generate response
     with torch.no_grad():
@@ -961,8 +973,20 @@ def process_batch(test_id: str) -> list:
             prompt_text = SELECTED_PROMPT['prompts'][0]['text']
             formatted_prompt = format_prompt(prompt_text)
             
-            # Prepare model inputs - simplified dtype handling
+            # Prepare model inputs with dtype handling
             inputs = processor(image, formatted_prompt, return_tensors="pt").to(model.device)
+            
+            # Convert pixel_values to match model dtype for quantized models
+            if 'pixel_values' in inputs:
+                # Get the actual dtype of the vision model's first layer
+                try:
+                    vision_dtype = next(model.vision_model.parameters()).dtype
+                    if vision_dtype != torch.float32:
+                        inputs['pixel_values'] = inputs['pixel_values'].to(vision_dtype)
+                except:
+                    # Fallback for quantized models
+                    if quantization in ["int8", "int4"]:
+                        inputs['pixel_values'] = inputs['pixel_values'].to(torch.float16)
             
             # Time the inference
             start_time = datetime.now()

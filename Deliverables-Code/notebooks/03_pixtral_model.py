@@ -621,8 +621,20 @@ def run_single_image_test():
         return_tensors="pt"
     )
     
-    # Move inputs to the correct device - simplified dtype handling
+    # Move inputs to device and convert to model's dtype
     inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    
+    # Convert pixel_values to match model dtype for quantized models
+    if 'pixel_values' in inputs:
+        # Get the actual dtype of the vision model's first layer
+        try:
+            vision_dtype = next(model.vision_tower.parameters()).dtype
+            if vision_dtype != torch.float32:
+                inputs['pixel_values'] = inputs['pixel_values'].to(vision_dtype)
+        except:
+            # Fallback for quantized models
+            if quantization in ["int8", "int4"]:
+                inputs['pixel_values'] = inputs['pixel_values'].to(torch.float16)
     
     # Get inference parameters from config
     config = yaml.safe_load(open(ROOT_DIR / "Deliverables-Code" / "config" / "pixtral.yaml", 'r'))
@@ -697,8 +709,20 @@ def process_all_images(results_file: Path, metadata: dict) -> list:
                 return_tensors="pt"
             )
             
-            # Move inputs to the correct device - simplified dtype handling
+            # Move inputs to device and convert to model's dtype
             inputs = {k: v.to(model.device) for k, v in inputs.items()}
+            
+            # Convert pixel_values to match model dtype for quantized models
+            if 'pixel_values' in inputs:
+                # Get the actual dtype of the vision model's first layer
+                try:
+                    vision_dtype = next(model.vision_tower.parameters()).dtype
+                    if vision_dtype != torch.float32:
+                        inputs['pixel_values'] = inputs['pixel_values'].to(vision_dtype)
+                except:
+                    # Fallback for quantized models
+                    if quantization in ["int8", "int4"]:
+                        inputs['pixel_values'] = inputs['pixel_values'].to(torch.float16)
             
             # Get inference parameters from config
             config = yaml.safe_load(open(ROOT_DIR / "Deliverables-Code" / "config" / "pixtral.yaml", 'r'))
