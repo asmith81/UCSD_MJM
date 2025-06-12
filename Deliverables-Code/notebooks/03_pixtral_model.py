@@ -184,6 +184,10 @@ def install_dependencies():
 # Install dependencies
 install_dependencies()
 
+# Clear CUDA cache to prevent conflicts
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+
 # %% [markdown]
 """
 ## Memory Resource Check
@@ -397,17 +401,22 @@ def download_pixtral_model(model_id: str = "mistral-community/pixtral-12b",
             if quantization == "bfloat16":
                 model_kwargs["torch_dtype"] = torch.bfloat16
             elif quantization == "int8":
+                # Simplified 8-bit config that works more reliably
                 model_kwargs["quantization_config"] = BitsAndBytesConfig(
                     load_in_8bit=True,
-                    bnb_4bit_compute_dtype=torch.float16
+                    llm_int8_threshold=6.0,
+                    llm_int8_enable_fp32_cpu_offload=False
                 )
+                model_kwargs["torch_dtype"] = torch.float16
             elif quantization == "int4":
+                # Simplified 4-bit config
                 model_kwargs["quantization_config"] = BitsAndBytesConfig(
                     load_in_4bit=True,
                     bnb_4bit_compute_dtype=torch.float16,
-                    bnb_4bit_use_double_quant=True,
+                    bnb_4bit_use_double_quant=False,
                     bnb_4bit_quant_type="nf4"
                 )
+                model_kwargs["torch_dtype"] = torch.float16
             
             # Download model and processor
             model = LlavaForConditionalGeneration.from_pretrained(model_id, **model_kwargs)
@@ -428,6 +437,11 @@ def download_pixtral_model(model_id: str = "mistral-community/pixtral-12b",
                 raise RuntimeError(f"Failed to download model after {max_retries} attempts: {str(e)}")
 
 model, processor = download_pixtral_model()
+
+# Clear CUDA cache after model loading
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+
 logger.info("Model and processor ready for use")
 
 # %% [markdown]
@@ -607,15 +621,8 @@ def run_single_image_test():
         return_tensors="pt"
     )
     
-    # Move inputs to the correct device and dtype
+    # Move inputs to the correct device - simplified dtype handling
     inputs = {k: v.to(model.device) for k, v in inputs.items()}
-    
-    # Convert inputs to the correct dtype based on quantization
-    if quantization == "bfloat16":
-        inputs = {k: v.to(torch.bfloat16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
-    elif quantization in ["int8", "int4"]:
-        # For quantized models, convert to float16
-        inputs = {k: v.to(torch.float16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
     
     # Get inference parameters from config
     config = yaml.safe_load(open(ROOT_DIR / "Deliverables-Code" / "config" / "pixtral.yaml", 'r'))
@@ -690,15 +697,8 @@ def process_all_images(results_file: Path, metadata: dict) -> list:
                 return_tensors="pt"
             )
             
-            # Move inputs to the correct device and dtype
+            # Move inputs to the correct device - simplified dtype handling
             inputs = {k: v.to(model.device) for k, v in inputs.items()}
-            
-            # Convert inputs to the correct dtype based on quantization
-            if quantization == "bfloat16":
-                inputs = {k: v.to(torch.bfloat16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
-            elif quantization in ["int8", "int4"]:
-                # For quantized models, convert to float16
-                inputs = {k: v.to(torch.float16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
             
             # Get inference parameters from config
             config = yaml.safe_load(open(ROOT_DIR / "Deliverables-Code" / "config" / "pixtral.yaml", 'r'))

@@ -206,6 +206,10 @@ def install_dependencies():
 # Install dependencies
 install_dependencies()
 
+# Clear CUDA cache to prevent conflicts
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+
 # %% [markdown]
 """
 ## Flash Attention Configuration
@@ -713,17 +717,22 @@ def download_llama_model(model_id: str = "meta-llama/Llama-3.2-11B-Vision",
             if quantization == "bfloat16":
                 model_kwargs["torch_dtype"] = torch.bfloat16
             elif quantization == "int8":
+                # Simplified 8-bit config that works more reliably
                 model_kwargs["quantization_config"] = BitsAndBytesConfig(
                     load_in_8bit=True,
-                    bnb_4bit_compute_dtype=torch.float16
+                    llm_int8_threshold=6.0,
+                    llm_int8_enable_fp32_cpu_offload=False
                 )
+                model_kwargs["torch_dtype"] = torch.float16
             elif quantization == "int4":
+                # Simplified 4-bit config
                 model_kwargs["quantization_config"] = BitsAndBytesConfig(
                     load_in_4bit=True,
                     bnb_4bit_compute_dtype=torch.float16,
-                    bnb_4bit_use_double_quant=True,
+                    bnb_4bit_use_double_quant=False,
                     bnb_4bit_quant_type="nf4"
                 )
+                model_kwargs["torch_dtype"] = torch.float16
             
             # Download model and processor
             model = MllamaForConditionalGeneration.from_pretrained(model_id, **model_kwargs)
@@ -745,6 +754,11 @@ def download_llama_model(model_id: str = "meta-llama/Llama-3.2-11B-Vision",
 
 # Download model and processor
 model, processor = download_llama_model()
+
+# Clear CUDA cache after model loading
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+
 logger.info("Model and processor ready for use")
 
 # %% [markdown]
@@ -800,15 +814,8 @@ def run_single_image_test():
     print(formatted_prompt)
     print("-" * 50)
     
-    # Prepare model inputs
+    # Prepare model inputs - simplified dtype handling
     inputs = processor(image, formatted_prompt, return_tensors="pt").to(model.device)
-    
-    # Convert inputs to the correct dtype based on quantization
-    if quantization == "bfloat16":
-        inputs = {k: v.to(torch.bfloat16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
-    elif quantization in ["int8", "int4"]:
-        # For quantized models, convert to float16
-        inputs = {k: v.to(torch.float16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
     
     # Generate response
     with torch.no_grad():
@@ -954,15 +961,8 @@ def process_batch(test_id: str) -> list:
             prompt_text = SELECTED_PROMPT['prompts'][0]['text']
             formatted_prompt = format_prompt(prompt_text)
             
-            # Prepare model inputs
+            # Prepare model inputs - simplified dtype handling
             inputs = processor(image, formatted_prompt, return_tensors="pt").to(model.device)
-            
-            # Convert inputs to the correct dtype based on quantization
-            if quantization == "bfloat16":
-                inputs = {k: v.to(torch.bfloat16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
-            elif quantization in ["int8", "int4"]:
-                # For quantized models, convert to float16
-                inputs = {k: v.to(torch.float16) if v.dtype == torch.float32 else v for k, v in inputs.items()}
             
             # Time the inference
             start_time = datetime.now()
