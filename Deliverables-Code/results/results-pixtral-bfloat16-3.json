@@ -1,0 +1,862 @@
+{
+  "metadata": {
+    "test_id": "results-pixtral-bfloat16-5",
+    "timestamp": "2025-06-12T16:27:57.911024",
+    "model_info": {
+      "name": "Pixtral-12B",
+      "version": "1.0",
+      "model_id": "mistral-community/pixtral-12b",
+      "model_type": "vision_language_model",
+      "quantization": {
+        "type": "bfloat16",
+        "config": {
+          "load_in_4bit": false,
+          "load_in_8bit": false,
+          "torch_dtype": "bfloat16",
+          "bnb_4bit_compute_dtype": null,
+          "bnb_4bit_quant_type": null
+        }
+      },
+      "device_info": {
+        "device_map": {
+          "": 0
+        },
+        "use_flash_attention": true,
+        "gpu_memory_gb": 93.11,
+        "compute_capability": "9.0"
+      }
+    },
+    "prompt_info": {
+      "prompt_type": "locational",
+      "raw_text": "Please analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n",
+      "formatted_text": "[INST]\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n[IMG]\n[/IMG]\n[/INST]",
+      "special_tokens": [
+        "[IMG]",
+        "[/IMG]",
+        "[INST]",
+        "[/INST]"
+      ]
+    },
+    "processing_config": {
+      "inference_params": {
+        "max_new_tokens": 500,
+        "do_sample": true,
+        "temperature": 1.0,
+        "top_k": 50,
+        "top_p": 0.95,
+        "batch_size": 1,
+        "max_batch_memory_gb": 20
+      },
+      "image_preprocessing": {
+        "max_size": [
+          4032,
+          3024
+        ],
+        "format": "RGB",
+        "resize_strategy": "maintain_aspect_ratio"
+      }
+    }
+  },
+  "results": [
+    {
+      "image_name": "21089.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:00.254186",
+      "processing_time_seconds": 1.68,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21089\",\n  \"total_cost\": \"200\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21086.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:02.349036",
+      "processing_time_seconds": 1.53,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21086\",\n  \"total_cost\": \"1000\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21084.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:04.313491",
+      "processing_time_seconds": 1.56,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"210.84\",\n  \"total_cost\": \"2,000.00\"\n}\n```",
+        "model_tokens_used": 3289,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21082.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:06.660630",
+      "processing_time_seconds": 1.78,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21082\",\n  \"total_cost\": \"950.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21081.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:08.656967",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21081\",\n  \"total_cost\": \"950\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21062.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:10.560577",
+      "processing_time_seconds": 1.49,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21062\",\n  \"total_cost\": \"750.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21060.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:12.539679",
+      "processing_time_seconds": 1.52,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21060\",\n  \"total_cost\": \"1206.00\"\n}\n```",
+        "model_tokens_used": 3287,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21059.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:14.487535",
+      "processing_time_seconds": 1.49,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21059\",\n  \"total_cost\": \"$675.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21054.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:16.663881",
+      "processing_time_seconds": 1.67,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21054\",\n  \"total_cost\": \"1520\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21037.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:18.554382",
+      "processing_time_seconds": 1.45,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21087\",\n  \"total_cost\": \"17000\"\n}\n```",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21036.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:20.469097",
+      "processing_time_seconds": 1.54,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21036\",\n  \"total_cost\": \"$1,000.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21035.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:22.372870",
+      "processing_time_seconds": 1.52,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21035\",\n  \"total_cost\": \"$1200.00\"\n}\n```",
+        "model_tokens_used": 3287,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21002.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:24.287921",
+      "processing_time_seconds": 1.53,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"2100.2\",\n  \"total_cost\": \"1200.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21001.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:26.131246",
+      "processing_time_seconds": 1.45,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21001\",\n  \"total_cost\": \"1100\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21000.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:27.964100",
+      "processing_time_seconds": 1.43,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21000\",\n  \"total_cost\": \"1200\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20993.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:29.899150",
+      "processing_time_seconds": 1.54,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"70993\",\n  \"total_cost\": \"$1,950.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20990.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:31.752847",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20790\",\n  \"total_cost\": \"$2,150.00\"\n}",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20980.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:33.691014",
+      "processing_time_seconds": 1.51,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20980\",\n  \"total_cost\": \"1100.00\"\n}\n```",
+        "model_tokens_used": 3287,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20977.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:35.528567",
+      "processing_time_seconds": 1.46,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20977\",\n  \"total_cost\": \"1,000\"\n}\n```",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20963.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:37.332332",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20963\",\n  \"total_cost\": \"950\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20919.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:39.229593",
+      "processing_time_seconds": 1.49,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20915.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:41.056757",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20915\",\n  \"total_cost\": \"950\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20914.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:43.012879",
+      "processing_time_seconds": 1.56,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"205-21-19\",\n  \"total_cost\": \"1000\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20898.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:44.924988",
+      "processing_time_seconds": 1.51,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20898\",\n  \"total_cost\": \"770.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20886.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:47.310398",
+      "processing_time_seconds": 1.82,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20886\",\n  \"total_cost\": \"1300.00\"\n}",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20884.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:49.488592",
+      "processing_time_seconds": 1.61,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20884\",\n  \"total_cost\": \"$1,000.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20860.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:51.326993",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"70 960\",\n  \"total_cost\": \"950\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20837.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:53.198663",
+      "processing_time_seconds": 1.46,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20837\",\n  \"total_cost\": \"21500\"\n}\n```",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20834.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:55.066959",
+      "processing_time_seconds": 1.46,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}\n```",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20833.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:56.880829",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20833\",\n  \"total_cost\": \"1100\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20832.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:28:58.828249",
+      "processing_time_seconds": 1.56,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"2083.2\",\n  \"total_cost\": \"$1,050.00\"\n}\n```",
+        "model_tokens_used": 3289,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20831.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:01.882299",
+      "processing_time_seconds": 2.66,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\nBased on the provided image, here is the extracted information in JSON format:\n\n```json\n{\n  \"work_order_number\": \"20-931\",\n  \"total_cost\": \"1150\"\n}\n```\n\nPlease note the following:\n- The work order number appears to be the \"Estimate Number\".\n- The total cost is mentioned in the bottom section as \"Grand Total\".",
+        "model_tokens_used": 3334,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20830.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:03.764984",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20830\",\n  \"total_cost\": \"1050\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20829.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:05.678140",
+      "processing_time_seconds": 1.54,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20829\",\n  \"total_cost\": \"1,050.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20809.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:07.698564",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"1700\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20795.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:09.518953",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"1100.00\"\n}",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20794.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:11.281609",
+      "processing_time_seconds": 1.37,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"207994\",\n  \"total_cost\": \"1800\"\n}",
+        "model_tokens_used": 3281,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20793.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:13.196322",
+      "processing_time_seconds": 1.47,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20773\",\n  \"total_cost\": \"21500\"\n}\n```",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20779.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:15.183982",
+      "processing_time_seconds": 1.59,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"7806 Poet Cr\",\n  \"total_cost\": \"$1,300.00\"\n}\n```",
+        "model_tokens_used": 3290,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20777.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:17.038769",
+      "processing_time_seconds": 1.44,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20777\",\n  \"total_cost\": \"1600\"\n}\n```",
+        "model_tokens_used": 3284,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20776.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:18.855723",
+      "processing_time_seconds": 1.42,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20776\",\n  \"total_cost\": \"300\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20774.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:20.658962",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20774\",\n  \"total_cost\": \"250\"\n}\n```",
+        "model_tokens_used": 3283,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20696.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:22.576116",
+      "processing_time_seconds": 1.54,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20676\",\n  \"total_cost\": \"$8,000.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20678.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:24.367388",
+      "processing_time_seconds": 1.48,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20678\",\n  \"total_cost\": \"410.66\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20634.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:26.243446",
+      "processing_time_seconds": 1.49,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20634\",\n  \"total_cost\": \"$100.00\"\n}\n```",
+        "model_tokens_used": 3286,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20593.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:28.133528",
+      "processing_time_seconds": 1.46,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"265-93\",\n  \"total_cost\": \"$2,200.00\"\n}",
+        "model_tokens_used": 3285,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20574.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:30.238298",
+      "processing_time_seconds": 1.72,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\nHere is the extracted information in JSON format:\n\n```json\n{\n  \"work_order_number\": \"20574\",\n  \"total_cost\": \"$200.00\"\n}\n```",
+        "model_tokens_used": 3295,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "16616.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:31.952929",
+      "processing_time_seconds": 1.39,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"16616\",\n  \"total_cost\": \"185.00\"\n}",
+        "model_tokens_used": 3282,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "110524.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:33.936800",
+      "processing_time_seconds": 1.52,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"110524\",\n  \"total_cost\": \"$368.06\"\n}\n```",
+        "model_tokens_used": 3287,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "110424.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:29:35.901820",
+      "processing_time_seconds": 1.54,
+      "raw_output": {
+        "model_response": "\nPlease analyze this invoice with attention to field locations:\n\n1. Work Order Number:\n   - Typically found in upper right portion of image\n   - May be in a box or labeled section\n\n2. Total Cost:\n   - Usually in the bottom right section\n   - Often in a \"Total\" or \"Amount Due\" box\n   - May be the last line item\n\nExtract these values and return them in JSON format:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"1104124\",\n  \"total_cost\": \"$450.00\"\n}\n```",
+        "model_tokens_used": 3288,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    }
+  ]
+}

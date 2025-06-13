@@ -1,0 +1,862 @@
+{
+  "metadata": {
+    "test_id": "results-pixtral-bfloat16-6",
+    "timestamp": "2025-06-12T16:31:17.125718",
+    "model_info": {
+      "name": "Pixtral-12B",
+      "version": "1.0",
+      "model_id": "mistral-community/pixtral-12b",
+      "model_type": "vision_language_model",
+      "quantization": {
+        "type": "bfloat16",
+        "config": {
+          "load_in_4bit": false,
+          "load_in_8bit": false,
+          "torch_dtype": "bfloat16",
+          "bnb_4bit_compute_dtype": null,
+          "bnb_4bit_quant_type": null
+        }
+      },
+      "device_info": {
+        "device_map": {
+          "": 0
+        },
+        "use_flash_attention": true,
+        "gpu_memory_gb": 93.11,
+        "compute_capability": "9.0"
+      }
+    },
+    "prompt_info": {
+      "prompt_type": "step_by_step",
+      "raw_text": "Let's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n",
+      "formatted_text": "[INST]\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n[IMG]\n[/IMG]\n[/INST]",
+      "special_tokens": [
+        "[IMG]",
+        "[/IMG]",
+        "[INST]",
+        "[/INST]"
+      ]
+    },
+    "processing_config": {
+      "inference_params": {
+        "max_new_tokens": 500,
+        "do_sample": true,
+        "temperature": 1.0,
+        "top_k": 50,
+        "top_p": 0.95,
+        "batch_size": 1,
+        "max_batch_memory_gb": 20
+      },
+      "image_preprocessing": {
+        "max_size": [
+          4032,
+          3024
+        ],
+        "format": "RGB",
+        "resize_strategy": "maintain_aspect_ratio"
+      }
+    }
+  },
+  "results": [
+    {
+      "image_name": "21089.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:19.292333",
+      "processing_time_seconds": 1.52,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21089\",\n  \"total_cost\": \"200\"\n}",
+        "model_tokens_used": 3310,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21086.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:21.603333",
+      "processing_time_seconds": 1.71,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21086\",\n  \"total_cost\": \"$1,000.00\"\n}",
+        "model_tokens_used": 3316,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21084.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:23.760655",
+      "processing_time_seconds": 1.57,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"210.84\",\n  \"total_cost\": \"2,000\"\n}",
+        "model_tokens_used": 3314,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21082.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:25.617250",
+      "processing_time_seconds": 1.39,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n(\n  \"work_order_number\": \"21082\",\n  \"total_cost\": \"950.00\"\n)",
+        "model_tokens_used": 3314,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21081.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:28.040343",
+      "processing_time_seconds": 1.96,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nBased on the invoice you provided, here is the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"21081\",\n  \"total_cost\": \"950\"\n}\n```",
+        "model_tokens_used": 3332,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21062.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:30.519769",
+      "processing_time_seconds": 1.84,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21062\",\n  \"total_cost\": \"$750.00\"\n}\n```",
+        "model_tokens_used": 3317,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21060.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:33.486963",
+      "processing_time_seconds": 2.14,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"21060\",\n  \"total_cost\": \"1206.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21059.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:36.099339",
+      "processing_time_seconds": 2.1,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere is the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"21059\",\n  \"total_cost\": \"$675.00\"\n}\n```",
+        "model_tokens_used": 3328,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21054.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:38.286217",
+      "processing_time_seconds": 1.67,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21054\",\n  \"total_cost\": \"1520\"\n}\n```",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21037.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:41.021413",
+      "processing_time_seconds": 2.11,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"21087\",\n  \"total_cost\": \"$1700.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21036.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:43.949246",
+      "processing_time_seconds": 2.33,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nBased on the provided image, here is the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"21036\",\n  \"total_cost\": \"1000.00\"\n}\n```",
+        "model_tokens_used": 3335,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21035.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:46.094127",
+      "processing_time_seconds": 1.53,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21035\",\n  \"total_cost\": \"1200\"\n}\n```",
+        "model_tokens_used": 3312,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21002.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:48.409582",
+      "processing_time_seconds": 1.7,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"2100.2\",\n  \"total_cost\": \"1200\"\n}\n```",
+        "model_tokens_used": 3316,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21001.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:50.751660",
+      "processing_time_seconds": 1.75,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21001\",\n  \"total_cost\": \"1100.00\"\n}\n```",
+        "model_tokens_used": 3318,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "21000.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:53.327597",
+      "processing_time_seconds": 1.99,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere is the extracted information in JSON format:\n\n```json\n{\n  \"work_order_number\": \"21000\",\n  \"total_cost\": \"1,200\"\n}\n```",
+        "model_tokens_used": 3325,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20993.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:55.908621",
+      "processing_time_seconds": 2.0,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"70993\",\n  \"total_cost\": \"1950\"\n}\n```",
+        "model_tokens_used": 3326,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20990.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:31:58.344405",
+      "processing_time_seconds": 1.8,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20990\",\n  \"total_cost\": \"$2,150.00\"\n}\n```",
+        "model_tokens_used": 3319,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20980.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:00.707630",
+      "processing_time_seconds": 1.78,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"20980\",\n  \"total_cost\": \"1100.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20977.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:03.018656",
+      "processing_time_seconds": 1.87,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nBased on the invoice you provided, here's the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"20997\",\n  \"total_cost\": \"1000\"\n}\n```",
+        "model_tokens_used": 3333,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20963.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:04.800414",
+      "processing_time_seconds": 1.35,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20963\",\n  \"total_cost\": \"950.00\"\n}",
+        "model_tokens_used": 3313,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20919.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:06.701905",
+      "processing_time_seconds": 1.46,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"200.00\"\n}\n```",
+        "model_tokens_used": 3317,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20915.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:09.395098",
+      "processing_time_seconds": 1.48,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20915\",\n  \"total_cost\": \"950.00\"\n}\n```",
+        "model_tokens_used": 3317,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20914.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:11.245900",
+      "processing_time_seconds": 1.4,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"1000\"\n}\n```",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20898.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:13.503014",
+      "processing_time_seconds": 1.74,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere is the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"20898\",\n  \"total_cost\": \"770.00\"\n}\n```",
+        "model_tokens_used": 3328,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20886.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:15.674807",
+      "processing_time_seconds": 1.71,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"20886\",\n  \"total_cost\": \"1300\"\n}\n```",
+        "model_tokens_used": 3326,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20884.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:17.644774",
+      "processing_time_seconds": 1.43,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20884\",\n  \"total_cost\": \"1,000.00\"\n}",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20860.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:19.838401",
+      "processing_time_seconds": 1.77,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"70960\",\n  \"total_cost\": \"950.00\"\n}\n```",
+        "model_tokens_used": 3328,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20837.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:21.622901",
+      "processing_time_seconds": 1.34,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20837\",\n  \"total_cost\": \"21500\"\n}",
+        "model_tokens_used": 3312,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20834.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:23.531146",
+      "processing_time_seconds": 1.41,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1100\"\n}\n```",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20833.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:25.404550",
+      "processing_time_seconds": 1.42,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"208.33\",\n  \"total_cost\": \"1100\"\n}\n```",
+        "model_tokens_used": 3316,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20832.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:27.553980",
+      "processing_time_seconds": 1.7,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"2083.2\",\n  \"total_cost\": \"1050\"\n}\n```",
+        "model_tokens_used": 3327,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20831.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:29.878850",
+      "processing_time_seconds": 1.9,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nBased on the provided image, here is the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"20.931\",\n  \"total_cost\": \"1,150\"\n}\n```",
+        "model_tokens_used": 3334,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20830.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:31.802251",
+      "processing_time_seconds": 1.5,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20830\",\n  \"total_cost\": \"$1,050.00\"\n}\n```",
+        "model_tokens_used": 3319,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20829.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:33.792802",
+      "processing_time_seconds": 1.49,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20829\",\n  \"total_cost\": \"$1,050.00\"\n}\n```",
+        "model_tokens_used": 3319,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20809.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:35.644656",
+      "processing_time_seconds": 1.4,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"1700\"\n}\n```",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20795.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:37.821931",
+      "processing_time_seconds": 1.73,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"1100.0\"\n}\n```",
+        "model_tokens_used": 3317,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20794.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:40.243453",
+      "processing_time_seconds": 1.81,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}\n```",
+        "model_tokens_used": 3315,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20793.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:42.641840",
+      "processing_time_seconds": 1.53,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20773\",\n  \"total_cost\": \"$2,500.00\"\n}\n```",
+        "model_tokens_used": 3319,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20779.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:45.272585",
+      "processing_time_seconds": 2.17,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"20779\",\n  \"total_cost\": \"1300.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20777.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:48.037474",
+      "processing_time_seconds": 2.15,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"20377\",\n  \"total_cost\": \"1600.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20776.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:50.730215",
+      "processing_time_seconds": 2.05,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nCertainly! Here\u2019s the extracted information in JSON format:\n\n```json\n{\n  \"work_order_number\": \"20176\",\n  \"total_cost\": \"$300\"\n}\n```",
+        "model_tokens_used": 3326,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20774.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:54.901389",
+      "processing_time_seconds": 3.56,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information from the given invoice:\n\n```json\n{\n  \"work_order_number\": \"20774\",\n  \"total_cost\": \"250.00\"\n}\n```\n\nNote: The description is in Spanish, which roughly translates to \"replacing the shower head and shower and installing the Band B shower and installing the 3-gallon shower and the shower in the guest bathroom.\"",
+        "model_tokens_used": 3370,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20696.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:57.181454",
+      "processing_time_seconds": 1.69,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20676\",\n  \"total_cost\": \"8,000\"\n}\n```",
+        "model_tokens_used": 3316,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20678.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:32:59.983332",
+      "processing_time_seconds": 2.12,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"20678\",\n  \"total_cost\": \"410.66\"\n}\n```",
+        "model_tokens_used": 3328,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20634.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:01.947169",
+      "processing_time_seconds": 1.39,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20634\",\n  \"total_cost\": \"100\"\n}\n```",
+        "model_tokens_used": 3314,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20593.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:04.351207",
+      "processing_time_seconds": 1.96,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nHere's the extracted information in the requested JSON format:\n\n```json\n{\n  \"work_order_number\": \"2693\",\n  \"total_cost\": \"2,700.00\"\n}\n```",
+        "model_tokens_used": 3329,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "20574.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:06.574641",
+      "processing_time_seconds": 1.74,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20574\",\n  \"total_cost\": \"200.00\"\n}\n```",
+        "model_tokens_used": 3317,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "16616.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:10.832019",
+      "processing_time_seconds": 3.67,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\nBased on the provided image, here is the extracted information in the specified JSON format:\n\n```json\n{\n  \"work_order_number\": \"16616\",\n  \"total_cost\": \"185.00\"\n}\n```\n\nExplanation:\n- The work order number is found in the \"Estimate Number\" section and is `16616`.\n- The total cost is located in the \"Grand Total\" section and is `$185.00`.",
+        "model_tokens_used": 3384,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "110524.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:13.157989",
+      "processing_time_seconds": 1.72,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"110524\",\n  \"total_cost\": \"$368.06\"\n}\n```",
+        "model_tokens_used": 3318,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    },
+    {
+      "image_name": "110424.jpg",
+      "status": "completed",
+      "timestamp": "2025-06-12T16:33:15.451108",
+      "processing_time_seconds": 1.79,
+      "raw_output": {
+        "model_response": "\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"1104124\",\n  \"total_cost\": \"$450.00\"\n}\n```",
+        "model_tokens_used": 3319,
+        "generation_parameters_used": {
+          "max_new_tokens": 500,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 0.95
+        }
+      }
+    }
+  ]
+}
