@@ -1,0 +1,1442 @@
+{
+  "source_results": "/workspace/UCSD_MJM/Deliverables-Code/results/results-pixtral-bfloat16-1.json",
+  "extraction_method": "json_parsing_v2",
+  "ground_truth_file": "/workspace/UCSD_MJM/Deliverables-Code/data/images/metadata/ground_truth.csv",
+  "metadata": {
+    "test_id": "results-pixtral-bfloat16-3",
+    "timestamp": "2025-06-12T16:20:08.930571",
+    "model_info": {
+      "name": "Pixtral-12B",
+      "version": "1.0",
+      "model_id": "mistral-community/pixtral-12b",
+      "model_type": "vision_language_model",
+      "quantization": {
+        "type": "bfloat16",
+        "config": {
+          "load_in_4bit": false,
+          "load_in_8bit": false,
+          "torch_dtype": "bfloat16",
+          "bnb_4bit_compute_dtype": null,
+          "bnb_4bit_quant_type": null
+        }
+      },
+      "device_info": {
+        "device_map": {
+          "": 0
+        },
+        "use_flash_attention": true,
+        "gpu_memory_gb": 93.11,
+        "compute_capability": "9.0"
+      }
+    },
+    "prompt_info": {
+      "prompt_type": "basic_extraction",
+      "raw_text": "Please extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n",
+      "formatted_text": "[INST]\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n[IMG]\n[/IMG]\n[/INST]",
+      "special_tokens": [
+        "[IMG]",
+        "[/IMG]",
+        "[INST]",
+        "[/INST]"
+      ]
+    },
+    "processing_config": {
+      "inference_params": {
+        "max_new_tokens": 500,
+        "do_sample": true,
+        "temperature": 1.0,
+        "top_k": 50,
+        "top_p": 0.95,
+        "batch_size": 1,
+        "max_batch_memory_gb": 20
+      },
+      "image_preprocessing": {
+        "max_size": [
+          4032,
+          3024
+        ],
+        "format": "RGB",
+        "resize_strategy": "maintain_aspect_ratio"
+      }
+    }
+  },
+  "summary": {
+    "total_images": 50,
+    "completed": 50,
+    "errors": 0,
+    "json_extraction_successful": 50,
+    "work_order_accuracy": 0.7,
+    "total_cost_accuracy": 0.84,
+    "average_cer": 0.1003783783783784
+  },
+  "error_categories": {
+    "work_order": {
+      "Exact Match": 35,
+      "Partial Match": 14,
+      "Date Confusion": 1
+    },
+    "total_cost": {
+      "Numeric Match": 42,
+      "Completely Wrong": 5,
+      "Extra Digit": 3
+    }
+  },
+  "extracted_data": [
+    {
+      "image_name": "21089.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21089\",\n  \"total_cost\": \"$200.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21089",
+        "total_cost": 200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21089",
+        "total_cost": 200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21086.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21086\",\n  \"total_cost\": \"1000\"\n}",
+      "ground_truth": {
+        "work_order_number": "21086",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21086",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21084.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21084\",\n  \"total_cost\": \"2,000\"\n}",
+      "ground_truth": {
+        "work_order_number": "21084",
+        "total_cost": 2000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21084",
+        "total_cost": 2000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21082.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21082\",\n  \"total_cost\": \"950.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21082",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "21082",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21081.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21081\",\n  \"total_cost\": \"950\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21081",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "21081",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21062.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21062\",\n  \"total_cost\": \"750.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "21062",
+        "total_cost": 750.0
+      },
+      "extracted_data": {
+        "work_order_number": "21062",
+        "total_cost": 750.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21060.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21060\",\n  \"total_cost\": \"$1,206.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21060",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21060",
+        "total_cost": 1206.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "21059.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21059\",\n  \"total_cost\": \"675.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "21059",
+        "total_cost": 675.0
+      },
+      "extracted_data": {
+        "work_order_number": "21059",
+        "total_cost": 675.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21054.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21054\",\n  \"total_cost\": \"1520.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21054",
+        "total_cost": 1520.0
+      },
+      "extracted_data": {
+        "work_order_number": "21054",
+        "total_cost": 1520.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21037.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21087\",\n  \"total_cost\": \"$17000.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21037",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21087",
+        "total_cost": 17000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Extra Digit",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "21036.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"21036\",\n  \"total_cost\": \"$1,000.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "21036",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21036",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21035.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21035\",\n  \"total_cost\": \"$1200.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21035",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21035",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21002.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"2100.2\",\n  \"total_cost\": \"1200\"\n}",
+      "ground_truth": {
+        "work_order_number": "21002",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "2100.2",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8333333333333334
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.16666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21001.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21001\",\n  \"total_cost\": \"11100\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21001",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "21001",
+        "total_cost": 11100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Extra Digit",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "21000.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"21000\",\n  \"total_cost\": \"1200\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "21000",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21000",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20993.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"70993\",\n  \"total_cost\": \"$1,950.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20993",
+        "total_cost": 1950.0
+      },
+      "extracted_data": {
+        "work_order_number": "70993",
+        "total_cost": 1950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20990.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20790\",\n  \"total_cost\": \"$2,150.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20990",
+        "total_cost": 2150.0
+      },
+      "extracted_data": {
+        "work_order_number": "20790",
+        "total_cost": 2150.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20980.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"UNIT013\",\n  \"total_cost\": \"1100.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20980",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "UNIT013",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.1428571428571429
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.8571428571428571,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20977.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20977\",\n  \"total_cost\": \"$1,000.00\"\n}\n\n```python\nimport pytesseract\nfrom PIL import Image\n\ndef extract_information_from_invoice(image_path):\n    # Load the image\n    img = Image.open(image_path)\n\n    # Use pytesseract to perform OCR on the image\n    text = pytesseract.image_to_string(img)\n\n    # Print the extracted text\n    print(text)\n\n    # Initialize the dictionary to store extracted information\n    invoice_info = {\n        \"work_order_number\": \"\",\n        \"total_cost\": \"\"\n    }\n\n    # Split the text into lines for easier processing\n    lines = text.split('\\n')\n\n    # Process each line to extract relevant information\n    for line in lines:\n        if \"Estimate Number:\" in line:\n            work_order_number = line.split(\":\")[1].strip()\n            invoice_info[\"work_order_number\"] = work_order_number\n        elif \"Grand Total\" in line:\n            total_cost = line.split(\":\")[1].strip()\n            invoice_info[\"total_cost\"] = total_cost\n\n    return invoice_info\n\n# Replace 'invoice.jpg' with the path to your invoice image file\nimage_path = 'invoice.jpg'\nextracted_info = extract_information_from_invoice(image_path)\nextracted_info\n```",
+      "ground_truth": {
+        "work_order_number": "20977",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "20977",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20963.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20963\",\n  \"total_cost\": \"950.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20963",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "20963",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20919.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20919",
+        "total_cost": 700.0
+      },
+      "extracted_data": {
+        "work_order_number": "20919",
+        "total_cost": 700.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20915.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20915\",\n  \"total_cost\": \"950.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20915",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "20915",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20914.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"205-21x19\",\n  \"total_cost\": \"$1,000.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20914",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "205-21x19",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.33333333333333337
+      },
+      "performance": {
+        "work_order_error_category": "Date Confusion",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.6666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20898.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20898\",\n  \"total_cost\": \"77700\"\n}",
+      "ground_truth": {
+        "work_order_number": "20898",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20898",
+        "total_cost": 77700.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20886.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20886\",\n  \"total_cost\": \"$1,300.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20886",
+        "total_cost": 1300.0
+      },
+      "extracted_data": {
+        "work_order_number": "20886",
+        "total_cost": 1300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20884.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20884\",\n  \"total_cost\": \"$1,000.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20884",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "20884",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20860.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"10860\",\n  \"total_cost\": \"$950.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20860",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "10860",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20837.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20837\",\n  \"total_cost\": \"2500\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20837",
+        "total_cost": 2500.0
+      },
+      "extracted_data": {
+        "work_order_number": "20837",
+        "total_cost": 2500.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20834.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20839\",\n  \"total_cost\": \"1,100\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20834",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20839",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20833.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"208.33\",\n  \"total_cost\": \"1100\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20833",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "208.33",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8333333333333334
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.16666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20832.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"2083.2\",\n  \"total_cost\": \"$1,050.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20832",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "2083.2",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8333333333333334
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.16666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20831.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20.931\",\n  \"total_cost\": \"$1,150\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20831",
+        "total_cost": 1150.0
+      },
+      "extracted_data": {
+        "work_order_number": "20.931",
+        "total_cost": 1150.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.6666666666666667
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.3333333333333333,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20830.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20830\",\n  \"total_cost\": \"$1,050.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20830",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "20830",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20829.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20829\",\n  \"total_cost\": \"$1,050.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20829",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "20829",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20809.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20809",
+        "total_cost": 1700.0
+      },
+      "extracted_data": {
+        "work_order_number": "20809",
+        "total_cost": 1700.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20795.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20795",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20795",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20794.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}",
+      "ground_truth": {
+        "work_order_number": "20794",
+        "total_cost": 1800.0
+      },
+      "extracted_data": {
+        "work_order_number": "20794",
+        "total_cost": 1800.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20793.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"20793\",\n  \"total_cost\": \"21500\"\n}",
+      "ground_truth": {
+        "work_order_number": "20793",
+        "total_cost": 2500.0
+      },
+      "extracted_data": {
+        "work_order_number": "20793",
+        "total_cost": 21500.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Extra Digit",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20779.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"7806 Poce Cr Create Landover MD 20785\",\n  \"total_cost\": \"1300\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20779",
+        "total_cost": 1300.0
+      },
+      "extracted_data": {
+        "work_order_number": "7806 Poce Cr Create Landover MD 20785",
+        "total_cost": 1300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.08108108108108103
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.918918918918919,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20777.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20777\",\n  \"total_cost\": \"$1,600.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20777",
+        "total_cost": 1600.0
+      },
+      "extracted_data": {
+        "work_order_number": "20777",
+        "total_cost": 1600.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20776.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20776\",\n  \"total_cost\": \"300\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20776",
+        "total_cost": 300.0
+      },
+      "extracted_data": {
+        "work_order_number": "20776",
+        "total_cost": 300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20774.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20774\",\n  \"total_cost\": \"$250.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20774",
+        "total_cost": 250.0
+      },
+      "extracted_data": {
+        "work_order_number": "20774",
+        "total_cost": 250.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20696.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"10676\",\n  \"total_cost\": \"8000\"\n}",
+      "ground_truth": {
+        "work_order_number": "20696",
+        "total_cost": 3000.0
+      },
+      "extracted_data": {
+        "work_order_number": "10676",
+        "total_cost": 8000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.6
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.4,
+        "work_order_correct": false,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20678.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20678\",\n  \"total_cost\": \"$410.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20678",
+        "total_cost": 410.0
+      },
+      "extracted_data": {
+        "work_order_number": "20678",
+        "total_cost": 410.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20634.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20634\",\n  \"total_cost\": \"100\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20634",
+        "total_cost": 100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20634",
+        "total_cost": 100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20593.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"26593\",\n  \"total_cost\": \"$3,200.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20593",
+        "total_cost": 2200.0
+      },
+      "extracted_data": {
+        "work_order_number": "26593",
+        "total_cost": 3200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20574.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n```json\n{\n  \"work_order_number\": \"20574\",\n  \"total_cost\": \"200.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "20574",
+        "total_cost": 200.0
+      },
+      "extracted_data": {
+        "work_order_number": "20574",
+        "total_cost": 200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "16616.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"16616\",\n  \"total_cost\": \"185.00\"\n}\n```",
+      "ground_truth": {
+        "work_order_number": "16616",
+        "total_cost": 185.0
+      },
+      "extracted_data": {
+        "work_order_number": "16616",
+        "total_cost": 185.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "110524.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"110524\",\n  \"total_cost\": \"368.06\"\n}",
+      "ground_truth": {
+        "work_order_number": "110524",
+        "total_cost": 300.0
+      },
+      "extracted_data": {
+        "work_order_number": "110524",
+        "total_cost": 368.06
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "110424.jpg",
+      "status": "completed",
+      "raw_response": "\nPlease extract the following information from this invoice:\n1. Work Order Number\n2. Total Cost\n\nReturn the information in JSON format with these exact keys:\n{\n  \"work_order_number\": \"extracted value\",\n  \"total_cost\": \"extracted value\"\n}\n\n\n[/IMG]\n{\n  \"work_order_number\": \"1104124\",\n  \"total_cost\": \"$450.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "110424",
+        "total_cost": 450.0
+      },
+      "extracted_data": {
+        "work_order_number": "1104124",
+        "total_cost": 450.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8571428571428572
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.14285714285714285,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    }
+  ],
+  "performance_metrics": {
+    "json_extraction_rate": 1.0,
+    "work_order_extraction_rate": 0.7,
+    "total_cost_extraction_rate": 0.84,
+    "average_processing_time": 1.5426
+  }
+}

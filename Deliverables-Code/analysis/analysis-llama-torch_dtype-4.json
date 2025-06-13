@@ -1,0 +1,1440 @@
+{
+  "source_results": "/workspace/UCSD_MJM/Deliverables-Code/results/results-llama-torch_dtype-4.json",
+  "extraction_method": "json_parsing_v2",
+  "ground_truth_file": "/workspace/UCSD_MJM/Deliverables-Code/data/images/metadata/ground_truth.csv",
+  "metadata": {
+    "test_id": "results-llama-torch_dtype-4",
+    "timestamp": "2025-06-13T17:16:56.212047",
+    "model_info": {
+      "name": "Llama-3.2-11B-Vision",
+      "version": "1.0",
+      "model_id": "meta-llama/Llama-3.2-11B-Vision",
+      "model_type": "vision_language_model",
+      "quantization": {
+        "type": "torch_dtype",
+        "config": {
+          "torch_dtype": "bfloat16",
+          "device_map": "auto"
+        }
+      },
+      "device_info": {
+        "device_map": "auto",
+        "use_flash_attention": true,
+        "gpu_memory_gb": 93.0,
+        "compute_capability": "9.0"
+      }
+    },
+    "prompt_info": {
+      "prompt_type": "step_by_step",
+      "raw_text": "Let's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n",
+      "formatted_text": "<|image|>\n<|begin_of_text|>\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n<|end_of_text|>\n<|response|>\n<|end_of_response|>",
+      "special_tokens": [
+        "<|image|>",
+        "<|begin_of_text|>",
+        "<|end_of_text|>",
+        "<|response|>",
+        "<|end_of_response|>"
+      ]
+    },
+    "processing_config": {
+      "inference_params": {
+        "max_new_tokens": 256,
+        "do_sample": false,
+        "temperature": 0.1,
+        "top_k": 1,
+        "top_p": 0.1,
+        "batch_size": 1,
+        "max_batch_memory_gb": 16
+      },
+      "image_preprocessing": {
+        "max_size": [
+          1344,
+          1344
+        ],
+        "convert_to_rgb": true,
+        "normalize": true,
+        "resize_strategy": "maintain_aspect_ratio"
+      }
+    }
+  },
+  "summary": {
+    "total_images": 50,
+    "completed": 50,
+    "errors": 0,
+    "json_extraction_successful": 50,
+    "work_order_accuracy": 0.74,
+    "total_cost_accuracy": 0.94,
+    "average_cer": 0.14164021164021168
+  },
+  "error_categories": {
+    "work_order": {
+      "Exact Match": 37,
+      "Date Confusion": 3,
+      "Partial Match": 6,
+      "Completely Wrong": 4
+    },
+    "total_cost": {
+      "Numeric Match": 47,
+      "Completely Wrong": 2,
+      "Extra Digit": 1
+    }
+  },
+  "extracted_data": [
+    {
+      "image_name": "21089.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21089\",\n  \"total_cost\": \"200\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "21089",
+        "total_cost": 200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21089",
+        "total_cost": 200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21086.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21086\",\n  \"total_cost\": \"$1,000\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "21086",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21086",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21084.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21084\",\n  \"total_cost\": \"2000\"\n}.\\n<|end_of_response|>.\\nStep 4: Paste the JSON into the chat window. <OCR/> ESTIMATE Nombre 240 4/70 43/2 5717 43rd MD 21084 Due Date: 1448 11-19-24 Estimate 209 Total R,000 las 4 las 3 de pared: 1,386 90 Base: 133 Payment terms: Signature Date Grand Total 2,000 $ $ 0002 2,000 $ $ 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002 0002",
+      "ground_truth": {
+        "work_order_number": "21084",
+        "total_cost": 2000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21084",
+        "total_cost": 2000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21082.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"2/082\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|",
+      "ground_truth": {
+        "work_order_number": "21082",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "2/082",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Date Confusion",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21081.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"2108\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_response|>.\\nStep 4: Paste the JSON into the chat window. <OCR/> ESTIMATE Nombre 240. 43rd 11-19-24 24 2108/ Due 1700 24 500 20036 Total 950 Description Work 4 4 3GX40 132 480 356 en 612 356 Payment terms: Grand Total Signature Date 950\u00b0 $ 24 Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date Signature&Date",
+      "ground_truth": {
+        "work_order_number": "21081",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "2108",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21062.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21062\",\n  \"total_cost\": \"$750.00\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "21062",
+        "total_cost": 750.0
+      },
+      "extracted_data": {
+        "work_order_number": "21062",
+        "total_cost": 750.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21060.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21060\",\n  \"total_cost\": \"$1,206.00\" }.\\n<|end_of_response|>.\\nStep 4: Paste the JSON into the chat window. <OCR/> ESTIMATE Nombre de Tu nombre, direcci\u00f3ny numero de telefono: 11436 Direcci\u00f3n del Proyecto: 1448 Road Apt De Estimate Number: Fecha: 21060 Due Date: Payable to: Estimate for: Contracting 500 20036 Description ofWork Total Payment terms: Grand Total Signature&Date Date Signature& 11/22/2024 2024 11/2 22/2024 22/2 2024 11/22/2024 11/2 22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/2024 11/22/",
+      "ground_truth": {
+        "work_order_number": "21060",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21060",
+        "total_cost": 1206.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "21059.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"2722 Martin Luther King Ave\",\n  \"total_cost\": \"$6,75.00\" } </s>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "21059",
+        "total_cost": 675.0
+      },
+      "extracted_data": {
+        "work_order_number": "2722 Martin Luther King Ave",
+        "total_cost": 675.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.03703703703703709
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.9629629629629629,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21054.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21054\",\n  \"total_cost\": \"$1,520\" }.\\n<|end_of_response|>.\\nStep 4: Write the response in the format requested.\\n\"work_order_number\": \"21054\",\n\"total_cost\": \"$1,520\" }.\\n<|end_of_response|>. <OCR/> ESTIMATE services Fecha: 12/12/24 Due Date: Jose Estimate Number: 21054 Payable to: 2210 place Estimate for: 20036 en portes que para hacer trabajar la de el agua, de porque milad de lavada, las mangeras porque tambien 2 porque no bien, de 4 veces para bien porque no Payment terms: Grand Total Signature Date 1,520 520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520 1,5 20 1,520",
+      "ground_truth": {
+        "work_order_number": "21054",
+        "total_cost": 1520.0
+      },
+      "extracted_data": {
+        "work_order_number": "21054",
+        "total_cost": 1520.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21037.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21037\",\n  \"total_cost\": \"1,000\"\n}.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "21037",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21037",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21036.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21036\",\n  \"total_cost\": \"$1,000\"\n}.\\n<|end_of_response|>.\\nStep 4: Paste the JSON into the chat. <OCR/> WASHING SERVICE: ESTIMATE 11-16-24 21036 1809 49 3318 223 25x19= 975 de de de de de alto y Payment terms: Grand Total Signature & Date $1,000 000 1,000 000 $1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 000 1,000 ",
+      "ground_truth": {
+        "work_order_number": "21036",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "21036",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21035.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21035\",\n  \"total_cost\": \"$1200\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |",
+      "ground_truth": {
+        "work_order_number": "21035",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "21035",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21002.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100 2\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"2100",
+      "ground_truth": {
+        "work_order_number": "21002",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "2100 2",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8333333333333334
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.16666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21001.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"21001\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\",
+      "ground_truth": {
+        "work_order_number": "21001",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "21001",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "21000.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"JGC construction Services\",\n  \"total_cost\": \"1,200\" }.\\n<|end_of_response|>.\\n<|start_header|>Estimate\n<|end_header|><|start_header|>Nombre de tu compa. A:\n<|end_header|><|start_header|>JGC construction Services\n<|end_header|><|start_header|>Tu nombre, direcci. N y numero de telefono:\n<|end_header|><|start_header|>Jose orozco 240- 470 4102\n<|end_header|><|start_header|>5717 43rd Ave Hyattsville MD\n<|end_header|><|start_header|>Direccion del Proyecto:\n<|end_header|><|start_header|>850 Delaware Ave SW D.C\n<|end_header|><|start_header|>Description of Work: 4/16 Reparacion de paredes 4 cielos 5 pintaron paredes y cielos Se plastieron paredes y cielos pie cuadrados de pared color blanco 578 pie cuadrados de pared porara 198 pie cuadrados de",
+      "ground_truth": {
+        "work_order_number": "21000",
+        "total_cost": 1200.0
+      },
+      "extracted_data": {
+        "work_order_number": "JGC construction Services",
+        "total_cost": 1200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.0
+      },
+      "performance": {
+        "work_order_error_category": "Completely Wrong",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 1.0,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20993.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20993\",\n  \"total_cost\": \"$1,950\"\n}.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>.\\n<|end_of_output|>",
+      "ground_truth": {
+        "work_order_number": "20993",
+        "total_cost": 1950.0
+      },
+      "extracted_data": {
+        "work_order_number": "20993",
+        "total_cost": 1950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20990.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20990\",\n  \"total_cost\": \"$2,150\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20990",
+        "total_cost": 2150.0
+      },
+      "extracted_data": {
+        "work_order_number": "20990",
+        "total_cost": 2150.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20980.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20980\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|",
+      "ground_truth": {
+        "work_order_number": "20980",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20980",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20977.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20977\",\n  \"total_cost\": \"1000\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\",
+      "ground_truth": {
+        "work_order_number": "20977",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "20977",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20963.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20963\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20963",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "20963",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20919.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20919\",\n  \"total_cost\": \"700.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20919",
+        "total_cost": 700.0
+      },
+      "extracted_data": {
+        "work_order_number": "20919",
+        "total_cost": 700.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20915.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20915\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_response|>.\\n<|start_header|>Estimate\n<|end_header|><|start_header|>Fecha: 11-18-21\n<|end_header|><|start_header|>Estimate Number: 20915\n<|end_header|><|start_header|>Due Date: 11-25-24\n<|end_header|><|start_header|>Payable to: 3GIC\n<|end_header|><|start_header|>Estimate for: M.J.M Contracting\n1627 K Street NW Suite 500 Washington, D.C. 20036\n<|end_header|><|start_header|>Description of Work: 100 m 306\n<|end_header|><|start_header|>Total 950.00\n<|end_header|><|start_header|>Pie avadados de el pared color Blanco:598\n2/2 cuadrados de cielo:290\n<|end_header|><|start_header|>Payment terms: Grand Total $ 950.00\n<",
+      "ground_truth": {
+        "work_order_number": "20915",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "20915",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20914.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20914\",\n  \"total_cost\": \"$1,000\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20914",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "20914",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20898.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20898\",\n  \"total_cost\": \"7,100\" } </s>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of",
+      "ground_truth": {
+        "work_order_number": "20898",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20898",
+        "total_cost": 7100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Completely Wrong",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20886.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20886\",\n  \"total_cost\": \"$1,300\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "20886",
+        "total_cost": 1300.0
+      },
+      "extracted_data": {
+        "work_order_number": "20886",
+        "total_cost": 1300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20884.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"EL Contracting\",\n  \"total_cost\": \"$1,000\"\n}.\\n<|end_of_output|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>",
+      "ground_truth": {
+        "work_order_number": "20884",
+        "total_cost": 1000.0
+      },
+      "extracted_data": {
+        "work_order_number": "EL Contracting",
+        "total_cost": 1000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.0
+      },
+      "performance": {
+        "work_order_error_category": "Completely Wrong",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 1.0,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20860.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"JGC\",\n  \"total_cost\": \"950.00\"\n}",
+      "ground_truth": {
+        "work_order_number": "20860",
+        "total_cost": 950.0
+      },
+      "extracted_data": {
+        "work_order_number": "JGC",
+        "total_cost": 950.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.0
+      },
+      "performance": {
+        "work_order_error_category": "Completely Wrong",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 1.0,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20837.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20837\",\n  \"total_cost\": \"2,500\"\n}.\\n<|end_of_output|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\n<|new_line|>.\\",
+      "ground_truth": {
+        "work_order_number": "20837",
+        "total_cost": 2500.0
+      },
+      "extracted_data": {
+        "work_order_number": "20837",
+        "total_cost": 2500.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20834.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_1|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_2|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_3|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_4|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_5|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\": \"1,100\"\n}.\\n<|end_of_output|>.\\n<|output_6|> {\n  \"work_order_number\": \"20834\",\n  \"total_cost\":",
+      "ground_truth": {
+        "work_order_number": "20834",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20834",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20833.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_1|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_2|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_3|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_4|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_5|> {\n  \"work_order_number\": \"208 33\",\n  \"total_cost\": \"1,100\" }.\\n<|end_of_output|>.\\n<|output_6|> {\n  \"work_order_number\": \"208 ",
+      "ground_truth": {
+        "work_order_number": "20833",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "208 33",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8333333333333334
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.16666666666666666,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20832.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20832\",\n  \"total_cost\": \"$1,050\" }.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20832",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "20832",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20831.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_1|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_2|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_3|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_4|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_5|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\": \"1,150\" }.\\n<|end_of_output|>.\\n<|output_6|> {\n  \"work_order_number\": \"20931\",\n  \"total_cost\":",
+      "ground_truth": {
+        "work_order_number": "20831",
+        "total_cost": 1150.0
+      },
+      "extracted_data": {
+        "work_order_number": "20931",
+        "total_cost": 1150.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.2,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20830.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20830\",\n  \"total_cost\": \"$1,050\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20830",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "20830",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20829.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20829\",\n  \"total_cost\": \"$1,050\"\n}.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20829",
+        "total_cost": 1050.0
+      },
+      "extracted_data": {
+        "work_order_number": "20829",
+        "total_cost": 1050.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20809.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700\" } </s>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700\" } </s>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700\" } </s>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700\" } </s>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20809\",\n  \"total_cost\": \"$1,700\" } </s>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|new_line|> {\n",
+      "ground_truth": {
+        "work_order_number": "20809",
+        "total_cost": 1700.0
+      },
+      "extracted_data": {
+        "work_order_number": "20809",
+        "total_cost": 1700.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20795.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work_order_number\": \"20795\",\n  \"total_cost\": \"$1,100.00\" }.\\n<|end_of_response|>.\\n<|end_of_response|> {\n  \"work",
+      "ground_truth": {
+        "work_order_number": "20795",
+        "total_cost": 1100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20795",
+        "total_cost": 1100.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20794.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output|>.\\n<|new_line|> {\n  \"work_order_number\": \"20794\",\n  \"total_cost\": \"1800\"\n}.\\n<|end_of_output",
+      "ground_truth": {
+        "work_order_number": "20794",
+        "total_cost": 1800.0
+      },
+      "extracted_data": {
+        "work_order_number": "20794",
+        "total_cost": 1800.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20793.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20793\",\n  \"total_cost\": \"2,500\" }.\\n<|end_of_response|>.\\n<|start_header|>Estimate\n<|end_header|><|start_header|>Nombre de tu compa.\\n<|end_header|><|start_header|>JGC construction Services\n<|end_header|><|start_header|>Tu nombre, direcci. N y numero de telefono:.\\n<|end_header|><|start_header|>Josue Cruz 240-470-4312.\\n<|end_header|><|start_header|>917 43rd Ave Hyattsville MD.\\<|end_header|><|start_header|>Direccion del Proyecto:.\\n<|end_header|><|start_header|>1448 Park Rd NW Washington DC.\\<|end_header|><|start_header|>Estimate for:.\\n<|end_header|><|start_header|>MJM Contracting.\\n1627 K Street NW Suite 500.\\nWashington, D.C. 20036.\\<|end_header|><|start_header|>Due Date:.\\n<|end_header|",
+      "ground_truth": {
+        "work_order_number": "20793",
+        "total_cost": 2500.0
+      },
+      "extracted_data": {
+        "work_order_number": "20793",
+        "total_cost": 2500.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20779.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20779\",\n  \"total_cost\": \"1,300\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "20779",
+        "total_cost": 1300.0
+      },
+      "extracted_data": {
+        "work_order_number": "20779",
+        "total_cost": 1300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20777.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20777\",\n  \"total_cost\": \"$1,600\" }.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>.\\n<|end_of_output|>.\\n<|end_of_response|>",
+      "ground_truth": {
+        "work_order_number": "20777",
+        "total_cost": 1600.0
+      },
+      "extracted_data": {
+        "work_order_number": "20777",
+        "total_cost": 1600.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20776.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20776\",\n  \"total_cost\": \"$300\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "20776",
+        "total_cost": 300.0
+      },
+      "extracted_data": {
+        "work_order_number": "20776",
+        "total_cost": 300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20774.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20774\",\n  \"total_cost\": \"$250\" }.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n",
+      "ground_truth": {
+        "work_order_number": "20774",
+        "total_cost": 250.0
+      },
+      "extracted_data": {
+        "work_order_number": "20774",
+        "total_cost": 250.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20696.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_1|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_2|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_3|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_4|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_5|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\": \"$3,000\"\n}.\\n<|end_of_output|>.\\n<|output_6|> {\n  \"work_order_number\": \"20696\",\n  \"total_cost\":",
+      "ground_truth": {
+        "work_order_number": "20696",
+        "total_cost": 3000.0
+      },
+      "extracted_data": {
+        "work_order_number": "20696",
+        "total_cost": 3000.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20678.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20678\",\n  \"total_cost\": \"410.00\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "20678",
+        "total_cost": 410.0
+      },
+      "extracted_data": {
+        "work_order_number": "20678",
+        "total_cost": 410.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20634.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"20634\",\n  \"total_cost\": \"$4,180\" } </s>.\\n<|end_of_response|>.\\n<|new_line|> {\n  \"work_order_number\": \"20634\",\n  \"total_cost\": \"$4,180\" } </s>.\\n<|end_of_response|>. <OCR/> ESTIMATE Nombre detu Fecha: 10/23/24 Estimate Number: 20634 Tu nombre, direcci\u00f3n numero telefono: 240 5717 Due Date: 11/18/24 Direcci\u00f3n 1700 Payable to: Estimate for: NE Contracting 1627 500 Washington, D.C. 20036 removio dos pedazos de metal atascado en des aulet Total Payment terms: Signature&Date Signature Date GrandTotal Total Grand 1800 1800$180 180 $4,180 $4, 180 $4,180$180 180$180 $4,180$180$4,180 $4,180$180$4,180 $4,180$180$4,180 $4,180$180$4,180 $4,180$180$4,180 $",
+      "ground_truth": {
+        "work_order_number": "20634",
+        "total_cost": 100.0
+      },
+      "extracted_data": {
+        "work_order_number": "20634",
+        "total_cost": 4180.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Extra Digit",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": false
+      }
+    },
+    {
+      "image_name": "20593.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"11-25-24 20593\",\n  \"total_cost\": \"2,200\" }.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<|end_of_response|>.\\n<",
+      "ground_truth": {
+        "work_order_number": "20593",
+        "total_cost": 2200.0
+      },
+      "extracted_data": {
+        "work_order_number": "11-25-24 20593",
+        "total_cost": 2200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.3571428571428571
+      },
+      "performance": {
+        "work_order_error_category": "Date Confusion",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.6428571428571429,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "20574.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"FK Contracting services\",\n  \"total_cost\": \"$200.00\"\n} |. <OCR/> ESTIMATE FK services 20574 Due New ork 20036 Insta AED lo solo Total Payment Signature Date Grand Total $200.00 00.00 $200.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ",
+      "ground_truth": {
+        "work_order_number": "20574",
+        "total_cost": 200.0
+      },
+      "extracted_data": {
+        "work_order_number": "FK Contracting services",
+        "total_cost": 200.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.0
+      },
+      "performance": {
+        "work_order_error_category": "Completely Wrong",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 1.0,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "16616.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"16616\",\n  \"total_cost\": \"$185.00\"\n} |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+      "ground_truth": {
+        "work_order_number": "16616",
+        "total_cost": 185.0
+      },
+      "extracted_data": {
+        "work_order_number": "16616",
+        "total_cost": 185.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 1.0
+      },
+      "performance": {
+        "work_order_error_category": "Exact Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.0,
+        "work_order_correct": true,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "110524.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_1|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_2|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_3|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_4|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_5|> {\n  \"work_order_number\": \"1105124\",\n  \"total_cost\": \"$300.00\"\n}.\\n<|end_of_output|>.\\n<|output_6|> {\n  \"work_order_number\": \"110512",
+      "ground_truth": {
+        "work_order_number": "110524",
+        "total_cost": 300.0
+      },
+      "extracted_data": {
+        "work_order_number": "1105124",
+        "total_cost": 300.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.8571428571428572
+      },
+      "performance": {
+        "work_order_error_category": "Partial Match",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.14285714285714285,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    },
+    {
+      "image_name": "110424.jpg",
+      "status": "completed",
+      "raw_response": "\n\nLet's extract information from this invoice step by step:\n\nStep 1: First, look for the work order number\n- It's usually a reference number\n- Often labeled as \"Work Order\" or \"WO\"\n- Note down what you find\n\nStep 2: Next, find the total cost\n- Look for the final amount\n- It might be labeled as \"Total\" or \"Amount Due\"\n- Make sure to get the complete amount\n\nStep 3: Format your findings\nPut the information in this exact JSON format:\n{\n  \"work_order_number\": \"what you found in step 1\",\n  \"total_cost\": \"what you found in step 2\"\n}\n\n\n<|response|>\n<|end_of_response|> {\n  \"work_order_number\": \"11/04/2024\",\n  \"total_cost\": \"$450.00\"\n} <|end_of_output|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <|new_line|> <",
+      "ground_truth": {
+        "work_order_number": "110424",
+        "total_cost": 450.0
+      },
+      "extracted_data": {
+        "work_order_number": "11/04/2024",
+        "total_cost": 450.0
+      },
+      "extraction_confidence": {
+        "json_extraction_successful": true,
+        "parsing_method": "json_extraction",
+        "work_order_found": true,
+        "total_cost_found": true,
+        "overall_confidence": 0.6
+      },
+      "performance": {
+        "work_order_error_category": "Date Confusion",
+        "total_cost_error_category": "Numeric Match",
+        "work_order_cer": 0.4,
+        "work_order_correct": false,
+        "total_cost_correct": true
+      }
+    }
+  ],
+  "performance_metrics": {
+    "json_extraction_rate": 1.0,
+    "work_order_extraction_rate": 0.74,
+    "total_cost_extraction_rate": 0.94,
+    "average_processing_time": 5.820800000000002
+  }
+}
