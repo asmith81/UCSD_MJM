@@ -599,7 +599,7 @@ def extract_work_order_and_total(result) -> dict:
                 # Try to parse as float
                 amount = float(clean_text)
                 
-                # Reasonable range check (between $10 and $1,252,000)
+                # Reasonable range check (between $10 and $1,252,000) - Updated for large amounts
                 if 10.0 <= amount <= 1252000.0:
                     # Format consistently
                     if '.' in clean_text:
@@ -852,10 +852,18 @@ def process_single_image_for_batch(image_path: str) -> dict:
         total_lines = sum(len(block['lines']) for page in json_result['pages'] for block in page['blocks'])
         total_words = sum(len(line['words']) for page in json_result['pages'] for block in page['blocks'] for line in block['lines'])
         
-        # Update result entry with raw OCR output only
+        # Extract structured data using the same post-processing logic
+        extracted_data = extract_work_order_and_total(doctr_result)
+        
+        # Update result entry with extracted data and raw OCR output
         result_entry.update({
             "status": "completed",
             "processing_time_seconds": round(processing_time, 2),
+            "extracted_data": {
+                "work_order_number": extracted_data["work_order_number"],
+                "total_cost": extracted_data["total_cost"]
+            },
+            "extraction_confidence": extracted_data["extraction_confidence"],
             "raw_output": {
                 "ocr_text": rendered_text,
                 "spatial_data": json_result,
@@ -1176,9 +1184,12 @@ def analyze_raw_results(results_file: str, ground_truth_file: str = None) -> dic
         if result["status"] == "completed":
             analysis["summary"]["completed"] += 1
             
-            # Extract structured data from spatial data
-            spatial_data = result["raw_output"]["spatial_data"]
-            extracted_data = extract_work_order_and_total(spatial_data)
+            # Get already extracted structured data from batch processing
+            extracted_data = {
+                "work_order_number": result.get("extracted_data", {}).get("work_order_number"),
+                "total_cost": result.get("extracted_data", {}).get("total_cost"),
+                "extraction_confidence": result.get("extraction_confidence", {})
+            }
             
             if extracted_data and not extracted_data.get("error"):
                 spatial_successful += 1
