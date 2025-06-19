@@ -305,7 +305,7 @@ def process_single_image(image_path: str) -> None:
 
 # %%
 # Test with a sample image
-test_image_path = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated" / "1017.jpg"
+test_image_path = ROOT_DIR / "Deliverables-Code" / "data" / "images" / "1_curated" / "110424.jpg"
 if test_image_path.exists():
     process_single_image(str(test_image_path))
 else:
