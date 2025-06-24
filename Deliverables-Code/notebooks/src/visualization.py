@@ -2862,3 +2862,1058 @@ def generate_efficiency_frontier_analysis(comprehensive_dataset):
     fig = plot_efficiency_frontier(efficiency_data)
     
     return fig, efficiency_data
+
+
+def create_image_performance_matrix_data(comprehensive_dataset):
+    """
+    Create a matrix showing how each individual image performs across different model-prompt combinations.
+    
+    Returns:
+        Dict with matrix data and metadata
+    """
+    print("🔍 Creating image performance matrix data...")
+    
+    # Collect all image results across all models
+    image_results = {}  # image_name -> {model_combo: error_category}
+    model_combinations = set()
+    
+    for model_name, experiments in comprehensive_dataset['model_data'].items():
+        for experiment in experiments:
+            if 'extracted_data' in experiment:
+                # Get prompt type for model combination label
+                prompt_type = 'unknown'
+                if 'metadata' in experiment and 'prompt_info' in experiment['metadata']:
+                    prompt_type = experiment['metadata']['prompt_info'].get('prompt_type', 'unknown')
+                
+                # Create model combination label
+                if 'pixtral' in model_name.lower():
+                    model_combo = f"Pixtral-{prompt_type}"
+                elif 'llama' in model_name.lower():
+                    model_combo = f"Llama-{prompt_type}"
+                elif 'doctr' in model_name.lower():
+                    model_combo = f"docTR"  # docTR doesn't use prompts
+                else:
+                    model_combo = model_name
+                
+                model_combinations.add(model_combo)
+                
+                # Process each image result
+                for result in experiment['extracted_data']:
+                    image_name = result.get('image_name', 'unknown')
+                    
+                    if image_name not in image_results:
+                        image_results[image_name] = {}
+                    
+                    # Get work order error category
+                    error_category = 'Unknown'
+                    if 'performance' in result:
+                        error_category = result['performance'].get('work_order_error_category', 'Unknown')
+                    
+                    image_results[image_name][model_combo] = error_category
+    
+    # Sort image names and model combinations for consistent ordering
+    sorted_images = sorted(image_results.keys())
+    sorted_models = sorted(model_combinations)
+    
+    print(f"   • Found {len(sorted_images)} images")
+    print(f"   • Found {len(sorted_models)} model combinations: {', '.join(sorted_models)}")
+    
+    return {
+        'image_results': image_results,
+        'sorted_images': sorted_images,
+        'sorted_models': sorted_models,
+        'total_images': len(sorted_images),
+        'total_models': len(sorted_models)
+    }
+
+
+def plot_image_performance_matrix(matrix_data):
+    """
+    Create a color-coded matrix visualization showing image performance across model combinations.
+    
+    Args:
+        matrix_data: Dictionary containing matrix data from create_image_performance_matrix_data
+        
+    Returns:
+        matplotlib figure
+    """
+    if not matrix_data or not matrix_data['image_results']:
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.text(0.5, 0.5, 'No image performance data available', 
+                ha='center', va='center', transform=ax.transAxes, fontsize=14)
+        ax.set_title("Image Performance Matrix: Work Order Error Categories", fontsize=14, fontweight='bold')
+        return fig
+    
+    image_results = matrix_data['image_results']
+    sorted_images = matrix_data['sorted_images']
+    sorted_models = matrix_data['sorted_models']
+    
+    # Create matrix for visualization
+    matrix = np.full((len(sorted_images), len(sorted_models)), -1, dtype=int)
+    
+    # Color mapping: Green for "Exact Match", Red for everything else
+    color_map = {
+        'Exact Match': 1,      # Green
+        'Partial Match': 0,    # Red
+        'Date Confusion': 0,   # Red
+        'Completely Wrong': 0, # Red
+        'Unknown': 0,          # Red
+        'No Extraction': 0     # Red
+    }
+    
+    # Fill matrix with color codes
+    for i, image_name in enumerate(sorted_images):
+        for j, model_combo in enumerate(sorted_models):
+            if model_combo in image_results[image_name]:
+                error_category = image_results[image_name][model_combo]
+                matrix[i, j] = color_map.get(error_category, 0)  # Default to red (0)
+    
+    # Create figure with appropriate size
+    fig_width = max(12, len(sorted_models) * 1.5)
+    fig_height = max(8, len(sorted_images) * 0.3)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    
+    # Create custom colormap: Red (0) and Green (1)
+    from matplotlib.colors import ListedColormap
+    colors = ['#FF6B6B', '#4ECDC4']  # Red, Green
+    cmap = ListedColormap(colors)
+    
+    # Create the heatmap
+    im = ax.imshow(matrix, cmap=cmap, aspect='auto', vmin=0, vmax=1)
+    
+    # Set ticks and labels
+    ax.set_xticks(range(len(sorted_models)))
+    ax.set_xticklabels(sorted_models, rotation=45, ha='right')
+    ax.set_yticks(range(len(sorted_images)))
+    ax.set_yticklabels([img.replace('.jpg', '') for img in sorted_images], fontsize=8)
+    
+    # Add grid
+    ax.set_xticks(np.arange(len(sorted_models)) - 0.5, minor=True)
+    ax.set_yticks(np.arange(len(sorted_images)) - 0.5, minor=True)
+    ax.grid(which="minor", color="white", linestyle='-', linewidth=1)
+    
+    # Labels and title
+    ax.set_xlabel("Model-Prompt Combinations", fontsize=12, fontweight='bold')
+    ax.set_ylabel("Image Files", fontsize=12, fontweight='bold')
+    ax.set_title("Image Performance Matrix: Work Order Error Categories\n(Green = Exact Match, Red = Other)", 
+                 fontsize=14, fontweight='bold', pad=20)
+    
+    # Create custom legend
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='#4ECDC4', label='Exact Match'),
+        Patch(facecolor='#FF6B6B', label='Other (Partial/Wrong/etc.)')
+    ]
+    ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1.02, 1))
+    
+    plt.tight_layout()
+    return fig
+
+
+def generate_image_performance_matrix_analysis(comprehensive_dataset):
+    """Generate complete image performance matrix analysis with visualization and insights."""
+    
+    print("🚀 GENERATING IMAGE PERFORMANCE MATRIX ANALYSIS")
+    print("="*60)
+    
+    # Create matrix data
+    matrix_data = create_image_performance_matrix_data(comprehensive_dataset)
+    
+    if not matrix_data or not matrix_data['image_results']:
+        print("❌ No image performance data available for analysis")
+        return None, None
+    
+    # Create visualization
+    fig = plot_image_performance_matrix(matrix_data)
+    
+    # Generate comprehensive analysis
+    print("\n" + "="*60)
+    print("📊 IMAGE PERFORMANCE MATRIX INSIGHTS")
+    print("="*60)
+    
+    image_results = matrix_data['image_results']
+    sorted_images = matrix_data['sorted_images']
+    sorted_models = matrix_data['sorted_models']
+    
+    # Calculate statistics
+    total_predictions = 0
+    exact_matches = 0
+    model_performance = {model: {'exact': 0, 'total': 0} for model in sorted_models}
+    image_performance = {image: {'exact': 0, 'total': 0} for image in sorted_images}
+    
+    for image_name in sorted_images:
+        for model_combo in sorted_models:
+            if model_combo in image_results[image_name]:
+                error_category = image_results[image_name][model_combo]
+                total_predictions += 1
+                model_performance[model_combo]['total'] += 1
+                image_performance[image_name]['total'] += 1
+                
+                if error_category == 'Exact Match':
+                    exact_matches += 1
+                    model_performance[model_combo]['exact'] += 1
+                    image_performance[image_name]['exact'] += 1
+    
+    overall_accuracy = exact_matches / total_predictions if total_predictions > 0 else 0
+    
+    print(f"\n📈 Overall Statistics:")
+    print(f"   • Total predictions: {total_predictions}")
+    print(f"   • Exact matches: {exact_matches} ({overall_accuracy:.1%})")
+    print(f"   • Images analyzed: {len(sorted_images)}")
+    print(f"   • Model combinations: {len(sorted_models)}")
+    
+    # Best and worst performing models
+    model_accuracies = []
+    for model, stats in model_performance.items():
+        if stats['total'] > 0:
+            accuracy = stats['exact'] / stats['total']
+            model_accuracies.append((model, accuracy, stats['exact'], stats['total']))
+    
+    model_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n🏆 Model Performance Ranking:")
+    for model, accuracy, exact, total in model_accuracies:
+        print(f"   • {model}: {accuracy:.1%} ({exact}/{total} exact matches)")
+    
+    # Best and worst performing images
+    image_accuracies = []
+    for image, stats in image_performance.items():
+        if stats['total'] > 0:
+            accuracy = stats['exact'] / stats['total']
+            image_accuracies.append((image, accuracy, stats['exact'], stats['total']))
+    
+    image_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n📸 Top 10 Best Performing Images:")
+    for image, accuracy, exact, total in image_accuracies[:10]:
+        print(f"   • {image.replace('.jpg', '')}: {accuracy:.1%} ({exact}/{total} models correct)")
+    
+    print(f"\n📸 Top 10 Most Challenging Images:")
+    for image, accuracy, exact, total in image_accuracies[-10:]:
+        print(f"   • {image.replace('.jpg', '')}: {accuracy:.1%} ({exact}/{total} models correct)")
+    
+    # Images with perfect or zero performance
+    perfect_images = [img for img, acc, _, _ in image_accuracies if acc == 1.0]
+    zero_images = [img for img, acc, _, _ in image_accuracies if acc == 0.0]
+    
+    if perfect_images:
+        print(f"\n✅ Images with Perfect Performance ({len(perfect_images)}):")
+        for img in perfect_images[:5]:  # Show first 5
+            print(f"   • {img.replace('.jpg', '')}")
+        if len(perfect_images) > 5:
+            print(f"   • ... and {len(perfect_images) - 5} more")
+    
+    if zero_images:
+        print(f"\n❌ Images with No Correct Predictions ({len(zero_images)}):")
+        for img in zero_images[:5]:  # Show first 5
+            print(f"   • {img.replace('.jpg', '')}")
+        if len(zero_images) > 5:
+            print(f"   • ... and {len(zero_images) - 5} more")
+    
+    return fig, matrix_data
+
+
+def create_total_cost_performance_matrix_data(comprehensive_dataset):
+    """
+    Create a matrix showing how each individual image performs across different model-prompt combinations for total cost extraction.
+    
+    Returns:
+        Dict with matrix data and metadata
+    """
+    print("🔍 Creating total cost performance matrix data...")
+    
+    # Collect all image results across all models
+    image_results = {}  # image_name -> {model_combo: error_category}
+    model_combinations = set()
+    
+    for model_name, experiments in comprehensive_dataset['model_data'].items():
+        for experiment in experiments:
+            if 'extracted_data' in experiment:
+                # Get prompt type for model combination label
+                prompt_type = 'unknown'
+                if 'metadata' in experiment and 'prompt_info' in experiment['metadata']:
+                    prompt_type = experiment['metadata']['prompt_info'].get('prompt_type', 'unknown')
+                
+                # Create model combination label
+                if 'pixtral' in model_name.lower():
+                    model_combo = f"Pixtral-{prompt_type}"
+                elif 'llama' in model_name.lower():
+                    model_combo = f"Llama-{prompt_type}"
+                elif 'doctr' in model_name.lower():
+                    model_combo = f"docTR"  # docTR doesn't use prompts
+                else:
+                    model_combo = model_name
+                
+                model_combinations.add(model_combo)
+                
+                # Process each image result
+                for result in experiment['extracted_data']:
+                    image_name = result.get('image_name', 'unknown')
+                    
+                    if image_name not in image_results:
+                        image_results[image_name] = {}
+                    
+                    # Get total cost error category
+                    error_category = 'Unknown'
+                    if 'performance' in result:
+                        error_category = result['performance'].get('total_cost_error_category', 'Unknown')
+                    
+                    image_results[image_name][model_combo] = error_category
+    
+    # Sort image names and model combinations for consistent ordering
+    sorted_images = sorted(image_results.keys())
+    sorted_models = sorted(model_combinations)
+    
+    print(f"   • Found {len(sorted_images)} images")
+    print(f"   • Found {len(sorted_models)} model combinations: {', '.join(sorted_models)}")
+    
+    return {
+        'image_results': image_results,
+        'sorted_images': sorted_images,
+        'sorted_models': sorted_models,
+        'total_images': len(sorted_images),
+        'total_models': len(sorted_models)
+    }
+
+
+def plot_total_cost_performance_matrix(matrix_data):
+    """
+    Create a color-coded matrix visualization showing total cost performance across model combinations.
+    
+    Args:
+        matrix_data: Dictionary containing matrix data from create_total_cost_performance_matrix_data
+        
+    Returns:
+        matplotlib figure
+    """
+    if not matrix_data or not matrix_data['image_results']:
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.text(0.5, 0.5, 'No total cost performance data available', 
+                ha='center', va='center', transform=ax.transAxes, fontsize=14)
+        ax.set_title("Total Cost Performance Matrix: Error Categories", fontsize=14, fontweight='bold')
+        return fig
+    
+    image_results = matrix_data['image_results']
+    sorted_images = matrix_data['sorted_images']
+    sorted_models = matrix_data['sorted_models']
+    
+    # Create matrix for visualization
+    matrix = np.full((len(sorted_images), len(sorted_models)), -1, dtype=int)
+    
+    # Color mapping: Green for "Numeric Match", Red for everything else
+    color_map = {
+        'Numeric Match': 1,        # Green
+        'No Extraction': 0,        # Red
+        'Completely Wrong': 0,     # Red
+        'Extra Digit': 0,          # Red
+        'Missing Digit': 0,        # Red
+        'Format Error': 0,         # Red
+        'Unknown': 0,              # Red
+    }
+    
+    # Fill matrix with color codes
+    for i, image_name in enumerate(sorted_images):
+        for j, model_combo in enumerate(sorted_models):
+            if model_combo in image_results[image_name]:
+                error_category = image_results[image_name][model_combo]
+                matrix[i, j] = color_map.get(error_category, 0)  # Default to red (0)
+    
+    # Create figure with appropriate size
+    fig_width = max(12, len(sorted_models) * 1.5)
+    fig_height = max(8, len(sorted_images) * 0.3)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    
+    # Create custom colormap: Red (0) and Green (1)
+    from matplotlib.colors import ListedColormap
+    colors = ['#FF6B6B', '#4ECDC4']  # Red, Green
+    cmap = ListedColormap(colors)
+    
+    # Create the heatmap
+    im = ax.imshow(matrix, cmap=cmap, aspect='auto', vmin=0, vmax=1)
+    
+    # Set ticks and labels
+    ax.set_xticks(range(len(sorted_models)))
+    ax.set_xticklabels(sorted_models, rotation=45, ha='right')
+    ax.set_yticks(range(len(sorted_images)))
+    ax.set_yticklabels([img.replace('.jpg', '') for img in sorted_images], fontsize=8)
+    
+    # Add grid
+    ax.set_xticks(np.arange(len(sorted_models)) - 0.5, minor=True)
+    ax.set_yticks(np.arange(len(sorted_images)) - 0.5, minor=True)
+    ax.grid(which="minor", color="white", linestyle='-', linewidth=1)
+    
+    # Labels and title
+    ax.set_xlabel("Model-Prompt Combinations", fontsize=12, fontweight='bold')
+    ax.set_ylabel("Image Files", fontsize=12, fontweight='bold')
+    ax.set_title("Total Cost Performance Matrix: Extraction Error Categories\n(Green = Numeric Match, Red = Other)", 
+                 fontsize=14, fontweight='bold', pad=20)
+    
+    # Create custom legend
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='#4ECDC4', label='Numeric Match'),
+        Patch(facecolor='#FF6B6B', label='Other (No Extraction/Wrong/etc.)')
+    ]
+    ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1.02, 1))
+    
+    plt.tight_layout()
+    return fig
+
+
+def generate_total_cost_performance_matrix_analysis(comprehensive_dataset):
+    """Generate complete total cost performance matrix analysis with visualization and insights."""
+    
+    print("🚀 GENERATING TOTAL COST PERFORMANCE MATRIX ANALYSIS")
+    print("="*60)
+    
+    # Create matrix data
+    matrix_data = create_total_cost_performance_matrix_data(comprehensive_dataset)
+    
+    if not matrix_data or not matrix_data['image_results']:
+        print("❌ No total cost performance data available for analysis")
+        return None, None
+    
+    # Create visualization
+    fig = plot_total_cost_performance_matrix(matrix_data)
+    
+    # Generate comprehensive analysis
+    print("\n" + "="*60)
+    print("📊 TOTAL COST PERFORMANCE MATRIX INSIGHTS")
+    print("="*60)
+    
+    image_results = matrix_data['image_results']
+    sorted_images = matrix_data['sorted_images']
+    sorted_models = matrix_data['sorted_models']
+    
+    # Calculate statistics
+    total_predictions = 0
+    numeric_matches = 0
+    model_performance = {model: {'numeric': 0, 'total': 0} for model in sorted_models}
+    image_performance = {image: {'numeric': 0, 'total': 0} for image in sorted_images}
+    
+    # Count error categories
+    error_category_counts = {}
+    
+    for image_name in sorted_images:
+        for model_combo in sorted_models:
+            if model_combo in image_results[image_name]:
+                error_category = image_results[image_name][model_combo]
+                total_predictions += 1
+                model_performance[model_combo]['total'] += 1
+                image_performance[image_name]['total'] += 1
+                
+                # Count error categories
+                if error_category not in error_category_counts:
+                    error_category_counts[error_category] = 0
+                error_category_counts[error_category] += 1
+                
+                if error_category == 'Numeric Match':
+                    numeric_matches += 1
+                    model_performance[model_combo]['numeric'] += 1
+                    image_performance[image_name]['numeric'] += 1
+    
+    overall_accuracy = numeric_matches / total_predictions if total_predictions > 0 else 0
+    
+    print(f"\n📈 Overall Statistics:")
+    print(f"   • Total predictions: {total_predictions}")
+    print(f"   • Numeric matches: {numeric_matches} ({overall_accuracy:.1%})")
+    print(f"   • Images analyzed: {len(sorted_images)}")
+    print(f"   • Model combinations: {len(sorted_models)}")
+    
+    # Error category breakdown
+    print(f"\n🔍 Error Category Breakdown:")
+    sorted_errors = sorted(error_category_counts.items(), key=lambda x: x[1], reverse=True)
+    for category, count in sorted_errors:
+        percentage = count / total_predictions if total_predictions > 0 else 0
+        print(f"   • {category}: {count} ({percentage:.1%})")
+    
+    # Best and worst performing models
+    model_accuracies = []
+    for model, stats in model_performance.items():
+        if stats['total'] > 0:
+            accuracy = stats['numeric'] / stats['total']
+            model_accuracies.append((model, accuracy, stats['numeric'], stats['total']))
+    
+    model_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n🏆 Model Performance Ranking:")
+    for model, accuracy, numeric, total in model_accuracies:
+        print(f"   • {model}: {accuracy:.1%} ({numeric}/{total} numeric matches)")
+    
+    # Best and worst performing images
+    image_accuracies = []
+    for image, stats in image_performance.items():
+        if stats['total'] > 0:
+            accuracy = stats['numeric'] / stats['total']
+            image_accuracies.append((image, accuracy, stats['numeric'], stats['total']))
+    
+    image_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n📸 Top 10 Best Performing Images (Total Cost):")
+    for image, accuracy, numeric, total in image_accuracies[:10]:
+        print(f"   • {image.replace('.jpg', '')}: {accuracy:.1%} ({numeric}/{total} models correct)")
+    
+    print(f"\n📸 Top 10 Most Challenging Images (Total Cost):")
+    for image, accuracy, numeric, total in image_accuracies[-10:]:
+        print(f"   • {image.replace('.jpg', '')}: {accuracy:.1%} ({numeric}/{total} models correct)")
+    
+    # Images with perfect or zero performance
+    perfect_images = [img for img, acc, _, _ in image_accuracies if acc == 1.0]
+    zero_images = [img for img, acc, _, _ in image_accuracies if acc == 0.0]
+    
+    if perfect_images:
+        print(f"\n✅ Images with Perfect Total Cost Extraction ({len(perfect_images)}):")
+        for img in perfect_images[:5]:  # Show first 5
+            print(f"   • {img.replace('.jpg', '')}")
+        if len(perfect_images) > 5:
+            print(f"   • ... and {len(perfect_images) - 5} more")
+    
+    if zero_images:
+        print(f"\n❌ Images with No Correct Total Cost Extractions ({len(zero_images)}):")
+        for img in zero_images[:5]:  # Show first 5
+            print(f"   • {img.replace('.jpg', '')}")
+        if len(zero_images) > 5:
+            print(f"   • ... and {len(zero_images) - 5} more")
+    
+    return fig, matrix_data
+
+
+def create_work_order_error_category_matrix_data(comprehensive_dataset):
+    """
+    Create a matrix showing count of work order error categories by model-prompt combinations.
+    
+    Returns:
+        Dict with matrix data and metadata
+    """
+    print("🔍 Creating work order error category count matrix data...")
+    
+    # Collect all results across all models
+    category_counts = {}  # model_combo -> {error_category: count}
+    model_combinations = set()
+    error_categories = set()
+    
+    for model_name, experiments in comprehensive_dataset['model_data'].items():
+        for experiment in experiments:
+            if 'extracted_data' in experiment:
+                # Get prompt type for model combination label
+                prompt_type = 'unknown'
+                if 'metadata' in experiment and 'prompt_info' in experiment['metadata']:
+                    prompt_type = experiment['metadata']['prompt_info'].get('prompt_type', 'unknown')
+                
+                # Create model combination label
+                if 'pixtral' in model_name.lower():
+                    model_combo = f"Pixtral-{prompt_type}"
+                elif 'llama' in model_name.lower():
+                    model_combo = f"Llama-{prompt_type}"
+                elif 'doctr' in model_name.lower():
+                    model_combo = f"docTR"  # docTR doesn't use prompts
+                else:
+                    model_combo = model_name
+                
+                model_combinations.add(model_combo)
+                
+                if model_combo not in category_counts:
+                    category_counts[model_combo] = {}
+                
+                # Process each image result
+                for result in experiment['extracted_data']:
+                    # Get work order error category
+                    error_category = 'Unknown'
+                    if 'performance' in result:
+                        error_category = result['performance'].get('work_order_error_category', 'Unknown')
+                    
+                    error_categories.add(error_category)
+                    
+                    if error_category not in category_counts[model_combo]:
+                        category_counts[model_combo][error_category] = 0
+                    category_counts[model_combo][error_category] += 1
+    
+    # Sort for consistent ordering
+    sorted_models = sorted(model_combinations)
+    sorted_categories = sorted(error_categories)
+    
+    print(f"   • Found {len(sorted_models)} model combinations")
+    print(f"   • Found {len(sorted_categories)} error categories: {', '.join(sorted_categories)}")
+    
+    return {
+        'category_counts': category_counts,
+        'sorted_models': sorted_models,
+        'sorted_categories': sorted_categories,
+        'total_models': len(sorted_models),
+        'total_categories': len(sorted_categories)
+    }
+
+
+def plot_work_order_error_category_matrix(matrix_data):
+    """
+    Create a heatmap showing count of work order error categories by model combinations.
+    
+    Args:
+        matrix_data: Dictionary containing matrix data from create_work_order_error_category_matrix_data
+        
+    Returns:
+        matplotlib figure
+    """
+    if not matrix_data or not matrix_data['category_counts']:
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.text(0.5, 0.5, 'No work order error category data available', 
+                ha='center', va='center', transform=ax.transAxes, fontsize=14)
+        ax.set_title("Work Order Error Categories by Model-Prompt Combination", fontsize=14, fontweight='bold')
+        return fig
+    
+    category_counts = matrix_data['category_counts']
+    sorted_models = matrix_data['sorted_models']
+    sorted_categories = matrix_data['sorted_categories']
+    
+    # Create matrix for visualization
+    matrix = np.zeros((len(sorted_categories), len(sorted_models)), dtype=int)
+    
+    # Fill matrix with counts
+    for j, model_combo in enumerate(sorted_models):
+        for i, error_category in enumerate(sorted_categories):
+            if model_combo in category_counts and error_category in category_counts[model_combo]:
+                matrix[i, j] = category_counts[model_combo][error_category]
+    
+    # Create figure with appropriate size
+    fig_width = max(12, len(sorted_models) * 1.2)
+    fig_height = max(8, len(sorted_categories) * 1.5)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    
+    # Create heatmap with counts
+    im = ax.imshow(matrix, cmap='YlOrRd', aspect='auto')
+    
+    # Set ticks and labels
+    ax.set_xticks(range(len(sorted_models)))
+    ax.set_xticklabels(sorted_models, rotation=45, ha='right')
+    ax.set_yticks(range(len(sorted_categories)))
+    ax.set_yticklabels(sorted_categories)
+    
+    # Add text annotations with counts
+    for i in range(len(sorted_categories)):
+        for j in range(len(sorted_models)):
+            count = matrix[i, j]
+            if count > 0:
+                # Use white text on dark cells, black on light cells
+                text_color = 'white' if count > matrix.max() * 0.5 else 'black'
+                ax.text(j, i, str(count), ha='center', va='center', 
+                       color=text_color, fontweight='bold', fontsize=10)
+    
+    # Add colorbar
+    cbar = plt.colorbar(im, ax=ax)
+    cbar.set_label('Count of Occurrences', rotation=270, labelpad=20, fontweight='bold')
+    
+    # Labels and title
+    ax.set_xlabel("Model-Prompt Combinations", fontsize=12, fontweight='bold')
+    ax.set_ylabel("Work Order Error Categories", fontsize=12, fontweight='bold')
+    ax.set_title("Work Order Error Category Counts by Model-Prompt Combination", 
+                 fontsize=14, fontweight='bold', pad=20)
+    
+    # Add grid
+    ax.set_xticks(np.arange(len(sorted_models)) - 0.5, minor=True)
+    ax.set_yticks(np.arange(len(sorted_categories)) - 0.5, minor=True)
+    ax.grid(which="minor", color="white", linestyle='-', linewidth=1)
+    
+    plt.tight_layout()
+    return fig
+
+
+def generate_work_order_error_category_matrix_analysis(comprehensive_dataset):
+    """Generate complete work order error category matrix analysis with visualization and insights."""
+    
+    print("🚀 GENERATING WORK ORDER ERROR CATEGORY MATRIX ANALYSIS")
+    print("="*60)
+    
+    # Create matrix data
+    matrix_data = create_work_order_error_category_matrix_data(comprehensive_dataset)
+    
+    if not matrix_data or not matrix_data['category_counts']:
+        print("❌ No work order error category data available for analysis")
+        return None, None
+    
+    # Create visualization
+    fig = plot_work_order_error_category_matrix(matrix_data)
+    
+    # Generate comprehensive analysis
+    print("\n" + "="*60)
+    print("📊 WORK ORDER ERROR CATEGORY MATRIX INSIGHTS")
+    print("="*60)
+    
+    category_counts = matrix_data['category_counts']
+    sorted_models = matrix_data['sorted_models']
+    sorted_categories = matrix_data['sorted_categories']
+    
+    # Calculate overall statistics
+    total_predictions = 0
+    category_totals = {cat: 0 for cat in sorted_categories}
+    model_totals = {model: 0 for model in sorted_models}
+    
+    for model_combo in sorted_models:
+        if model_combo in category_counts:
+            for error_category in sorted_categories:
+                count = category_counts[model_combo].get(error_category, 0)
+                total_predictions += count
+                category_totals[error_category] += count
+                model_totals[model_combo] += count
+    
+    print(f"\n📈 Overall Statistics:")
+    print(f"   • Total predictions: {total_predictions}")
+    print(f"   • Model combinations: {len(sorted_models)}")
+    print(f"   • Error categories: {len(sorted_categories)}")
+    
+    # Error category distribution
+    print(f"\n🔍 Error Category Distribution:")
+    sorted_category_totals = sorted(category_totals.items(), key=lambda x: x[1], reverse=True)
+    for category, count in sorted_category_totals:
+        percentage = count / total_predictions if total_predictions > 0 else 0
+        print(f"   • {category}: {count} ({percentage:.1%})")
+    
+    # Model performance summary
+    print(f"\n🏆 Model Performance Summary:")
+    for model in sorted_models:
+        model_total = model_totals[model]
+        if model_total > 0:
+            exact_matches = category_counts[model].get('Exact Match', 0)
+            accuracy = exact_matches / model_total if model_total > 0 else 0
+            print(f"   • {model}: {exact_matches}/{model_total} exact matches ({accuracy:.1%})")
+    
+    # Best and worst performing models
+    model_accuracies = []
+    for model in sorted_models:
+        model_total = model_totals[model]
+        if model_total > 0:
+            exact_matches = category_counts[model].get('Exact Match', 0)
+            accuracy = exact_matches / model_total
+            model_accuracies.append((model, accuracy, exact_matches, model_total))
+    
+    model_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n🥇 Top Performing Models:")
+    for model, accuracy, exact, total in model_accuracies[:3]:
+        print(f"   • {model}: {accuracy:.1%} ({exact}/{total})")
+    
+    print(f"\n🥉 Lowest Performing Models:")
+    for model, accuracy, exact, total in model_accuracies[-3:]:
+        print(f"   • {model}: {accuracy:.1%} ({exact}/{total})")
+    
+    # Error pattern analysis
+    print(f"\n🔬 Error Pattern Analysis:")
+    
+    # Find models with most "Completely Wrong" errors
+    completely_wrong = []
+    for model in sorted_models:
+        count = category_counts[model].get('Completely Wrong', 0)
+        if count > 0:
+            completely_wrong.append((model, count))
+    completely_wrong.sort(key=lambda x: x[1], reverse=True)
+    
+    if completely_wrong:
+        print(f"   • Models with most 'Completely Wrong' errors:")
+        for model, count in completely_wrong[:3]:
+            print(f"     - {model}: {count} cases")
+    
+    # Find models with most "Partial Match" errors
+    partial_match = []
+    for model in sorted_models:
+        count = category_counts[model].get('Partial Match', 0)
+        if count > 0:
+            partial_match.append((model, count))
+    partial_match.sort(key=lambda x: x[1], reverse=True)
+    
+    if partial_match:
+        print(f"   • Models with most 'Partial Match' errors:")
+        for model, count in partial_match[:3]:
+            print(f"     - {model}: {count} cases")
+    
+    # Create detailed breakdown table
+    print(f"\n📋 Detailed Count Matrix:")
+    print(f"{'Model':<20}", end="")
+    for cat in sorted_categories:
+        print(f"{cat:<15}", end="")
+    print("Total")
+    print("-" * (20 + len(sorted_categories) * 15 + 10))
+    
+    for model in sorted_models:
+        print(f"{model:<20}", end="")
+        for cat in sorted_categories:
+            count = category_counts[model].get(cat, 0)
+            print(f"{count:<15}", end="")
+        print(f"{model_totals[model]}")
+    
+    return fig, matrix_data
+
+
+def create_total_cost_error_category_matrix_data(comprehensive_dataset):
+    """
+    Create a matrix showing count of total cost error categories by model-prompt combinations.
+    
+    Returns:
+        Dict with matrix data and metadata
+    """
+    print("🔍 Creating total cost error category count matrix data...")
+    
+    # Collect all results across all models
+    category_counts = {}  # model_combo -> {error_category: count}
+    model_combinations = set()
+    error_categories = set()
+    
+    for model_name, experiments in comprehensive_dataset['model_data'].items():
+        for experiment in experiments:
+            if 'extracted_data' in experiment:
+                # Get prompt type for model combination label
+                prompt_type = 'unknown'
+                if 'metadata' in experiment and 'prompt_info' in experiment['metadata']:
+                    prompt_type = experiment['metadata']['prompt_info'].get('prompt_type', 'unknown')
+                
+                # Create model combination label
+                if 'pixtral' in model_name.lower():
+                    model_combo = f"Pixtral-{prompt_type}"
+                elif 'llama' in model_name.lower():
+                    model_combo = f"Llama-{prompt_type}"
+                elif 'doctr' in model_name.lower():
+                    model_combo = f"docTR"  # docTR doesn't use prompts
+                else:
+                    model_combo = model_name
+                
+                model_combinations.add(model_combo)
+                
+                if model_combo not in category_counts:
+                    category_counts[model_combo] = {}
+                
+                # Process each image result
+                for result in experiment['extracted_data']:
+                    # Get total cost error category
+                    error_category = 'Unknown'
+                    if 'performance' in result:
+                        error_category = result['performance'].get('total_cost_error_category', 'Unknown')
+                    
+                    error_categories.add(error_category)
+                    
+                    if error_category not in category_counts[model_combo]:
+                        category_counts[model_combo][error_category] = 0
+                    category_counts[model_combo][error_category] += 1
+    
+    # Sort for consistent ordering
+    sorted_models = sorted(model_combinations)
+    sorted_categories = sorted(error_categories)
+    
+    print(f"   • Found {len(sorted_models)} model combinations")
+    print(f"   • Found {len(sorted_categories)} error categories: {', '.join(sorted_categories)}")
+    
+    return {
+        'category_counts': category_counts,
+        'sorted_models': sorted_models,
+        'sorted_categories': sorted_categories,
+        'total_models': len(sorted_models),
+        'total_categories': len(sorted_categories)
+    }
+
+
+def plot_total_cost_error_category_matrix(matrix_data):
+    """
+    Create a heatmap showing count of total cost error categories by model combinations.
+    
+    Args:
+        matrix_data: Dictionary containing matrix data from create_total_cost_error_category_matrix_data
+        
+    Returns:
+        matplotlib figure
+    """
+    if not matrix_data or not matrix_data['category_counts']:
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.text(0.5, 0.5, 'No total cost error category data available', 
+                ha='center', va='center', transform=ax.transAxes, fontsize=14)
+        ax.set_title("Total Cost Error Categories by Model-Prompt Combination", fontsize=14, fontweight='bold')
+        return fig
+    
+    category_counts = matrix_data['category_counts']
+    sorted_models = matrix_data['sorted_models']
+    sorted_categories = matrix_data['sorted_categories']
+    
+    # Create matrix for visualization
+    matrix = np.zeros((len(sorted_categories), len(sorted_models)), dtype=int)
+    
+    # Fill matrix with counts
+    for j, model_combo in enumerate(sorted_models):
+        for i, error_category in enumerate(sorted_categories):
+            if model_combo in category_counts and error_category in category_counts[model_combo]:
+                matrix[i, j] = category_counts[model_combo][error_category]
+    
+    # Create figure with appropriate size
+    fig_width = max(12, len(sorted_models) * 1.2)
+    fig_height = max(8, len(sorted_categories) * 1.5)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    
+    # Create heatmap with counts - using a different colormap for total cost
+    im = ax.imshow(matrix, cmap='Blues', aspect='auto')
+    
+    # Set ticks and labels
+    ax.set_xticks(range(len(sorted_models)))
+    ax.set_xticklabels(sorted_models, rotation=45, ha='right')
+    ax.set_yticks(range(len(sorted_categories)))
+    ax.set_yticklabels(sorted_categories)
+    
+    # Add text annotations with counts
+    for i in range(len(sorted_categories)):
+        for j in range(len(sorted_models)):
+            count = matrix[i, j]
+            if count > 0:
+                # Use white text on dark cells, black on light cells
+                text_color = 'white' if count > matrix.max() * 0.5 else 'black'
+                ax.text(j, i, str(count), ha='center', va='center', 
+                       color=text_color, fontweight='bold', fontsize=10)
+    
+    # Add colorbar
+    cbar = plt.colorbar(im, ax=ax)
+    cbar.set_label('Count of Occurrences', rotation=270, labelpad=20, fontweight='bold')
+    
+    # Labels and title
+    ax.set_xlabel("Model-Prompt Combinations", fontsize=12, fontweight='bold')
+    ax.set_ylabel("Total Cost Error Categories", fontsize=12, fontweight='bold')
+    ax.set_title("Total Cost Error Category Counts by Model-Prompt Combination", 
+                 fontsize=14, fontweight='bold', pad=20)
+    
+    # Add grid
+    ax.set_xticks(np.arange(len(sorted_models)) - 0.5, minor=True)
+    ax.set_yticks(np.arange(len(sorted_categories)) - 0.5, minor=True)
+    ax.grid(which="minor", color="white", linestyle='-', linewidth=1)
+    
+    plt.tight_layout()
+    return fig
+
+
+def generate_total_cost_error_category_matrix_analysis(comprehensive_dataset):
+    """Generate complete total cost error category matrix analysis with visualization and insights."""
+    
+    print("🚀 GENERATING TOTAL COST ERROR CATEGORY MATRIX ANALYSIS")
+    print("="*60)
+    
+    # Create matrix data
+    matrix_data = create_total_cost_error_category_matrix_data(comprehensive_dataset)
+    
+    if not matrix_data or not matrix_data['category_counts']:
+        print("❌ No total cost error category data available for analysis")
+        return None, None
+    
+    # Create visualization
+    fig = plot_total_cost_error_category_matrix(matrix_data)
+    
+    # Generate comprehensive analysis
+    print("\n" + "="*60)
+    print("📊 TOTAL COST ERROR CATEGORY MATRIX INSIGHTS")
+    print("="*60)
+    
+    category_counts = matrix_data['category_counts']
+    sorted_models = matrix_data['sorted_models']
+    sorted_categories = matrix_data['sorted_categories']
+    
+    # Calculate overall statistics
+    total_predictions = 0
+    category_totals = {cat: 0 for cat in sorted_categories}
+    model_totals = {model: 0 for model in sorted_models}
+    
+    for model_combo in sorted_models:
+        if model_combo in category_counts:
+            for error_category in sorted_categories:
+                count = category_counts[model_combo].get(error_category, 0)
+                total_predictions += count
+                category_totals[error_category] += count
+                model_totals[model_combo] += count
+    
+    print(f"\n📈 Overall Statistics:")
+    print(f"   • Total predictions: {total_predictions}")
+    print(f"   • Model combinations: {len(sorted_models)}")
+    print(f"   • Error categories: {len(sorted_categories)}")
+    
+    # Error category distribution
+    print(f"\n🔍 Error Category Distribution:")
+    sorted_category_totals = sorted(category_totals.items(), key=lambda x: x[1], reverse=True)
+    for category, count in sorted_category_totals:
+        percentage = count / total_predictions if total_predictions > 0 else 0
+        print(f"   • {category}: {count} ({percentage:.1%})")
+    
+    # Model performance summary
+    print(f"\n🏆 Model Performance Summary:")
+    for model in sorted_models:
+        model_total = model_totals[model]
+        if model_total > 0:
+            numeric_matches = category_counts[model].get('Numeric Match', 0)
+            accuracy = numeric_matches / model_total if model_total > 0 else 0
+            print(f"   • {model}: {numeric_matches}/{model_total} numeric matches ({accuracy:.1%})")
+    
+    # Best and worst performing models
+    model_accuracies = []
+    for model in sorted_models:
+        model_total = model_totals[model]
+        if model_total > 0:
+            numeric_matches = category_counts[model].get('Numeric Match', 0)
+            accuracy = numeric_matches / model_total
+            model_accuracies.append((model, accuracy, numeric_matches, model_total))
+    
+    model_accuracies.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"\n🥇 Top Performing Models:")
+    for model, accuracy, numeric, total in model_accuracies[:3]:
+        print(f"   • {model}: {accuracy:.1%} ({numeric}/{total})")
+    
+    print(f"\n🥉 Lowest Performing Models:")
+    for model, accuracy, numeric, total in model_accuracies[-3:]:
+        print(f"   • {model}: {accuracy:.1%} ({numeric}/{total})")
+    
+    # Error pattern analysis
+    print(f"\n🔬 Error Pattern Analysis:")
+    
+    # Find models with most "No Extraction" errors
+    no_extraction = []
+    for model in sorted_models:
+        count = category_counts[model].get('No Extraction', 0)
+        if count > 0:
+            no_extraction.append((model, count))
+    no_extraction.sort(key=lambda x: x[1], reverse=True)
+    
+    if no_extraction:
+        print(f"   • Models with most 'No Extraction' errors:")
+        for model, count in no_extraction[:3]:
+            print(f"     - {model}: {count} cases")
+    
+    # Find models with most "Completely Wrong" errors
+    completely_wrong = []
+    for model in sorted_models:
+        count = category_counts[model].get('Completely Wrong', 0)
+        if count > 0:
+            completely_wrong.append((model, count))
+    completely_wrong.sort(key=lambda x: x[1], reverse=True)
+    
+    if completely_wrong:
+        print(f"   • Models with most 'Completely Wrong' errors:")
+        for model, count in completely_wrong[:3]:
+            print(f"     - {model}: {count} cases")
+    
+    # Find models with most "Extra Digit" errors
+    extra_digit = []
+    for model in sorted_models:
+        count = category_counts[model].get('Extra Digit', 0)
+        if count > 0:
+            extra_digit.append((model, count))
+    extra_digit.sort(key=lambda x: x[1], reverse=True)
+    
+    if extra_digit:
+        print(f"   • Models with most 'Extra Digit' errors:")
+        for model, count in extra_digit[:3]:
+            print(f"     - {model}: {count} cases")
+    
+    # Create detailed breakdown table
+    print(f"\n📋 Detailed Count Matrix:")
+    print(f"{'Model':<20}", end="")
+    for cat in sorted_categories:
+        print(f"{cat:<15}", end="")
+    print("Total")
+    print("-" * (20 + len(sorted_categories) * 15 + 10))
+    
+    for model in sorted_models:
+        print(f"{model:<20}", end="")
+        for cat in sorted_categories:
+            count = category_counts[model].get(cat, 0)
+            print(f"{count:<15}", end="")
+        print(f"{model_totals[model]}")
+    
+    return fig, matrix_data
