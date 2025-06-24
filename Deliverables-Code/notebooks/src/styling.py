@@ -13,15 +13,15 @@ from typing import Dict, Any
 
 # Custom color palette for consistent visualization
 ANALYSIS_COLORS = {
-    'LMM': '#2E86AB',        # Blue for LMM models
-    'OCR': '#A23B72',        # Purple for OCR models
-    'Pixtral': '#2E86AB',    # Blue for Pixtral
-    'Llama': '#00A6D6',      # Light blue for Llama
-    'DocTR': '#A23B72',      # Purple for DocTR
-    'accuracy': '#28A745',    # Green for accuracy metrics
-    'cer': '#DC3545',        # Red for error metrics
-    'work_order': '#FD7E14',  # Orange for work order
-    'total_cost': '#6F42C1',  # Purple for total cost
+    'LMM': '#4682B4',        # Blue for LMM models (when Pixtral+Llama combined)
+    'OCR': '#D87093',        # Pink/magenta for OCR models  
+    'Pixtral': '#20B2AA',    # Teal for Pixtral (distinct from blue)
+    'Llama': '#4682B4',      # Steel blue for Llama (matches LMM when combined)
+    'DocTR': '#D87093',      # Pink/magenta for DocTR (consistent with OCR)
+    'accuracy': '#7C9885',    # Muted sage green for accuracy metrics
+    'cer': '#B85C5C',        # Muted dusty red for error metrics
+    'work_order': '#D4A574',  # Muted warm orange for work order
+    'total_cost': '#8B7CAE',  # Muted lavender purple for total cost
     'baseline': '#6C757D',    # Gray for baseline/reference
     'improvement': '#20C997'   # Teal for improvements
 }
@@ -35,7 +35,7 @@ INDUSTRY_STANDARDS = {
     'reference_line_alpha': 0.8
 }
 
-# Matplotlib style configuration
+# Matplotlib style configuration - white background, no gridlines
 MATPLOTLIB_CONFIG = {
     'figure.figsize': (12, 8),
     'figure.dpi': 100,
@@ -46,17 +46,15 @@ MATPLOTLIB_CONFIG = {
     'ytick.labelsize': 10,
     'legend.fontsize': 10,
     'legend.title_fontsize': 11,
-    'axes.grid': True,
-    'grid.alpha': 0.3,
-    'lines.linewidth': 2,
+    'axes.grid': False,           # No gridlines by default
     'axes.spines.top': False,
     'axes.spines.right': False,
-    'figure.facecolor': 'white',
-    'axes.facecolor': 'white'
+    'figure.facecolor': 'white',  # White background
+    'axes.facecolor': 'white'     # White background
 }
 
 # Seaborn style settings
-SEABORN_STYLE = "whitegrid"
+SEABORN_STYLE = "white"           # White background style
 SEABORN_PALETTE = "husl"
 
 # Pandas display configuration
@@ -66,7 +64,7 @@ PANDAS_CONFIG = {
     'display.max_colwidth': 50
 }
 
-# Chart-specific styling
+# Chart-specific styling - updated for white background, no gridlines
 CHART_STYLES = {
     'bar_chart': {
         'alpha': 0.8,
@@ -91,8 +89,8 @@ CHART_STYLES = {
         'fontweight': 'bold'
     },
     'grid': {
-        'alpha': 0.3,
-        'axis': 'y'
+        'alpha': 0,              # No grid by default
+        'axis': 'none'           # No grid axis
     }
 }
 
@@ -131,9 +129,19 @@ def get_model_color(model_name: str) -> str:
     """
     model_key = model_name.lower()
     
-    # Direct matches
-    if model_key in ['lmm', 'pixtral', 'llama', 'ocr', 'doctr']:
-        return ANALYSIS_COLORS.get(model_key.title(), ANALYSIS_COLORS['baseline'])
+    # Direct matches with proper key mapping
+    direct_mapping = {
+        'lmm': 'LMM',
+        'pixtral': 'Pixtral', 
+        'llama': 'Llama',
+        'ocr': 'OCR',
+        'doctr': 'DocTR'
+    }
+    
+    if model_key in direct_mapping:
+        color_key = direct_mapping[model_key]
+        color = ANALYSIS_COLORS.get(color_key, ANALYSIS_COLORS['baseline'])
+        return color
     
     # Partial matches
     if 'pixtral' in model_key:
@@ -187,8 +195,9 @@ def apply_chart_styling(ax: plt.Axes, chart_type: str = 'bar_chart') -> plt.Axes
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     
-    # Configure grid
-    ax.grid(True, alpha=CHART_STYLES['grid']['alpha'], axis=CHART_STYLES['grid']['axis'])
+    # White background, no gridlines (benchmark lines added separately)
+    ax.set_facecolor('white')
+    ax.grid(False)  # Explicitly disable all gridlines
     ax.set_axisbelow(True)
     
     return ax

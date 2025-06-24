@@ -20,6 +20,7 @@ from .styling import (
     ANALYSIS_COLORS, 
     INDUSTRY_STANDARDS, 
     CHART_STYLES,
+    get_model_color,
     get_model_colors,
     apply_chart_styling,
     add_industry_standard_line
@@ -215,7 +216,10 @@ def create_primary_performance_comparison_chart(analysis_dir: Path) -> Tuple[plt
                    xy=(bar.get_x() + bar.get_width() / 2, height),
                    **CHART_STYLES['annotation'])
     
-    # Add industry standard reference line
+    # Apply standard chart styling first (white background, no grid)
+    apply_chart_styling(ax)
+    
+    # Add industry standard reference line (intentional benchmark line)
     add_industry_standard_line(ax)
     
     # Customize the chart
@@ -223,9 +227,6 @@ def create_primary_performance_comparison_chart(analysis_dir: Path) -> Tuple[plt
                 **CHART_STYLES['title'])
     ax.set_ylabel('Overall Accuracy (%)', **CHART_STYLES['axis_label'])
     ax.set_ylim(0, 105)
-    
-    # Apply standard chart styling
-    apply_chart_styling(ax)
     
     # Tight layout
     plt.tight_layout()
@@ -276,7 +277,10 @@ def create_individual_model_accuracy_chart(analysis_dir: Path, ax: plt.Axes) -> 
                    xy=(bar.get_x() + bar.get_width() / 2, height),
                    **CHART_STYLES['annotation'])
     
-    # Add industry standard reference line
+    # Apply standard chart styling first (white background, no grid)
+    apply_chart_styling(ax)
+    
+    # Add industry standard reference line (intentional benchmark line)
     add_industry_standard_line(ax)
     
     # Customize the chart
@@ -284,9 +288,6 @@ def create_individual_model_accuracy_chart(analysis_dir: Path, ax: plt.Axes) -> 
                 **CHART_STYLES['title'])
     ax.set_ylabel('Overall Accuracy (%)', **CHART_STYLES['axis_label'])
     ax.set_ylim(0, 105)
-    
-    # Apply standard chart styling
-    apply_chart_styling(ax)
     
     # Rotate x-axis labels for better fit
     ax.tick_params(axis='x', rotation=15)
@@ -333,14 +334,14 @@ def create_lmm_vs_ocr_cer_chart(analysis_dir: Path, ax: plt.Axes) -> Dict[str, D
                    xy=(bar.get_x() + bar.get_width() / 2, height),
                    **CHART_STYLES['annotation'])
     
+    # Apply standard chart styling first (white background, no grid)
+    apply_chart_styling(ax)
+    
     # Customize the chart
     ax.set_title('Character Error Rate Comparison:\nLMM vs. OCR (Lower is Better)', 
                 **CHART_STYLES['title'])
     ax.set_ylabel('Character Error Rate (%)', **CHART_STYLES['axis_label'])
     ax.set_ylim(0, max(cer_values) * 1.2)
-    
-    # Apply standard chart styling
-    apply_chart_styling(ax)
     
     # Return CER data
     model_cer = {
@@ -388,14 +389,14 @@ def create_individual_model_cer_chart(analysis_dir: Path, ax: plt.Axes) -> Dict[
                    xy=(bar.get_x() + bar.get_width() / 2, height),
                    **CHART_STYLES['annotation'])
     
+    # Apply standard chart styling first (white background, no grid)
+    apply_chart_styling(ax)
+    
     # Customize the chart
     ax.set_title('Individual Model CER:\nPixtral vs. Llama vs. OCR (Lower is Better)', 
                 **CHART_STYLES['title'])
     ax.set_ylabel('Character Error Rate (%)', **CHART_STYLES['axis_label'])
     ax.set_ylim(0, max(cer_values) * 1.2)
-    
-    # Apply standard chart styling
-    apply_chart_styling(ax)
     
     # Rotate x-axis labels for better fit
     ax.tick_params(axis='x', rotation=15)
@@ -439,11 +440,11 @@ def create_performance_comparison_grid(analysis_dir: Path) -> Tuple[plt.Figure, 
                     xy=(bar.get_x() + bar.get_width() / 2, height),
                     **CHART_STYLES['annotation'])
     
+    apply_chart_styling(ax1)
     add_industry_standard_line(ax1)
     ax1.set_title('LMM vs. OCR\n(Overall Accuracy)', **CHART_STYLES['title'])
     ax1.set_ylabel('Overall Accuracy (%)', **CHART_STYLES['axis_label'])
     ax1.set_ylim(0, 105)
-    apply_chart_styling(ax1)
     
     # Upper right: Individual models accuracy
     individual_accuracy = create_individual_model_accuracy_chart(analysis_dir, ax2)
@@ -841,9 +842,8 @@ def create_field_performance_sidebyside(comprehensive_dataset):
         field_names = list(sorted_accuracy.keys())
         accuracy_values = [sorted_accuracy[f] * 100 for f in field_names]  # Convert to percentage
         
-        # Use different colors for each field
-        colors = ['#2E86AB', '#A23B72']  # Blue for work order, Purple for total cost
-        field_colors = [colors[0] if 'work' in field else colors[1] for field in field_names]
+        # Use consistent colors for each field
+        field_colors = [ANALYSIS_COLORS['work_order'] if 'work' in field else ANALYSIS_COLORS['total_cost'] for field in field_names]
         
         # Create bar chart
         bars = ax.bar(range(len(field_names)), accuracy_values, 
@@ -861,7 +861,7 @@ def create_field_performance_sidebyside(comprehensive_dataset):
                     fontsize=16, fontweight='bold', pad=20)
         ax.set_xticks(range(len(field_names)))
         ax.set_xticklabels([name.replace('_', ' ').title() for name in field_names], fontsize=12)
-        ax.grid(axis='y', alpha=0.3)
+        # No grid - white background (benchmark lines added separately)
         ax.set_ylim(0, max(accuracy_values) * 1.15)
         
         # Add industry standard line
@@ -1617,10 +1617,8 @@ def plot_model_performance_ranges(model_stats):
     mins_sorted = [mins[i] for i in sorted_indices]
     maxs_sorted = [maxs[i] for i in sorted_indices]
     
-    # Color mapping
-    colors = [ANALYSIS_COLORS['accuracy'] if r < 0.1 else 
-              ANALYSIS_COLORS['work_order'] if r < 0.15 else 
-              ANALYSIS_COLORS['cer'] for r in ranges_sorted]
+    # Color mapping by model type (use model-specific colors)
+    colors = [get_model_color(model) for model in models_sorted]
     
     # Create side-by-side plots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
@@ -1637,7 +1635,7 @@ def plot_model_performance_ranges(model_stats):
     ax1.set_title('Model Performance Range\n(Max - Min Accuracy)', fontsize=16, fontweight='bold', pad=20)
     ax1.set_xlabel('Model', fontsize=12, fontweight='bold')
     ax1.set_ylabel('Performance Range', fontsize=12, fontweight='bold')
-    ax1.grid(True, alpha=0.3, axis='y')
+    # No grid - white background (benchmark lines added separately)
     ax1.set_ylim(0, max(ranges_sorted) * 1.2)
     
     # Add consistency note
@@ -1674,7 +1672,7 @@ def plot_model_performance_ranges(model_stats):
     ax2.set_ylabel('Accuracy', fontsize=12, fontweight='bold')
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels(models_sorted)
-    ax2.grid(True, alpha=0.3, axis='y')
+    # No grid - white background (benchmark lines added separately)
     ax2.set_ylim(0, 1.0)
     
     # Add industry standard line
@@ -1708,10 +1706,8 @@ def plot_model_cer_ranges(model_stats):
     mins_sorted = [mins[i] for i in sorted_indices]
     maxs_sorted = [maxs[i] for i in sorted_indices]
     
-    # Color mapping (for CER, lower is better)
-    colors = [ANALYSIS_COLORS['accuracy'] if r < 0.05 else 
-              ANALYSIS_COLORS['work_order'] if r < 0.1 else 
-              ANALYSIS_COLORS['cer'] for r in ranges_sorted]
+    # Color mapping by model type (use model-specific colors)
+    colors = [get_model_color(model) for model in models_sorted]
     
     # Create side-by-side plots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
@@ -1728,7 +1724,7 @@ def plot_model_cer_ranges(model_stats):
     ax1.set_title('Model CER Range\n(Max - Min CER)', fontsize=16, fontweight='bold', pad=20)
     ax1.set_xlabel('Model', fontsize=12, fontweight='bold')
     ax1.set_ylabel('CER Range', fontsize=12, fontweight='bold')
-    ax1.grid(True, alpha=0.3, axis='y')
+    # No grid - white background (benchmark lines added separately)
     ax1.set_ylim(0, max(ranges_sorted) * 1.2)
     
     # Add consistency note
@@ -1765,7 +1761,7 @@ def plot_model_cer_ranges(model_stats):
     ax2.set_ylabel('Character Error Rate (CER)', fontsize=12, fontweight='bold')
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels(models_sorted)
-    ax2.grid(True, alpha=0.3, axis='y')
+    # No grid - white background (benchmark lines added separately)
     ax2.set_ylim(0, max(maxs_sorted) * 1.1)
     
     plt.tight_layout()
@@ -1906,17 +1902,14 @@ def plot_performance_gap_scatter_sidebyside(gap_data):
     # Create side-by-side plots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
     
-    # Color mapping by model type
-    color_map = {
-        'pixtral': ANALYSIS_COLORS['Pixtral'],
-        'llama': ANALYSIS_COLORS['Llama'], 
-        'doctr': ANALYSIS_COLORS['DocTR']
-    }
+    # Color mapping by model type (use dynamic color function)
+    def get_color_for_model_type(model_type):
+        return get_model_color(model_type)
     
     # Left plot: Overall Accuracy vs Gap (both axes flipped for worst to best flow)
     for data_point in gap_data:
         model_type = data_point['model_type']
-        color = color_map.get(model_type, ANALYSIS_COLORS['baseline'])
+        color = get_color_for_model_type(model_type)
         
         # Invert gap (negative gap for plotting so lower gap appears higher)
         ax1.scatter(data_point['overall_accuracy'], -data_point['gap'], 
@@ -1932,7 +1925,7 @@ def plot_performance_gap_scatter_sidebyside(gap_data):
     ax1.set_xlabel('Overall Accuracy', fontsize=12, fontweight='bold')
     ax1.set_ylabel('Gap Quality (Inverted Gap)', fontsize=12, fontweight='bold')
     ax1.set_title('Overall Accuracy vs Gap Quality', fontsize=14, fontweight='bold')
-    ax1.grid(True, alpha=0.3)
+    # No grid - white background (benchmark lines added separately)
     ax1.axhline(y=0, color='black', linestyle='--', alpha=0.5, label='Zero Gap')
     ax1.axvline(x=0.85, color='red', linestyle='--', alpha=0.7, linewidth=2, label='85% Standard')
     
@@ -1970,7 +1963,7 @@ def plot_performance_gap_scatter_sidebyside(gap_data):
     # Right plot: CER vs Gap (both axes flipped for worst to best flow)
     for data_point in gap_data:
         model_type = data_point['model_type']
-        color = color_map.get(model_type, ANALYSIS_COLORS['baseline'])
+        color = get_color_for_model_type(model_type)
         
         # Flip both CER and gap axes for plotting
         ax2.scatter(-data_point['cer'], -data_point['gap'], 
@@ -1986,7 +1979,7 @@ def plot_performance_gap_scatter_sidebyside(gap_data):
     ax2.set_xlabel('Performance Quality (Inverted CER)', fontsize=12, fontweight='bold')
     ax2.set_ylabel('Gap Quality (Inverted Gap)', fontsize=12, fontweight='bold')
     ax2.set_title('Performance Quality vs Gap Quality', fontsize=14, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
+    # No grid - white background (benchmark lines added separately)
     ax2.axhline(y=0, color='black', linestyle='--', alpha=0.5, label='Zero Gap')
     
     # Custom x-axis labels for inverted CER
@@ -2145,8 +2138,8 @@ def plot_model_accuracy_boxplot(accuracy_data):
     models = list(accuracy_data.keys())
     accuracy_values = [accuracy_data[model] for model in models]
     
-    # Create figure with reduced height to minimize whitespace
-    fig, ax = plt.subplots(figsize=(12, 4.5))
+    # Create figure with optimal size for box plot
+    fig, ax = plt.subplots(figsize=(12, 6))
     
     # Create box plot
     box_plot = ax.boxplot(accuracy_values, labels=models, patch_artist=True, 
@@ -2186,7 +2179,7 @@ def plot_model_accuracy_boxplot(accuracy_data):
         plt.Line2D([0], [0], color=INDUSTRY_STANDARDS['reference_line_color'], linewidth=2, linestyle=':', 
                   label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
     ]
-    ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1.02, 1))
+    ax.legend(handles=legend_elements, loc='upper right')
     
     # Format y-axis as percentage
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.0%}'))
@@ -2199,19 +2192,19 @@ def plot_model_accuracy_boxplot(accuracy_data):
             max_val = max(all_values)
             data_range = max_val - min_val
             
-            # Use smaller padding for tighter view
-            padding = max(0.05, data_range * 0.1)  # At least 5% padding, or 10% of data range
+            # Use very tight padding for minimal whitespace
+            padding = max(0.01, data_range * 0.02)  # At least 1% padding, or 2% of data range
             
             y_min = max(0, min_val - padding)
-            y_max = max_val + padding
+            y_max = min(0.9, max_val + padding)  # Cap at 90% since data doesn't exceed ~85%
             
             ax.set_ylim(y_min, y_max)
     
-    # Add grid for better readability
-    ax.grid(True, alpha=0.3, axis='y')
+    # Apply our standard styling (no grid - white background)
+    # Grid removed to maintain consistency with other charts
     
     # Use tight layout to minimize whitespace
-    plt.tight_layout(pad=0.5)
+    plt.tight_layout()
     return fig
 
 
@@ -2839,7 +2832,7 @@ def plot_efficiency_frontier(efficiency_data):
     ax.legend(loc='upper left', bbox_to_anchor=(1.02, 1))
     
     # Add grid
-    ax.grid(True, alpha=0.3)
+            # No grid - white background (benchmark lines added separately)
     
     plt.tight_layout(pad=0.5)
     return fig
@@ -3480,7 +3473,7 @@ def plot_work_order_error_category_matrix(matrix_data):
     fig, ax = plt.subplots(figsize=(fig_width, fig_height))
     
     # Create heatmap with counts
-    im = ax.imshow(matrix, cmap='YlOrRd', aspect='auto')
+    im = ax.imshow(matrix, cmap='Blues', aspect='auto')
     
     # Set ticks and labels
     ax.set_xticks(range(len(sorted_models)))
