@@ -2138,8 +2138,8 @@ def plot_model_accuracy_boxplot(accuracy_data):
     models = list(accuracy_data.keys())
     accuracy_values = [accuracy_data[model] for model in models]
     
-    # Create figure with optimal size for box plot
-    fig, ax = plt.subplots(figsize=(12, 6))
+    # Create figure with reduced height and optimized for minimal whitespace
+    fig, ax = plt.subplots(figsize=(12, 5))
     
     # Create box plot
     box_plot = ax.boxplot(accuracy_values, labels=models, patch_artist=True, 
@@ -2162,14 +2162,14 @@ def plot_model_accuracy_boxplot(accuracy_data):
     
     # Styling
     apply_chart_styling(ax, "bar_chart")
-    ax.set_title("Model Accuracy Distribution Comparison", fontsize=14, fontweight='bold', pad=15)
+    ax.set_title("Model Accuracy Distribution Comparison", fontsize=14, fontweight='bold', pad=8)
     ax.set_ylabel("Accuracy", fontsize=12, fontweight='bold')
     ax.set_xlabel("Model Configuration", fontsize=12, fontweight='bold')
     
     # Rotate x-axis labels for better readability
     ax.tick_params(axis='x', rotation=45)
     
-    # Add legend
+    # Add legend with reduced font size and better positioning
     legend_elements = [
         mpatches.Patch(color=ANALYSIS_COLORS['Pixtral'], alpha=0.7, label='Pixtral Models'),
         mpatches.Patch(color=ANALYSIS_COLORS['Llama'], alpha=0.7, label='Llama Models'),
@@ -2179,7 +2179,7 @@ def plot_model_accuracy_boxplot(accuracy_data):
         plt.Line2D([0], [0], color=INDUSTRY_STANDARDS['reference_line_color'], linewidth=2, linestyle=':', 
                   label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
     ]
-    ax.legend(handles=legend_elements, loc='upper right')
+    ax.legend(handles=legend_elements, loc='upper right', fontsize=10, framealpha=0.9)
     
     # Format y-axis as percentage
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.0%}'))
@@ -2193,18 +2193,28 @@ def plot_model_accuracy_boxplot(accuracy_data):
             data_range = max_val - min_val
             
             # Use very tight padding for minimal whitespace
-            padding = max(0.01, data_range * 0.02)  # At least 1% padding, or 2% of data range
+            padding = max(0.02, data_range * 0.05)  # At least 2% padding, or 5% of data range
             
             y_min = max(0, min_val - padding)
-            y_max = min(0.9, max_val + padding)  # Cap at 90% since data doesn't exceed ~85%
+            # Don't cap at 90% - use actual data range for better visualization
+            y_max = max_val + padding
+            
+            # Include industry standard in the visible range if it's close
+            industry_std = INDUSTRY_STANDARDS['automation_threshold'] / 100
+            if industry_std <= y_max + 0.05:  # If industry standard is within 5% of max
+                y_max = max(y_max, industry_std + 0.02)  # Show industry line with small margin
             
             ax.set_ylim(y_min, y_max)
     
     # Apply our standard styling (no grid - white background)
     # Grid removed to maintain consistency with other charts
     
-    # Use tight layout to minimize whitespace
-    plt.tight_layout()
+    # Use tight layout with optimized padding to minimize whitespace
+    plt.tight_layout(pad=0.5)
+    
+    # Further reduce top margin
+    # plt.subplots_adjust(top=0.92)
+    
     return fig
 
 
@@ -2331,8 +2341,8 @@ def plot_lmm_prompt_combination_boxplot(combination_data):
             patch.set_alpha(0.7)
     
     # Add industry standard line
-    add_industry_standard_line(ax, INDUSTRY_STANDARDS['automation_threshold']/100, 
-                              label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
+    # add_industry_standard_line(ax, INDUSTRY_STANDARDS['automation_threshold']/100, 
+    #                           label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
     
     # Styling
     apply_chart_styling(ax, "bar_chart")
@@ -2349,8 +2359,8 @@ def plot_lmm_prompt_combination_boxplot(combination_data):
         mpatches.Patch(color=ANALYSIS_COLORS['Llama'], alpha=0.7, label='Llama Combinations'),
         plt.Line2D([0], [0], color='red', linewidth=2, label='Median'),
         plt.Line2D([0], [0], color='blue', linewidth=2, linestyle='--', label='Mean'),
-        plt.Line2D([0], [0], color=INDUSTRY_STANDARDS['reference_line_color'], linewidth=2, linestyle=':', 
-                  label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
+        # plt.Line2D([0], [0], color=INDUSTRY_STANDARDS['reference_line_color'], linewidth=2, linestyle=':', 
+        #           label=f"Industry Standard ({INDUSTRY_STANDARDS['automation_threshold']}%)")
     ]
     ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1.02, 1))
     
