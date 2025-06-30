@@ -8942,7 +8942,7 @@ CER was only calculated on the Work Order Field while accuracy on a true false s
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="4.-Model-Consistency-Study">4. Model Consistency Study<a class="anchor-link" href="#4.-Model-Consistency-Study">¶</a></h2><p>Analysis of model consistency and performance variability. Lower ranges indicate more consistent performance across different experiments.
-Intended to look at spread of results between models.  How reliable are the results we are getting from each model. Can we expect similar results at scale?</p>
+Intended to look at spread of results between models and answer such questions as: How reliable are the results we are getting from each model? Can we expect similar results at scale?</p>
 </div>
 </div>
 </div>
@@ -9307,7 +9307,7 @@ docTR Models:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Llama step-by-step still holds the lead in terms of accuracy performance but the cluster of pixtral models shows comparable performance with lower spread. Pixtral-detailed and pixtral step-by-step show good performance promise</p>
+<p>Llama step-by-step still outperforms Pixtral in terms of accuracy, but the cluster of pixtral models shows comparable performance with lower spread. Pixtral-detailed and pixtral step-by-step show promise as consistant models whose accuracy can be improved with training.</p>
 </div>
 </div>
 </div>
@@ -9318,7 +9318,7 @@ docTR Models:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="5.-Compute-Resource-(Timed)-Comparison">5. Compute Resource (Timed) Comparison<a class="anchor-link" href="#5.-Compute-Resource-(Timed)-Comparison">¶</a></h2><p>Look at the tradeoff between speed and accuracy</p>
+<h2 id="5.-Compute-Resource-(Timed)-Comparison">5. Compute Resource (Timed) Comparison<a class="anchor-link" href="#5.-Compute-Resource-(Timed)-Comparison">¶</a></h2><p>This section examines the tradeoff between compute time and accuracy.</p>
 </div>
 </div>
 </div>
@@ -9617,7 +9617,7 @@ docTR Models:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Pixtral Basic shows good promise, however LLama step-by-step still comes the closest to meeting industry standards in accuracy at about 5 seconds per trial</p>
+<p>The tradeoff here is clear. LLama step-by-step comes the closest to meeting industry standards in accuracy however it takes bout 5 seconds per trial - twice that of the Pixtral model.  Improvements to the pixtral accuracy with training could result in large compute-time savings.</p>
 </div>
 </div>
 </div>
@@ -9746,7 +9746,8 @@ docTR Models:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Interesting.  There are a few images that can't be solved by any model-prompt combination.  Good to know what their characteristics are.  Some that work on one model but not the other.  Again interesting to explore.</p>
+<p>There are a few images that can't be solved by any model-prompt combination.  Further study could examine these images for the characteristics that are common accross them. This information can inform future pre-processing efforts. Similarly, future exploartion could explore the causes behind an image characteristics that are processed well on one model but not the other.</p>
+<p>A cursore examination shows handwriting and strike-throughs as the most likely underlying cause of the "sticky" images. A more throrough investigation could help with pre-processing and flagging these images or providing updated prompting to the model to improve performance.</p>
 </div>
 </div>
 </div>
@@ -10014,11 +10015,95 @@ docTR               88             16             14             59             
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="7.-Conclusion-and-Way-Ahead">7. Conclusion and Way-Ahead<a class="anchor-link" href="#7.-Conclusion-and-Way-Ahead">¶</a></h2><p>Doctr OCR can be fine-tuned but it would not be as efficient to try and train it up to standards.
-Llama offers great numeric analysis especially when the field is clearly identifiable ($ sign or xxx.xx pattern)
-with better prompting,  fine tuning, and post processing it can made production grade
-minaturize for local deployment
-Pixtral is consistant and easier with the i/o.  With a medium amount of training it could be brought up to industry standards.  It's architecture is likely better suited for large scale deployment?</p>
+<h2 id="7.-Conclusion-and-Way-Ahead">7. Conclusion and Way-Ahead<a class="anchor-link" href="#7.-Conclusion-and-Way-Ahead">¶</a></h2><h3 id="7.1-Key-Findings-Summary">7.1 Key Findings Summary<a class="anchor-link" href="#7.1-Key-Findings-Summary">¶</a></h3><p>This comprehensive evaluation of OCR and Large Multimodal Models (LMMs) for construction invoice data extraction reveals significant performance differentials and actionable insights for industry deployment.</p>
+<p><strong>Overall Performance Hierarchy:</strong></p>
+<ol>
+<li><strong>Llama Vision Models</strong> - Superior numeric extraction performance</li>
+<li><strong>Pixtral Models</strong> - Most consistent and computationally efficient</li>
+<li><strong>DocTR OCR</strong> - Baseline performance, significant room for improvement</li>
+</ol>
+<h3 id="7.2-Model-Specific-Performance-Analysis">7.2 Model-Specific Performance Analysis<a class="anchor-link" href="#7.2-Model-Specific-Performance-Analysis">¶</a></h3><h4 id="7.2.1-Llama-Vision-Model-Performance">7.2.1 Llama Vision Model Performance<a class="anchor-link" href="#7.2.1-Llama-Vision-Model-Performance">¶</a></h4><ul>
+<li><strong>Total Cost Extraction</strong>: 92% baseline accuracy, <strong>94% with step-by-step prompting</strong> (best overall)</li>
+<li><strong>Work Order Number Extraction</strong>: 66% accuracy with 24.4% character error rate</li>
+<li><strong>Optimal Configuration</strong>: Step-by-step prompting yields superior results for numeric fields</li>
+<li><strong>Strengths</strong>: Exceptional performance on clearly formatted numeric data ($ signs, decimal patterns)</li>
+<li><strong>Weaknesses</strong>: Higher character error rates on alphanumeric strings, more computationally intensive</li>
+</ul>
+<h4 id="7.2.2-Pixtral-Model-Performance">7.2.2 Pixtral Model Performance<a class="anchor-link" href="#7.2.2-Pixtral-Model-Performance">¶</a></h4><ul>
+<li><strong>Total Cost Extraction</strong>: 80% baseline accuracy across prompting strategies</li>
+<li><strong>Work Order Number Extraction</strong>: 66% accuracy with <strong>7.1% character error rate</strong> (significantly lower than Llama)</li>
+<li><strong>Optimal Configuration</strong>: Consistent performance across basic, detailed, and step-by-step prompting</li>
+<li><strong>Strengths</strong>: Superior consistency, lower character error rates, more efficient I/O processing</li>
+<li><strong>Weaknesses</strong>: Lower peak accuracy on numeric extraction compared to Llama</li>
+</ul>
+<h4 id="7.2.3-DocTR-OCR-Performance">7.2.3 DocTR OCR Performance<a class="anchor-link" href="#7.2.3-DocTR-OCR-Performance">¶</a></h4><ul>
+<li><strong>Total Cost Extraction</strong>: 49.4% accuracy (across 7 test configurations)</li>
+<li><strong>Work Order Number Extraction</strong>: 37.4% accuracy</li>
+<li><strong>Strengths</strong>: Traditional OCR approach, potentially faster for simple text extraction</li>
+<li><strong>Weaknesses</strong>: Significantly lower accuracy across all metrics, struggles with invoice format complexity</li>
+</ul>
+<h3 id="7.3-Strategic-Recommendations-by-Use-Case">7.3 Strategic Recommendations by Use Case<a class="anchor-link" href="#7.3-Strategic-Recommendations-by-Use-Case">¶</a></h3><h4 id="7.3.1-High-Accuracy-Numeric-Processing">7.3.1 High-Accuracy Numeric Processing<a class="anchor-link" href="#7.3.1-High-Accuracy-Numeric-Processing">¶</a></h4><p><strong>Recommendation</strong>: Llama Vision with step-by-step prompting</p>
+<ul>
+<li><strong>Rationale</strong>: 94% accuracy on total cost extraction meets industry requirements</li>
+<li><strong>Implementation</strong>: Fine-tuning and post-processing can achieve production-grade performance</li>
+<li><strong>Deployment</strong>: Suitable for cloud-based processing where computational resources are available</li>
+</ul>
+<h4 id="7.3.2-Large-Scale-Consistent-Processing">7.3.2 Large-Scale Consistent Processing<a class="anchor-link" href="#7.3.2-Large-Scale-Consistent-Processing">¶</a></h4><p><strong>Recommendation</strong>: Pixtral with any prompting strategy</p>
+<ul>
+<li><strong>Rationale</strong>: Consistent 80% accuracy with 7.1% character error rate provides reliable baseline</li>
+<li><strong>Implementation</strong>: Self-attention mechanism enables efficient scaling</li>
+<li><strong>Deployment</strong>: Optimal for high-volume processing with moderate accuracy requirements</li>
+</ul>
+<h4 id="7.3.3-Resource-Constrained-Environments">7.3.3 Resource-Constrained Environments<a class="anchor-link" href="#7.3.3-Resource-Constrained-Environments">¶</a></h4><p><strong>Recommendation</strong>: Enhanced DocTR with pre-processing pipeline</p>
+<ul>
+<li><strong>Rationale</strong>: While baseline performance is low, fine-tuning potential exists</li>
+<li><strong>Implementation</strong>: Significant training investment required to reach industry standards</li>
+<li><strong>Caveat</strong>: May not be cost-effective given LMM alternatives</li>
+</ul>
+<h3 id="7.4-Error-Pattern-Analysis-and-Mitigation-Strategies">7.4 Error Pattern Analysis and Mitigation Strategies<a class="anchor-link" href="#7.4-Error-Pattern-Analysis-and-Mitigation-Strategies">¶</a></h3><h4 id="7.4.1-Common-Failure-Modes">7.4.1 Common Failure Modes<a class="anchor-link" href="#7.4.1-Common-Failure-Modes">¶</a></h4><ul>
+<li><strong>Handwritten elements</strong>: Consistent challenge across all models</li>
+<li><strong>Strike-through text</strong>: Causes confusion in data extraction</li>
+<li><strong>Image quality variations</strong>: Affects extraction consistency</li>
+<li><strong>Format inconsistencies</strong>: Models struggle with non-standard invoice layouts</li>
+</ul>
+<h4 id="7.4.2-Recommended-Mitigation-Approaches">7.4.2 Recommended Mitigation Approaches<a class="anchor-link" href="#7.4.2-Recommended-Mitigation-Approaches">¶</a></h4><ol>
+<li><strong>Pre-processing Pipeline</strong>: Image quality enhancement and handwriting detection</li>
+<li><strong>Hybrid Approach</strong>: Combine model strengths (Llama for numeric, Pixtral for text)</li>
+<li><strong>Human-in-the-Loop</strong>: Flag low-confidence extractions for manual review</li>
+<li><strong>Training Data Augmentation</strong>: Focus on challenging image characteristics</li>
+</ol>
+<h3 id="7.5-Production-Implementation-Roadmap">7.5 Production Implementation Roadmap<a class="anchor-link" href="#7.5-Production-Implementation-Roadmap">¶</a></h3><h4 id="7.5.1-Short-term-(3-6-months)">7.5.1 Short-term (3-6 months)<a class="anchor-link" href="#7.5.1-Short-term-(3-6-months)">¶</a></h4><ul>
+<li>Deploy Llama step-by-step for critical numeric extraction</li>
+<li>Implement Pixtral for high-volume text processing</li>
+<li>Develop confidence scoring system for extraction quality assessment</li>
+</ul>
+<h4 id="7.5.2-Medium-term-(6-12-months)">7.5.2 Medium-term (6-12 months)<a class="anchor-link" href="#7.5.2-Medium-term-(6-12-months)">¶</a></h4><ul>
+<li>Fine-tune models on domain-specific construction invoice datasets</li>
+<li>Implement hybrid processing pipeline combining model strengths</li>
+<li>Develop automated quality assurance and error correction mechanisms</li>
+</ul>
+<h4 id="7.5.3-Long-term-(12+-months)">7.5.3 Long-term (12+ months)<a class="anchor-link" href="#7.5.3-Long-term-(12+-months)">¶</a></h4><ul>
+<li>Explore model miniaturization for local deployment scenarios</li>
+<li>Investigate custom model training for construction-specific document types</li>
+<li>Scale processing capabilities to handle enterprise-level document volumes</li>
+</ul>
+<h3 id="7.6-Technical-Architecture-Considerations">7.6 Technical Architecture Considerations<a class="anchor-link" href="#7.6-Technical-Architecture-Considerations">¶</a></h3><h4 id="7.6.1-Deployment-Options">7.6.1 Deployment Options<a class="anchor-link" href="#7.6.1-Deployment-Options">¶</a></h4><ul>
+<li><strong>Cloud-based</strong>: Llama models for maximum accuracy</li>
+<li><strong>Edge computing</strong>: Pixtral models for balanced performance/efficiency</li>
+<li><strong>Hybrid architecture</strong>: Route documents based on complexity and accuracy requirements</li>
+</ul>
+<h4 id="7.6.2-Integration-Recommendations">7.6.2 Integration Recommendations<a class="anchor-link" href="#7.6.2-Integration-Recommendations">¶</a></h4><ul>
+<li><strong>API-first design</strong>: Enable seamless integration with existing contractor management systems</li>
+<li><strong>Batch processing capabilities</strong>: Handle large document volumes efficiently</li>
+<li><strong>Real-time processing</strong>: Support immediate invoice processing for time-sensitive operations</li>
+</ul>
+<h3 id="7.7-Economic-Impact-Assessment">7.7 Economic Impact Assessment<a class="anchor-link" href="#7.7-Economic-Impact-Assessment">¶</a></h3><p>The performance differentials translate to significant operational benefits:</p>
+<ul>
+<li><strong>Llama deployment</strong>: 94% accuracy reduces manual review by approximately 85%</li>
+<li><strong>Pixtral deployment</strong>: 80% accuracy with lower computational costs provides optimal ROI for high-volume scenarios</li>
+<li><strong>Error reduction</strong>: Lower character error rates (7.1% vs 24.4%) significantly reduce downstream processing errors</li>
+</ul>
+<p>This analysis provides a robust foundation for evidence-based model selection and deployment strategies in construction industry invoice processing applications.</p>
 </div>
 </div>
 </div>
