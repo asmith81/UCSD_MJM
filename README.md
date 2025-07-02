@@ -27,7 +27,6 @@
   - [Experimental Design](#experimental-design)
   - [Evaluation Methodology](#evaluation-methodology)
 - [Reproduction Guide](#reproduction-guide)
-  - [Quick Start](#quick-start)
   - [Detailed Reproduction](#detailed-reproduction)
     - [Environment Setup](#environment-setup)
     - [Data Preparation](#data-preparation)
@@ -71,24 +70,24 @@ This repository contains all deliverables for the UCSD Extension AI/ML Engineeri
 
 ### Phase 1 - Build a Prototype
 
-| Rubric Step | Deliverable | Description | Rubric Requirements Fulfilled |
-|-------------|-------------|-------------|------------------------------|
-| **Step 2: Data Collection** | `Deliverables-Code/notebooks/01_image_download_and_processing.ipynb`<br/>`Deliverables-Code/data/` | Data acquisition from Google Forms, preprocessing pipeline, quality assessment | ✅ 797 invoice dataset (>15K samples requirement)<br/>✅ Well-documented collection process<br/>✅ Multiple data sources integration |
-| **Step 3: Project Proposal** | `Deliverables-Discussion/01_Project_Proposal.md` | Business case definition, technical approach, computational resource planning | ✅ Practical problem with client value<br/>✅ Appropriately scoped for course<br/>✅ Computational resource estimates<br/>✅ Clear problem statement |
-| **Step 4: Survey Existing Research** | `Deliverables-Discussion/02_Survey_of_Research.md` | Literature review of multimodal LLM architectures, comparative analysis of existing solutions | ✅ Research paper analysis & reproduction<br/>✅ Baseline performance establishment<br/>✅ Strength/weakness differentiation<br/>✅ SOTA technique evaluation |
-| **Step 5: Data Wrangling** | `Deliverables-Code/notebooks/02_image_curation_interface.ipynb`<br/>`Deliverables-Code/data/images/metadata/` | Interactive curation tool, ground truth validation, missing data handling | ✅ Systematic data cleaning process<br/>✅ Thoughtful outlier treatment<br/>✅ Step-by-step documentation<br/>✅ Quality control measures |
-| **Step 6: Benchmark Your Model** | `Deliverables-Code/notebooks/05_doctr_model.ipynb` | DocTR traditional OCR baseline implementation | ✅ Realistic baseline comparison<br/>✅ Legitimate comparison metrics<br/>✅ Performance benchmarking |
+| Step | Deliverable | Description |
+|------|-------------|-------------|
+| **Step 2: Data Collection** | [📓 Image Download & Processing](Deliverables-Code/notebooks/01_image_download_and_processing.ipynb)<br/>[📁 Dataset](Deliverables-Code/data/) | Data acquisition from Google Forms, preprocessing pipeline, quality assessment |
+| **Step 3: Project Proposal** | [📄 Project Proposal](Deliverables-Discussion/01_Project_Proposal.md) | Business case definition, technical approach, computational resource planning |
+| **Step 4: Survey Existing Research** | [📄 Research Survey](Deliverables-Discussion/02_Survey_of_Research.md) | Literature review of multimodal LLM architectures, comparative analysis of existing solutions |
+| **Step 5: Data Wrangling** | [📓 Curation Interface](Deliverables-Code/notebooks/02_image_curation_interface.ipynb)<br/>[📁 Metadata](Deliverables-Code/data/images/metadata/) | Interactive curation tool, ground truth validation, missing data handling |
+| **Step 6: Benchmark Your Model** | [📓 DocTR Model](Deliverables-Code/notebooks/05_doctr_model.ipynb) | DocTR traditional OCR baseline implementation |
 
 ### Phase 2 - Deploy to Production
 
-| Rubric Step | Deliverable | Description | Rubric Requirements Fulfilled |
-|-------------|-------------|-------------|------------------------------|
-| **Step 7: Experiment with Various Models** | `Deliverables-Code/notebooks/03_pixtral_model.ipynb`<br/>`Deliverables-Code/notebooks/04_llama_model.ipynb`<br/>`Deliverables-Code/notebooks/06_Final_Analysis_v2.ipynb` | Multi-model comparison: Pixtral, LLaMA Vision, DocTR with statistical evaluation | ✅ Multiple architecture evaluation<br/>✅ Cross-validation process<br/>✅ Performance metric selection<br/>✅ Overfitting prevention<br/>✅ Training time/cost analysis |
-| **Step 8: Scale Your Prototype** | `Deliverables-Discussion/05_Discussion_of_Scaling.md`<br/>`Deliverables-Code/config/` | Production scaling analysis, infrastructure requirements, configuration management | ✅ Complete dataset handling capability<br/>✅ Real-world scale considerations<br/>✅ Tool/library selection justification<br/>✅ ML technique optimization |
-| **Step 9: Pick Your Deployment Method** | `Deliverables-Discussion/06_Discussion_of_Deployment.md` | Deployment architecture comparison, cost-benefit analysis, monitoring strategy | ✅ Deployment option evaluation<br/>✅ Cost/performance trade-offs<br/>✅ ML pipeline integration<br/>✅ Monitoring & redeployment plan |
-| **Step 10: Design Your Deployment Solution** | `Deliverables-Discussion/06_Discussion_of_Deployment.md`<br/>`Deliverables-Discussion/img/` | Architecture diagrams, engineering specifications, production-level design | ✅ Production architecture design<br/>✅ Data pipeline specifications<br/>✅ Logging & monitoring design<br/>✅ API & UI planning |
-| **Step 11: Deployment Implementation** | `Deliverables-Code/` (Complete Repository)<br/>`Deliverables-Code/requirements/`<br/>`Deliverables-Discussion/06_Discussion_of_Deployment.md` | Production-ready codebase, containerization setup, API implementation | ✅ Production repository structure<br/>✅ Data pipeline implementation<br/>✅ Containerization ready<br/>✅ Well-documented API design |
-| **Step 12: Share Your Project** | This README.md<br/>Complete Repository | Comprehensive documentation, deployment instructions, interactive demonstration | ✅ Complete GitHub repository<br/>✅ Visual project manifestation<br/>✅ End-to-end ML lifecycle<br/>✅ User interaction interface |
+| Step | Deliverable | Description |
+|------|-------------|-------------|
+| **Step 7: Experiment with Various Models** | [📓 Pixtral Model](Deliverables-Code/notebooks/03_pixtral_model.ipynb)<br/>[📓 LLaMA Model](Deliverables-Code/notebooks/04_llama_model.ipynb)<br/>[📓 Final Analysis](Deliverables-Code/notebooks/06_Final_Analysis_v2.ipynb) | Multi-model comparison: Pixtral, LLaMA Vision, DocTR with statistical evaluation |
+| **Step 8: Scale Your Prototype** | [📄 Scaling Discussion](Deliverables-Discussion/05_Discussion_of_Scaling.md)<br/>[📁 Configuration](Deliverables-Code/config/) | Production scaling analysis, infrastructure requirements, configuration management |
+| **Step 9: Pick Your Deployment Method** | [📄 Deployment Discussion](Deliverables-Discussion/06_Discussion_of_Deployment.md) | Deployment architecture comparison, cost-benefit analysis, monitoring strategy |
+| **Step 10: Design Your Deployment Solution** | [📄 Deployment Discussion](Deliverables-Discussion/06_Discussion_of_Deployment.md)<br/>[📁 Architecture Diagrams](Deliverables-Discussion/img/) | Architecture diagrams, engineering specifications, production-level design |
+| **Step 11: Deployment Implementation** | [📁 Complete Repository](Deliverables-Code/)<br/>[📁 Requirements](Deliverables-Code/requirements/)<br/>[📄 Deployment Discussion](Deliverables-Discussion/06_Discussion_of_Deployment.md) | Production-ready codebase, containerization setup, API implementation |
+| **Step 12: Share Your Project** | [📄 This README](README.md)<br/>📁 Complete Repository | Comprehensive documentation, deployment instructions, interactive demonstration |
 
 ### Core Competency Demonstration
 
@@ -230,19 +229,6 @@ Each model was evaluated across multiple dimensions:
 
 ## Reproduction Guide
 
-### Quick Start
-```bash
-# 1. Clone repository
-git clone [repository-url]
-cd UCSD_MJM
-
-# 2. Set up environment (choose appropriate requirements file)
-pip install -r Deliverables-Code/requirements/requirements_analysis.txt
-
-# 3. Run analysis notebook
-jupyter lab Deliverables-Code/notebooks/06_Final_Analysis_v2.ipynb
-```
-
 ### Detailed Reproduction
 
 #### Environment Setup
@@ -310,23 +296,16 @@ Execute notebooks in sequence:
 Special recognition for providing the academic framework and rigorous curriculum that enabled this comprehensive analysis.
 
 ### Faculty & Mentorship
-**[Faculty Mentor Name]** - Technical guidance and academic oversight  
-**Course Instructors** - Foundation in machine learning, deep learning, and practical AI deployment
+**Arvind Aravind** - Technical guidance and academic oversight  
 
 ### Business Partnership
-**Washington D.C. Area General Contracting Firm** - Real-world data provision and business case validation  
+**MJM Copntracting** - Real-world data provision and business case validation  
 This partnership enabled authentic problem-solving with genuine business impact, transforming academic learning into practical value creation.
 
 ### Technical Resources
 **Hugging Face** - Model access and deployment infrastructure  
 **Google Colaboratory & AWS** - Cloud computing resources for model training and inference  
 **Open Source Community** - DocTR, Transformers, and supporting libraries
-
-### Data & Methodology
-**Ground Truth Validation** - Business partner's administrative team for data accuracy verification  
-**Image Dataset** - 797 authentic construction invoices providing realistic test conditions  
-**Research Foundation** - Academic papers and industry reports informing architectural decisions
-
 ---
 
 *This project represents the culmination of intensive study in AI/ML engineering, demonstrating the practical application of cutting-edge technology to solve real-world business challenges. The work showcases both technical depth and business acumen, preparing for professional deployment of AI solutions in industry settings.* 
