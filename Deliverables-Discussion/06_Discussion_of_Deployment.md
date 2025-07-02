@@ -95,14 +95,14 @@ The local deployment architecture leverages Llama's superior cost field accuracy
 
 Response validation improvements focus on data integrity through JSON schema compliance checking and business rule validation engines that verify extracted costs fall within reasonable ranges ($1-$50,000), validate date formats, and ensure work order numbers conform to client-specific patterns. Progressive confidence scoring combines model uncertainty, preprocessing quality metrics, and business rule compliance to route low-confidence items to extended review queues. Systematic feedback collection captures original images, model outputs, human corrections, and timing metadata through simple correction workflows, accumulating high-quality training examples that enable the system to evolve from v0 prototype to v1 MVP through accumulated learning on previously problematic invoice types.
 
- ![](img/v0_architecture_diagram(1).png)
+ ![](img/v0_architecture_diagram (1).png)
 
 ### Figure 1: V0 Basic Llama Local Deployment
 *Simple working prototype with human-in-the-loop validation*
 
-![](img/v1_architecture_diagram(1).png)
+![](img/v1_architecture_diagram (1).png)
 ### Figure 2: V1 Enhanced Llama Local Deployment
- *Customer feedback integration and business system connectivity*
+*Customer feedback integration and business system connectivity*
 
 ## 3.3 Pixtral Enterprise Cloud Platform Architecture
 
@@ -132,7 +132,7 @@ The enterprise deployment architecture centers on extensively trained and fine-t
 
 Multi-model inference strategies reduce extraction failures by routing requests to multiple Pixtral instances configured with different prompts and parameters, comparing results and selecting optimal extractions based on confidence correlation analysis. Alternative model architectures serve as fallback options when primary models return low-confidence results. Advanced confidence correlation systems leverage customer-specific databases to train secondary machine learning models that predict extraction reliability, automatically classifying extractions as AUTO-APPROVE, STANDARD-REVIEW, or EXPERT-REVIEW to optimize human resource allocation. Batch processing and active learning maximize training efficiency by implementing intelligent sample selection algorithms that prioritize corrections addressing systematic model weaknesses or representing new invoice formats, enabling continuous evolution through accumulated customer feedback across the enterprise platform.
 
-![](img/v2_architecture_diagram(1).png)
+![](img/v2_architecture_diagram (1).png)
 ### Figure 3: V2 Enterprise Pixtral Cloud Platform  
 *Scalable cloud infrastructure with multi-tenant support*
 
