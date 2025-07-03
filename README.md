@@ -303,9 +303,9 @@ Special recognition for providing the academic framework and rigorous curriculum
 This partnership enabled authentic problem-solving with genuine business impact, transforming academic learning into practical value creation.
 
 ### Technical Resources
-**Hugging Face** - Model access and deployment infrastructure  
-**Google Colaboratory & AWS** - Cloud computing resources for model training and inference  
-**Open Source Community** - DocTR, Transformers, and supporting libraries
+*Hugging Face* - Model access and deployment infrastructure  
+*Google Colaboratory & AWS* - Cloud computing resources for model training and inference  
+*Open Source Community* - DocTR, Transformers, and supporting libraries
 ---
 
 *This project represents the culmination of intensive study in AI/ML engineering, demonstrating the practical application of cutting-edge technology to solve real-world business challenges. The work showcases both technical depth and business acumen, preparing for professional deployment of AI solutions in industry settings.* 
